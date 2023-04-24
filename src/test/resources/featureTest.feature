@@ -25,16 +25,16 @@ Feature: Placing ships
       | 2 | 3 | 2  | 3  | "DESTROYER" | "true"     |
       | 3 | 6 | 3  | 7  | "CRUISER"   | "false"    |
 
-#  @tag
-#  Scenario Outline: All ships placed for first player
-#    Given user has one ship left to place
-#    And user is entering coordinates <x2> <y2> for a vertical equals <isVertical> ship of type <shipType>
-#    Then  the next player is prompted to place their ships
-#
-#    Examples:
-#      | x2 | y2 | shipType     | isVertical |
-#      | 0  | 0  | "BATTLESHIP" | "true"     |
-#      | 4  | 5  | "DESTROYER"  | "false"    |
+  @tag
+  Scenario Outline: All ships placed for first player
+    Given user has one ship left to place
+    And user is entering coordinates <x2> <y2> for a vertical equals <isVertical> ship of type <shipType>
+    Then  the next player is prompted to place their ships
+
+    Examples:
+      | x2 | y2 | shipType     | isVertical |
+      | 0  | 0  | "BATTLESHIP" | "true"     |
+      | 4  | 5  | "DESTROYER"  | "false"    |
 
 #  @tag
 #  Scenario: All ships placed for second player

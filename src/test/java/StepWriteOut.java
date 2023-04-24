@@ -1,13 +1,8 @@
 import static org.junit.Assert.assertEquals;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-
-import java.util.Locale;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class StepWriteOut {
     Board gameBoard = new Board(10);
@@ -57,7 +52,7 @@ public class StepWriteOut {
         testShip.setShipType(ShipType.valueOf(shipType));
         gameBoard.placeShip(userX, userY, testShip);
 //        System.out.println("\n the board already contains a vertical ship of type {string} at coordinates {int} and {int} " + "userX: " + userX + " userY:" + userY);
-//        gameBoard.displayBoard();
+        gameBoard.displayBoard();
         assertEquals(false, gameBoard.isEmpty());
     }
 
