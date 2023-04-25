@@ -1,9 +1,8 @@
-import static org.junit.Assert.assertEquals;
-
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import static org.junit.Assert.*;
 public class StepWriteOut {
     Board gameBoard = new Board(10);
     Ship testShip = new Ship();
@@ -13,7 +12,7 @@ public class StepWriteOut {
 
     @Given("the board is empty")
     public void the_board_is_empty() {
-        assertEquals(true, gameBoard.isEmpty());
+        assertTrue(gameBoard.isEmpty());
     }
 
 //    @Given("random coordinates for a vertical ship")
@@ -40,7 +39,7 @@ public class StepWriteOut {
     public void the_ship_should_appear_on_board() {
         System.out.println("\n The ship should appear on board @ " + "userX:" + userX + " userY:" + userY);
         gameBoard.displayBoard();
-        assertEquals(false, gameBoard.isEmpty());
+        assertFalse(gameBoard.isEmpty());
         //need to add check to validate the location of the ship for use down the line
     }
 
@@ -53,19 +52,19 @@ public class StepWriteOut {
         gameBoard.placeShip(userX, userY, testShip);
 //        System.out.println("\n the board already contains a vertical ship of type {string} at coordinates {int} and {int} " + "userX: " + userX + " userY:" + userY);
         gameBoard.displayBoard();
-        assertEquals(false, gameBoard.isEmpty());
+        assertFalse( gameBoard.isEmpty());
     }
 
     @Given("the coordinates for ship overlap with an existing object on board")
     public void the_coordinates_for_ship_overlap_with_an_existing_object_on_board() {
         boolean overlap = gameBoard.overlapping(userX, userY, testShip);
-        assertEquals(true, overlap);
+        assertTrue(overlap);
     }
 
 
     @Then("a notification appears that ships cannot overlap")
     public void a_notification_appears_that_ships_cannot_overlap() {
-        assertEquals(true, true);
+        assertTrue(true);
         // COME BACK TO THIS!!!! IT IS A GUI THING
     }
 
@@ -112,8 +111,10 @@ public class StepWriteOut {
 
     @When("a notification appears that ships cannot be placed out of bounds")
     public void a_notification_appears_that_ships_cannot_be_placed_out_of_bounds() {
-        assertEquals(true, true);
+        boolean outOfBounds = gameBoard.outOfBounds(userX, userY, testShip);
+        assertTrue(outOfBounds);
         // COME BACK TO THIS!!!! IT IS A GUI THING
+
     }
 
 
