@@ -1,13 +1,13 @@
-import java.util.Scanner;
 import java.util.HashMap;
+import java.lang.IndexOutOfBoundsException;
 
 public class Board {
-    private int size;
+    private final int size;
     private Tile[][] gameBoard;
     private HashMap<String, Integer> shipsLeft;
 
     public Board(int size) {
-        shipsLeft = new HashMap<String, Integer>();
+        shipsLeft = new HashMap<>();
         shipsLeft.put("CARRIER", 1);
         shipsLeft.put("BATTLESHIP", 1);
         shipsLeft.put("CRUISER", 2);
@@ -35,9 +35,8 @@ public class Board {
 
     public void placeShip(int x, int y, Ship ship) {
         try{
-
             overlapping(x,y,ship);
-            objOutOfBounds(x,y,ship);
+            outOfBounds(x,y,ship);
             for (int i = 0; i < ship.getLength(); i++) { //placing the ship on every coordinate
                 if (ship.isVertical()) {
                     gameBoard[x][y + i].setTileType(TileTypes.COVERED_SHIP);
@@ -60,38 +59,37 @@ public class Board {
             System.out.println("Error: " + e);
         }
     }
-    public boolean objOutOfBounds(int x, int y, Ship ship) {
+    public boolean outOfBounds(int x, int y, Ship ship) {
         try{
             for (int i = 0; i < ship.getLength(); i++) { // checking that the ship isn't overlapping any coordinate
-                if (y + i >= size || x + i >= size) {
-                    System.out.println("OUT OF BOUNDS; FAILED to place ship on coordinates: " + x + ", " + y);
-                    return false;
+                if (y + i >= size || x + i >= size || x < 0 || y < 0 ) {
+                    throw new IndexOutOfBoundsException("OUT OF BOUNDS: Coordinates" + x + ", " + y );
                 }
             }
-        } catch (Exception e){
+            return false; // coordinates are within bounds
+        } catch (IndexOutOfBoundsException e){
             System.out.println("Error: " + e);
         }
-        return true;
+        return true; // coordinates are out of bounds
     }
     public boolean overlapping(int x, int y, Ship ship) {
         try{
             for (int i = 0; i < ship.getLength(); i++) { // checking that the ship isn't overlapping any coordinate
                 if (ship.isVertical()) {
                     if (gameBoard[x][y + i].getTileType() != TileTypes.WATER) {
-                        System.out.println("TILE ALREADY OCCUPIED; FAILED to place ship on coordinates: " + x + ", " + y);
-                        return true;
+                        throw new IllegalArgumentException("TILE ALREADY OCCUPIED: FAILED to place ship on coordinates" + x + ", " + y );
                     }
                 } else {
                     if (gameBoard[x + i][y].getTileType() != TileTypes.WATER) {
-                        System.out.println("TILE ALREADY OCCUPIED; FAILED to place ship on coordinates: " + x + ", " + y);
-                        return true;
+                        throw new IllegalArgumentException("TILE ALREADY OCCUPIED: FAILED to place ship on coordinates" + x + ", " + y );
                     }
                 }
             }
-        } catch (Exception e) {
+            return false; // ships are NOT overlapping
+        } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e);
         }
-        return false;
+        return true; // ships are overlapping
     }
 
     public boolean isEmpty() {
@@ -115,7 +113,7 @@ public class Board {
                 h_margin += " ";
             }
             divider += "---";
-            h_margin += Integer.toString(i) + " ";
+            h_margin += i + " ";
 
             if (i == size - 1) {
                 divider += "+ ";

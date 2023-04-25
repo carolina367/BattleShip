@@ -13,7 +13,7 @@ Feature: Placing ships
       | 6  | 6  | "CRUISER"   | "true"     |
 
   @tag
-  Scenario Outline: Overlapping ships - fail
+  Scenario Outline: Overlapping ships - overlappingException
     Given the board already contains a vertical ship of type <shipType> at coordinates <x> and <y>
     And user is entering coordinates <x2> <y2> for a vertical equals <isVertical> ship of type <shipType>
     And the coordinates for ship overlap with an existing object on board
@@ -24,6 +24,18 @@ Feature: Placing ships
       | x | y | x2 | y2 | shipType    | isVertical |
       | 2 | 3 | 2  | 3  | "DESTROYER" | "true"     |
       | 3 | 6 | 3  | 7  | "CRUISER"   | "false"    |
+
+  @tag
+  Scenario Outline: Place ship out of bounds - OutOfBoundsException
+    Given the board is empty
+    And user is entering coordinates <x2> <y2> for a vertical equals <isVertical> ship of type <shipType>
+    When the user tries to place the ship
+    And a notification appears that ships cannot be placed out of bounds
+
+    Examples:
+      | x2 | y2 | shipType    | isVertical |
+      | 9  | 1  | "DESTROYER" | "false"    |
+      | 6  | 8  | "CRUISER"   | "true"     |
 
 #  @tag
 #  Scenario Outline: All ships placed for first player
@@ -42,14 +54,3 @@ Feature: Placing ships
 #    When the user is done placing all of their ships
 #    Then
 
-  @tag
-  Scenario Outline: Place ship out of bounds - Fail
-    Given the board is empty
-    And user is entering coordinates <x2> <y2> for a vertical equals <isVertical> ship of type <shipType>
-    When the user tries to place the ship
-    And a notification appears that ships cannot be placed out of bounds
-
-    Examples:
-      | x2 | y2 | shipType    | isVertical |
-      | 9  | 1  | "DESTROYER" | "false"    |
-      | 6  | 8  | "CRUISER"   | "true"     |
