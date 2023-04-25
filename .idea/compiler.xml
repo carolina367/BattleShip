@@ -9,8 +9,5 @@
         <module name="battleship" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="battleship" target="20" />
-    </bytecodeTargetLevel>
   </component>
 </project>

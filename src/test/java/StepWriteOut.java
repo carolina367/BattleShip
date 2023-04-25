@@ -69,23 +69,46 @@ public class StepWriteOut {
         // COME BACK TO THIS!!!! IT IS A GUI THING
     }
 
-//    @Given("user has one ship left to place")
-//    public void user_has_one_ship_left_to_place() {
-//        // ***
-//
-//        throw new io.cucumber.java.PendingException();
-//    }
-//
-//    @Given("user is entering coordinates for a vertical ship of type ")
-//    public void user_is_entering_coordinates_for_a_vertical_ship_of_type() {
-//        // Write code here that turns the phrase above into concrete actions
-//        throw new io.cucumber.java.PendingException();
-//    }
-//    @Then("the next player is prompted to place their ships")
-//    public void the_next_player_is_prompted_to_place_their_ships() {
-//        // Write code here that turns the phrase above into concrete actions
-//        throw new io.cucumber.java.PendingException();
-//    }
+    @Given("user has one ship left to place")
+    public void user_has_one_ship_left_to_place() {
+        Board gameBoard = new Board(10);
+        Ship testShip = new Ship();
+        testShip.setVertical(true);
+        Player player1 = new Player("Player 1");
+        Player player2 = new Player("Player 2");
+
+        int userX;
+        int userY;
+        if (player1.getShipsLeftToPlace() == 1) {
+            System.out.println(player1.getName() + " has one ship left to place");
+        } else if (player2.getShipsLeftToPlace() == 1) {
+            System.out.println(player2.getName() + " has one ship left to place");
+        }
+        System.out.println("Test 'user_has_one_ship_left_to_place' complete");
+
+    }
+
+    @Given("user is entering coordinates for a vertical ship of type ")
+    public void user_is_entering_coordinates_for_a_vertical_ship_of_type() {
+        // Write code here that turns the phrase above into concrete actions
+        assertEquals(testShip.isVertical(), true);
+        System.out.println("Test 'user_is_entering_coordinates_for_a_vertical_ship_of_type' complete");
+        // Write code here that turns the phrase above into concrete actions
+    }
+    @Then("the next player is prompted to place their ships")
+    public void the_next_player_is_prompted_to_place_their_ships() {
+        // Write code here that turns the phrase above into concrete actions
+        Player player1 = new Player("Player 1");
+        Player player2 = new Player("Player 2");
+
+        if (player1.getShipsLeftToPlace() == 0) {
+            System.out.println(player2.getName() + ", it's your turn to place your ships");
+            player1.switchTurns();
+        } else {
+            System.out.println(player1.getName() + ", it's your turn to place your ships");
+        }
+        System.out.print("turns switched");
+    }
 
     @When("a notification appears that ships cannot be placed out of bounds")
     public void a_notification_appears_that_ships_cannot_be_placed_out_of_bounds() {
