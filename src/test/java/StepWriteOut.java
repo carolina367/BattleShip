@@ -115,6 +115,30 @@ public class StepWriteOut {
         assertEquals(true, true);
         // COME BACK TO THIS!!!! IT IS A GUI THING
     }
+    @Given("User has placed their ships on their map")
+    public void User_has_placed_their_ships_on_their_map() {
+        Board gameBoard = new Board(10);
+        Ship testShip = new Ship();
+        int userX=5;
+        int userY=6;
+        testShip.setVertical(true);
+        gameBoard.placeShip(userX, userY, testShip);
+        assertEquals(false, gameBoard.isEmpty());
+    }
+    @Then("User can see the locations of their placed ships on the map")
+    public void User_can_see_the_locations_of_their_placed_ships_on_the_map() {
+        System.out.println("\n The board with ships should appear on board");
+        gameBoard.displayBoard();
+        assertEquals(false, gameBoard.isEmpty());
+        //need to add check to validate the location of the ship for use down the line
+    }
+
+
+
+
+
+
+
 
 
 }
