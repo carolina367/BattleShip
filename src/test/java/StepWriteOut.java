@@ -65,7 +65,7 @@ public class StepWriteOut {
     @Then("a notification appears that ships cannot overlap")
     public void a_notification_appears_that_ships_cannot_overlap() {
         assertTrue(true);
-        // COME BACK TO THIS!!!! IT IS A GUI THING
+        // TODO: COME BACK TO THIS!!!! IT IS A GUI THING
     }
 
     @Given("user has one ship left to place")
@@ -99,6 +99,6 @@ public class StepWriteOut {
     public void a_notification_appears_that_ships_cannot_be_placed_out_of_bounds() {
         boolean outOfBounds = gameBoard.outOfBounds(userX, userY, testShip);
         assertTrue(outOfBounds);
-        // COME BACK TO THIS!!!! IT IS A GUI THING
+        // TODO: COME BACK TO THIS!!!! IT IS A GUI THING
     }
 }

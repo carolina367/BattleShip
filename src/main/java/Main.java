@@ -87,7 +87,6 @@ public class Main {
 
             System.out.println("X Coordinate: " + xCord + "\nY Coordinate: " + yCord + "\nisVertical: " + isVertical + "\nShip Type: " + newShip.getShipType());
 
-            // TODO: Make this to handle the gameBoard number based on the player turn
             // Validate the x and y type exception again
             while (gameBoard1.outOfBounds(xCord, yCord, newShip)) {
                 System.out.println("Invalid coordinates. Please enter valid coordinates and isVertical.");
