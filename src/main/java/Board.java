@@ -3,8 +3,8 @@ import java.lang.IndexOutOfBoundsException;
 
 public class Board {
     private final int size;
-    private Tile[][] gameBoard;
-    private HashMap<String, Integer> shipsLeft;
+    private final Tile[][] gameBoard;
+    private final HashMap<String, Integer> shipsLeft;
 
     public Board(int size) {
         shipsLeft = new HashMap<>();
@@ -139,5 +139,18 @@ public class Board {
 
         System.out.println(divider + "\n" + h_margin);
 
+    }
+
+    public int shipsLeft() {
+        int sumOfShips = 0;
+        for (String i : shipsLeft.keySet()) {
+            System.out.println("Ship Type: " + i + " | Ships left to be placed: " + shipsLeft.get(i));
+            sumOfShips += shipsLeft.get(i);
+        }
+
+        if (sumOfShips == 0) {
+            System.out.println("No ships left!");
+        }
+        return sumOfShips;
     }
 }

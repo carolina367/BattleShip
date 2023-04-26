@@ -52,6 +52,7 @@ public class StepWriteOut {
         testShip.setShipType(ShipType.valueOf(shipType));
         gameBoard.placeShip(userX, userY, testShip);
 //        System.out.println("\n the board already contains a vertical ship of type {string} at coordinates {int} and {int} " + "userX: " + userX + " userY:" + userY);
+
         gameBoard.displayBoard(false);
         assertFalse(gameBoard.isEmpty());
     }
@@ -66,11 +67,13 @@ public class StepWriteOut {
     @Then("a notification appears that ships cannot overlap")
     public void a_notification_appears_that_ships_cannot_overlap() {
         assertTrue(true);
-        // COME BACK TO THIS!!!! IT IS A GUI THING
+        // TODO: COME BACK TO THIS!!!! IT IS A GUI THING
     }
 
     @Given("user has one ship left to place")
     public void user_has_one_ship_left_to_place() {
+
+        //artur
         Board gameBoard = new Board(10);
         Ship testShip = new Ship();
         testShip.setVertical(true);
@@ -83,39 +86,37 @@ public class StepWriteOut {
             System.out.println(player2.getName() + " has one ship left to place");
         }
         System.out.println("Test 'user_has_one_ship_left_to_place' complete");
+ //seb
+        // Make ships
+        testShip.setShipType(ShipType.DESTROYER);
+        Ship carrier = new Ship(true, ShipType.CARRIER);
+        Ship battleship = new Ship(true, ShipType.BATTLESHIP);
+        Ship cruiser1 = new Ship(true, ShipType.CRUISER);
+        Ship cruiser2 = new Ship(true, ShipType.CRUISER);
 
-    }
+        // Place Ships
+        gameBoard.placeShip(0, 0, carrier);
+        gameBoard.placeShip(1, 0, battleship);
+        gameBoard.placeShip(2, 0, cruiser1);
+        gameBoard.placeShip(3, 0, cruiser2);
 
-    @Given("user is entering coordinates for a vertical ship of type ")
-    public void user_is_entering_coordinates_for_a_vertical_ship_of_type() {
-        // Write code here that turns the phrase above into concrete actions
-        assertEquals(testShip.isVertical(), true);
-        System.out.println("Test 'user_is_entering_coordinates_for_a_vertical_ship_of_type' complete");
-        // Write code here that turns the phrase above into concrete actions
+
+        gameBoard.displayBoard();
+
+        // Test
+        assertEquals(1, gameBoard.shipsLeft());
     }
 
     @Then("the next player is prompted to place their ships")
     public void the_next_player_is_prompted_to_place_their_ships() {
-        // Write code here that turns the phrase above into concrete actions
-        Player player1 = new Player("Player 1");
-        Player player2 = new Player("Player 2");
-
-        if (player1.getShipsLeftToPlace() == 0) {
-            System.out.println(player2.getName() + ", it's your turn to place your ships");
-            player1.switchTurns();
-        } else {
-            System.out.println(player1.getName() + ", it's your turn to place your ships");
-        }
-        System.out.print("turns switched");
+        // TODO
+        assertTrue(true);
     }
 
     @When("a notification appears that ships cannot be placed out of bounds")
     public void a_notification_appears_that_ships_cannot_be_placed_out_of_bounds() {
         boolean outOfBounds = gameBoard.outOfBounds(userX, userY, testShip);
         assertTrue(outOfBounds);
-        // COME BACK TO THIS!!!! IT IS A GUI THING
-
+        // TODO: COME BACK TO THIS!!!! IT IS A GUI THING
     }
-
-
 }

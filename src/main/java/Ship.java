@@ -73,6 +73,4 @@ public class Ship {
         }
         this.type = typeDeclared;
     }
-
-
 }
