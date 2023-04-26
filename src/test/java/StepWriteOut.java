@@ -1,9 +1,9 @@
 import static org.junit.Assert.assertEquals;
-
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import static org.junit.Assert.*;
 
 public class StepWriteOut {
     Board gameBoard = new Board(10);
@@ -25,8 +25,17 @@ public class StepWriteOut {
 
     @Given("the board is empty")
     public void the_board_is_empty() {
-        assertEquals(true, gameBoard.isEmpty());
+        assertTrue(gameBoard.isEmpty());
     }
+    
+    //    @Given("random coordinates for a vertical ship")
+//    public void random_coordinates_for_a_vertical_ship() {
+//        userX = ThreadLocalRandom.current().nextInt(0, gameBoard.getSize() - 1);
+//        userY = ThreadLocalRandom.current().nextInt(0, gameBoard.getSize() - testShip.getLength() - 1);
+//        testShip.setVertical(true);
+//        System.out.println("user is entering coordinates for a vertical ship" + "userX:" + userX + " userY:" + userY);
+//    } // TODO: useful in future
+
     @Given("user is entering coordinates {int} {int} for a vertical equals {string} ship of type {string}")
     public void user_is_entering_coordinates_for_a_vertical_equals_true_ship_of_type(Integer x2, Integer y2, String isVertical, String shipType) {
         userX = x2;
@@ -43,8 +52,8 @@ public class StepWriteOut {
     @Then("The ship should appear on board")
     public void the_ship_should_appear_on_board() {
         System.out.println("\n The ship should appear on board @ " + "userX:" + userX + " userY:" + userY);
-        gameBoard.displayBoard();
-        assertEquals(false, gameBoard.isEmpty());
+        gameBoard.displayBoard(false);
+        assertFalse(gameBoard.isEmpty());
         //need to add check to validate the location of the ship for use down the line
     }
 
@@ -56,25 +65,32 @@ public class StepWriteOut {
         testShip.setShipType(ShipType.valueOf(shipType));
         gameBoard.placeShip(userX, userY, testShip);
 //        System.out.println("\n the board already contains a vertical ship of type {string} at coordinates {int} and {int} " + "userX: " + userX + " userY:" + userY);
-        gameBoard.displayBoard();
-        assertEquals(false, gameBoard.isEmpty());
+        gameBoard.displayBoard(false);
+        assertFalse(gameBoard.isEmpty());
     }
 
     @Given("the coordinates for ship overlap with an existing object on board")
     public void the_coordinates_for_ship_overlap_with_an_existing_object_on_board() {
         boolean overlap = gameBoard.overlapping(userX, userY, testShip);
-        assertEquals(true, overlap);
+        assertTrue(overlap);
     }
 
 
     @Then("a notification appears that ships cannot overlap")
     public void a_notification_appears_that_ships_cannot_overlap() {
-        assertEquals(true, true);
+        assertTrue(true);
         // COME BACK TO THIS!!!! IT IS A GUI THING
     }
 
     @Given("user has one ship left to place")
     public void user_has_one_ship_left_to_place() {
+
+        Board gameBoard = new Board(10);
+        Ship testShip = new Ship();
+        testShip.setVertical(true);
+        Player player1 = new Player("Player 1");
+        Player player2 = new Player("Player 2");
+
         if (player1.getShipsLeftToPlace() == 1) {
             System.out.println(player1.getName() + " has one ship left to place");
         } else if (player2.getShipsLeftToPlace() == 1) {
@@ -91,6 +107,7 @@ public class StepWriteOut {
         System.out.println("Test 'user_is_entering_coordinates_for_a_vertical_ship_of_type' complete");
         // Write code here that turns the phrase above into concrete actions
     }
+
     @Then("the next player is prompted to place their ships")
     public void the_next_player_is_prompted_to_place_their_ships() {
         // Write code here that turns the phrase above into concrete actions
@@ -106,8 +123,10 @@ public class StepWriteOut {
 
     @When("a notification appears that ships cannot be placed out of bounds")
     public void a_notification_appears_that_ships_cannot_be_placed_out_of_bounds() {
-        assertEquals(true, true);
+        boolean outOfBounds = gameBoard.outOfBounds(userX, userY, testShip);
+        assertTrue(outOfBounds);
         // COME BACK TO THIS!!!! IT IS A GUI THING
+
     }
     @Given("User has placed their ships on their map")
     public void User_has_placed_their_ships_on_their_map() {

@@ -1,30 +1,43 @@
 public class Tile {
-   private TileTypes type;
-   private String key;
+    private TileType type;
+    private String key;
+    private Ship ship;
 
     public Tile() {
-        type = TileTypes.WATER;
-        key = " W";
+        type = TileType.WATER;
+        key = TileType.WATER.toString();
+        ship = null;
     }
 
     public String getKey() {
         return key;
     }
 
-    public TileTypes getTileType() {
+    public Ship getShip() {
+        return ship;
+    }
+
+    public TileType getTileType() {
         return type;
     }
 
-    public void setTileType(TileTypes typeDeclared) {
-        if (typeDeclared == TileTypes.BOMBED_WATER){this.key = "BW";}
-        else if (typeDeclared == TileTypes.BOMBED_ROCK){this.key = "BR";}
-        else if (typeDeclared == TileTypes.BOMBED_SHIP){this.key = "BS";}
-        else if (typeDeclared == TileTypes.COVERED_SHIP){this.key = "CS";}
-        else if (typeDeclared == TileTypes.COVERED_ROCK){this.key = "CR";}
-        else if (typeDeclared == TileTypes.UNCOVERED_SHIP){this.key = "US";}
-        else if (typeDeclared == TileTypes.UNCOVERED_ROCK){this.key = "UR";}
-        else if (typeDeclared == TileTypes.WATER){this.key = "W";} // there really should never be a need to set something back to water
+    public void setTileType(TileType typeDeclared) {
+        this.key = typeDeclared.toString();
         this.type = typeDeclared;
+    }
+
+    public void setTileType(TileType typeDeclared, Ship ship) {
+        this.key = typeDeclared.toString();
+        this.type = typeDeclared;
+        if (typeDeclared == TileType.COVERED_SHIP) {
+            this.ship = ship;
+        }
+//        if (typeDeclared == TileType.BOMBED_ROCK) { // wil create an interface for obstacle and change ship to that
+//        } else if (typeDeclared == TileType.BOMBED_SHIP) {
+//        } else if (typeDeclared == TileType.COVERED_ROCK) {
+//        } else if (typeDeclared == TileType.UNCOVERED_SHIP) {
+//        } else if (typeDeclared == TileType.UNCOVERED_ROCK) {
+//        } // there really should never be a need to set tile back to water
 
     }
     public void bombing(int x, int y){

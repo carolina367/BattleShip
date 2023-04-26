@@ -1,7 +1,17 @@
 public enum ShipType{
 
-    CARRIER,
-    BATTLESHIP,
-    CRUISER,
-    DESTROYER,
+    CARRIER("cs"),
+    BATTLESHIP("bs"),
+    CRUISER("cr"),
+    DESTROYER("de");
+
+    private String extendedName;
+
+    ShipType(String extendedName) {
+        this.extendedName = extendedName;
+    }
+
+    public String toString() {
+        return extendedName;
+    }
 }

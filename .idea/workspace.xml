@@ -4,21 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="989c97fc-02f0-4c31-a9f2-d561fc80435d" name="Changes" comment="Added foundational cucumber tests" />
-    <list id="7a444fcc-1707-4010-8812-5a3f1f4a024b" name="Changes by Sebastian" comment="" />
-    <list id="0bceb6e0-1bfa-4812-a569-8c005913ab43" name="Changes by Sebastian Oberg" comment="" />
+    <list default="true" id="3827aeef-2b64-436f-9985-b6799b292925" name="Changes" comment="enhanced TileTypes enum">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ShipType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ShipType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TileTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/TileType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/StepWriteOut.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/StepWriteOut.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Enum" />
-        <option value="Class" />
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -32,124 +29,63 @@
         <option name="useMavenConfig" value="true" />
       </MavenGeneralSettings>
     </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="workspaceImportEnabled" value="true" />
+      </MavenImportingSettings>
+    </option>
   </component>
-  <component name="ProjectId" id="2OdftB8CHWHHbuUlCbbsgNkVrx7" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="2OxLHkR81FV2oOW7FuBNMNNIt9T" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="" />
-    </key>
-  </component>
-  <component name="RunManager" selected="JUnit.CucumberTest">
-    <configuration name="All Features in: test" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
-      <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test" />
-      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+}]]></component>
+  <component name="RunManager">
+    <configuration name="java in battleship" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="battleship" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="All Features in: test" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="io.cucumber.core.cli.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Feature: featureTest" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
-      <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/featureTest.feature" />
-      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
-      <module name="battleship" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: featureTest" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="io.cucumber.core.cli.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="All in battleship" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="battleship" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CucumberTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="battleship" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="CucumberTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CucumberTest" />
-        <item itemvalue="Cucumber Java.Feature: featureTest" />
-        <item itemvalue="JUnit.All in battleship" />
-        <item itemvalue="Cucumber Java.All Features in: test" />
+        <item itemvalue="JUnit.java in battleship" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="989c97fc-02f0-4c31-a9f2-d561fc80435d" name="Changes" comment="" />
-      <created>1681895591103</created>
+      <changelist id="3827aeef-2b64-436f-9985-b6799b292925" name="Changes" comment="" />
+      <created>1682497202277</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1681895591103</updated>
-      <workItem from="1681895592363" duration="920000" />
-      <workItem from="1681897763545" duration="49000" />
-      <workItem from="1681897924983" duration="92000" />
-      <workItem from="1681898033430" duration="12258000" />
-      <workItem from="1682258298657" duration="1016000" />
-      <workItem from="1682259378940" duration="5399000" />
-      <workItem from="1682264797987" duration="5592000" />
-      <workItem from="1682331871703" duration="1435000" />
-      <workItem from="1682347489554" duration="365000" />
-      <workItem from="1682347916417" duration="17116000" />
+      <updated>1682497202277</updated>
+      <workItem from="1682497205644" duration="19051000" />
     </task>
-    <task id="LOCAL-00001" summary="Added foundational cucumber tests">
-      <created>1682366612757</created>
+    <task id="LOCAL-00001" summary="enhanced TileTypes enum">
+      <created>1682510681320</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1682366612757</updated>
+      <updated>1682510681320</updated>
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
@@ -158,8 +94,7 @@
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Added foundational cucumber tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added foundational cucumber tests" />
+    <MESSAGE value="enhanced TileTypes enum" />
+    <option name="LAST_COMMIT_MESSAGE" value="enhanced TileTypes enum" />
   </component>
 </project>
