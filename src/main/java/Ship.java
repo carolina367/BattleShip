@@ -5,7 +5,7 @@ public class Ship {
     private boolean isSunk;
     private ShipType type;
 
-    public Ship(){
+    public Ship() {
         isSunk = false;
         numberOfHitsGot = 0;
     }
@@ -66,7 +66,4 @@ public class Ship {
         else if (typeDeclared == ShipType.DESTROYER){length = 2;}
         this.type = typeDeclared;
     }
-
-
-
 }
