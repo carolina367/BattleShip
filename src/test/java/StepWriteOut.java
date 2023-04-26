@@ -149,6 +149,18 @@ public class StepWriteOut {
         System.out.print("Board of Player 2");
         gameBoard2.displayBoard();
     }
+    @Given("Player1 just bombed location at coordinates {int} and {int}")
+    public void Player1_just_bombed_location(Integer x, Integer y) {
+
+    }
+    @And("Its player1s turn again")
+    public void Its_player1s_turn_again() {
+
+    }
+    @Then("Player1 should see the locations of their previous shots on the game board")
+    public void Player1_should_see_the_locations_of_their_previous_shots_on_the_game_board() {
+
+    }
 
 
 

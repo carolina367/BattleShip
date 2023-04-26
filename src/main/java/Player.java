@@ -12,6 +12,7 @@ public class Player {
             whoseTurnIsIt = 1;
         }
     }
+
     public int getWhoseTurnIsIt(){return whoseTurnIsIt;}
     private int shipsLeftToPlace=10;
     private int conqueredEnemyShips = 0;
