@@ -1,11 +1,11 @@
 public class Tile {
-    private TileTypes type;
+    private TileType type;
     private String key;
     private Ship ship;
 
     public Tile() {
-        type = TileTypes.WATER;
-        key = TileTypes.WATER.toString();
+        type = TileType.WATER;
+        key = TileType.WATER.toString();
         ship = null;
     }
 
@@ -17,27 +17,27 @@ public class Tile {
         return ship;
     }
 
-    public TileTypes getTileType() {
+    public TileType getTileType() {
         return type;
     }
 
-    public void setTileType(TileTypes typeDeclared) {
+    public void setTileType(TileType typeDeclared) {
         this.key = typeDeclared.toString();
         this.type = typeDeclared;
-
     }
 
-    public void setTileType(TileTypes typeDeclared, Ship ship) {
+    public void setTileType(TileType typeDeclared, Ship ship) {
         this.key = typeDeclared.toString();
         this.type = typeDeclared;
-        if (typeDeclared == TileTypes.BOMBED_ROCK) { // wil create an interface for obstacle and change ship to that
-        } else if (typeDeclared == TileTypes.BOMBED_SHIP) {
-        } else if (typeDeclared == TileTypes.COVERED_SHIP) {
+        if (typeDeclared == TileType.COVERED_SHIP) {
             this.ship = ship;
-        } else if (typeDeclared == TileTypes.COVERED_ROCK) {
-        } else if (typeDeclared == TileTypes.UNCOVERED_SHIP) {
-        } else if (typeDeclared == TileTypes.UNCOVERED_ROCK) {
-        } // there really should never be a need to set tile back to water
+        }
+//        if (typeDeclared == TileType.BOMBED_ROCK) { // wil create an interface for obstacle and change ship to that
+//        } else if (typeDeclared == TileType.BOMBED_SHIP) {
+//        } else if (typeDeclared == TileType.COVERED_ROCK) {
+//        } else if (typeDeclared == TileType.UNCOVERED_SHIP) {
+//        } else if (typeDeclared == TileType.UNCOVERED_ROCK) {
+//        } // there really should never be a need to set tile back to water
 
     }
 }

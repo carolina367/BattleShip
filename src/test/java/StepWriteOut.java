@@ -39,7 +39,7 @@ public class StepWriteOut {
     @Then("The ship should appear on board")
     public void the_ship_should_appear_on_board() {
         System.out.println("\n The ship should appear on board @ " + "userX:" + userX + " userY:" + userY);
-        gameBoard.displayBoard();
+        gameBoard.displayBoard(false);
         assertFalse(gameBoard.isEmpty());
         //need to add check to validate the location of the ship for use down the line
     }
@@ -52,7 +52,7 @@ public class StepWriteOut {
         testShip.setShipType(ShipType.valueOf(shipType));
         gameBoard.placeShip(userX, userY, testShip);
 //        System.out.println("\n the board already contains a vertical ship of type {string} at coordinates {int} and {int} " + "userX: " + userX + " userY:" + userY);
-        gameBoard.displayBoard();
+        gameBoard.displayBoard(false);
         assertFalse(gameBoard.isEmpty());
     }
 

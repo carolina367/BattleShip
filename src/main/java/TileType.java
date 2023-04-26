@@ -1,4 +1,4 @@
-public enum TileTypes {
+public enum TileType {
     WATER(" W"), //0
     BOMBED_WATER("BW"), //1
     BOMBED_ROCK("BR"), //2
@@ -10,12 +10,11 @@ public enum TileTypes {
 
     private String extendedName;
 
-    TileTypes(String extendedName) {
+    TileType(String extendedName) {
         this.extendedName = extendedName;
     }
 
     public String toString() {
         return extendedName;
     }
-
 }
