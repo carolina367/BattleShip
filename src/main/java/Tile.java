@@ -1,14 +1,20 @@
 public class Tile {
-   private TileTypes type;
-   private String key;
+    private TileTypes type;
+    private String key;
+    private Ship ship;
 
     public Tile() {
         type = TileTypes.WATER;
-        key = " W";
+        key = TileTypes.WATER.toString();
+        ship = null;
     }
 
     public String getKey() {
         return key;
+    }
+
+    public Ship getShip() {
+        return ship;
     }
 
     public TileTypes getTileType() {
@@ -16,15 +22,22 @@ public class Tile {
     }
 
     public void setTileType(TileTypes typeDeclared) {
-        if (typeDeclared == TileTypes.BOMBED_WATER){this.key = "BW";}
-        else if (typeDeclared == TileTypes.BOMBED_ROCK){this.key = "BR";}
-        else if (typeDeclared == TileTypes.BOMBED_SHIP){this.key = "BS";}
-        else if (typeDeclared == TileTypes.COVERED_SHIP){this.key = "CS";}
-        else if (typeDeclared == TileTypes.COVERED_ROCK){this.key = "CR";}
-        else if (typeDeclared == TileTypes.UNCOVERED_SHIP){this.key = "US";}
-        else if (typeDeclared == TileTypes.UNCOVERED_ROCK){this.key = "UR";}
-        else if (typeDeclared == TileTypes.WATER){this.key = "W";} // there really should never be a need to set something back to water
+        this.key = typeDeclared.toString();
         this.type = typeDeclared;
+
+    }
+
+    public void setTileType(TileTypes typeDeclared, Ship ship) {
+        this.key = typeDeclared.toString();
+        this.type = typeDeclared;
+        if (typeDeclared == TileTypes.BOMBED_ROCK) { // wil create an interface for obstacle and change ship to that
+        } else if (typeDeclared == TileTypes.BOMBED_SHIP) {
+        } else if (typeDeclared == TileTypes.COVERED_SHIP) {
+            this.ship = ship;
+        } else if (typeDeclared == TileTypes.COVERED_ROCK) {
+        } else if (typeDeclared == TileTypes.UNCOVERED_SHIP) {
+        } else if (typeDeclared == TileTypes.UNCOVERED_ROCK) {
+        } // there really should never be a need to set tile back to water
 
     }
 }

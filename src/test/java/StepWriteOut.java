@@ -3,6 +3,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import static org.junit.Assert.*;
+
 public class StepWriteOut {
     Board gameBoard = new Board(10);
     Ship testShip = new Ship();
@@ -15,7 +16,7 @@ public class StepWriteOut {
         assertTrue(gameBoard.isEmpty());
     }
 
-//    @Given("random coordinates for a vertical ship")
+    //    @Given("random coordinates for a vertical ship")
 //    public void random_coordinates_for_a_vertical_ship() {
 //        userX = ThreadLocalRandom.current().nextInt(0, gameBoard.getSize() - 1);
 //        userY = ThreadLocalRandom.current().nextInt(0, gameBoard.getSize() - testShip.getLength() - 1);
@@ -52,7 +53,7 @@ public class StepWriteOut {
         gameBoard.placeShip(userX, userY, testShip);
 //        System.out.println("\n the board already contains a vertical ship of type {string} at coordinates {int} and {int} " + "userX: " + userX + " userY:" + userY);
         gameBoard.displayBoard();
-        assertFalse( gameBoard.isEmpty());
+        assertFalse(gameBoard.isEmpty());
     }
 
     @Given("the coordinates for ship overlap with an existing object on board")
@@ -76,8 +77,6 @@ public class StepWriteOut {
         Player player1 = new Player("Player 1");
         Player player2 = new Player("Player 2");
 
-        int userX;
-        int userY;
         if (player1.getShipsLeftToPlace() == 1) {
             System.out.println(player1.getName() + " has one ship left to place");
         } else if (player2.getShipsLeftToPlace() == 1) {
@@ -94,6 +93,7 @@ public class StepWriteOut {
         System.out.println("Test 'user_is_entering_coordinates_for_a_vertical_ship_of_type' complete");
         // Write code here that turns the phrase above into concrete actions
     }
+
     @Then("the next player is prompted to place their ships")
     public void the_next_player_is_prompted_to_place_their_ships() {
         // Write code here that turns the phrase above into concrete actions
