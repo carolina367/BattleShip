@@ -2,6 +2,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+
 import static org.junit.Assert.*;
 
 public class StepWriteOut {
@@ -16,7 +17,7 @@ public class StepWriteOut {
         assertTrue(gameBoard.isEmpty());
     }
 
-    //    @Given("random coordinates for a vertical ship")
+//    @Given("random coordinates for a vertical ship")
 //    public void random_coordinates_for_a_vertical_ship() {
 //        userX = ThreadLocalRandom.current().nextInt(0, gameBoard.getSize() - 1);
 //        userY = ThreadLocalRandom.current().nextInt(0, gameBoard.getSize() - testShip.getLength() - 1);
@@ -59,7 +60,7 @@ public class StepWriteOut {
 
     @Given("the coordinates for ship overlap with an existing object on board")
     public void the_coordinates_for_ship_overlap_with_an_existing_object_on_board() {
-        boolean overlap = gameBoard.overlapping(userX, userY, testShip);
+        boolean overlap = gameBoard.overlapping(userX, userY, testShip);  // TODO: err in how the tiles are stored on board
         assertTrue(overlap);
     }
 
@@ -73,19 +74,19 @@ public class StepWriteOut {
     @Given("user has one ship left to place")
     public void user_has_one_ship_left_to_place() {
 
-        //artur
-        Board gameBoard = new Board(10);
-        Ship testShip = new Ship();
-        testShip.setVertical(true);
-        Player player1 = new Player("Player 1");
-        Player player2 = new Player("Player 2");
-
-        if (player1.getShipsLeftToPlace() == 1) {
-            System.out.println(player1.getName() + " has one ship left to place");
-        } else if (player2.getShipsLeftToPlace() == 1) {
-            System.out.println(player2.getName() + " has one ship left to place");
-        }
-        System.out.println("Test 'user_has_one_ship_left_to_place' complete");
+//        //artur
+//        Board gameBoard = new Board(10);
+//        Ship testShip = new Ship();
+//        testShip.setVertical(true);
+//        Player player1 = new Player("Player 1");
+//        Player player2 = new Player("Player 2");
+//
+//        if (player1.getShipsLeftToPlace() == 1) {
+//            System.out.println(player1.getName() + " has one ship left to place");
+//        } else if (player2.getShipsLeftToPlace() == 1) {
+//            System.out.println(player2.getName() + " has one ship left to place");
+//        }
+//        System.out.println("Test 'user_has_one_ship_left_to_place' complete");
  //seb
         // Make ships
         testShip.setShipType(ShipType.DESTROYER);
@@ -101,7 +102,7 @@ public class StepWriteOut {
         gameBoard.placeShip(3, 0, cruiser2);
 
 
-        gameBoard.displayBoard();
+        gameBoard.displayBoard(false);
 
         // Test
         assertEquals(1, gameBoard.shipsLeft());

@@ -21,23 +21,21 @@ public class Tile {
         return type;
     }
 
-    public void setTileType(TileType typeDeclared) {
-        this.key = typeDeclared.toString();
-        this.type = typeDeclared;
+    public void setTileType(TileType typeDeclared) { // for transitioning tile
+        if (typeDeclared != TileType.COVERED_SHIP && typeDeclared != TileType.COVERED_ROCK) {
+            this.key = typeDeclared.toString();
+            this.type = typeDeclared;
+        } else {
+            System.out.println("tried to use SetTileType() on CS or BS without giving function a ship");
+        }
     }
 
-    public void setTileType(TileType typeDeclared, Ship ship) {
-        this.key = typeDeclared.toString();
-        this.type = typeDeclared;
-        if (typeDeclared == TileType.COVERED_SHIP) {
+    public void setTileType(TileType typeDeclared, Ship ship) {  // for initializing a tile with obstacle or ship
+        if (typeDeclared == TileType.COVERED_SHIP || typeDeclared == TileType.COVERED_ROCK) {
             this.ship = ship;
+//          this.obstacle = rock; // TODO: create an interface for obstacle and change ship to that
+            this.key = typeDeclared.toString();
+            this.type = typeDeclared;
         }
-//        if (typeDeclared == TileType.BOMBED_ROCK) { // wil create an interface for obstacle and change ship to that
-//        } else if (typeDeclared == TileType.BOMBED_SHIP) {
-//        } else if (typeDeclared == TileType.COVERED_ROCK) {
-//        } else if (typeDeclared == TileType.UNCOVERED_SHIP) {
-//        } else if (typeDeclared == TileType.UNCOVERED_ROCK) {
-//        } // there really should never be a need to set tile back to water
-
     }
 }

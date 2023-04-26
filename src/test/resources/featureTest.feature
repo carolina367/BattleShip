@@ -13,7 +13,7 @@ Feature: Placing ships
       | 6  | 6  | "CRUISER"   | "true"     |
 
   @tag
-  Scenario Outline: Overlapping ships - overlappingException
+  Scenario Outline: Overlapping ships
     Given the board already contains a vertical ship of type <shipType> at coordinates <x> and <y>
     And user is entering coordinates <x2> <y2> for a vertical equals <isVertical> ship of type <shipType>
     And the coordinates for ship overlap with an existing object on board
@@ -26,7 +26,7 @@ Feature: Placing ships
       | 3 | 6 | 3  | 7  | "CRUISER"   | "false"    |
 
   @tag
-  Scenario Outline: Place ship out of bounds - OutOfBoundsException
+  Scenario Outline: Place ship out of bounds
     Given the board is empty
     And user is entering coordinates <x2> <y2> for a vertical equals <isVertical> ship of type <shipType>
     When the user tries to place the ship
@@ -45,7 +45,7 @@ Feature: Placing ships
     Then the next player is prompted to place their ships
 
     Examples:
-      | x2 | y2 | shipType     | isVertical |
+      | x2 | y2 | shipType    | isVertical |
       | 5  | 0  | "DESTROYER" | "true"     |
 
 

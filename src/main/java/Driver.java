@@ -1,49 +1,39 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Main {
+public class Driver {
     public static int getValidCoordinate(Scanner sc, Board board, String str) {
-        boolean coordinateGiven = false;
+//        boolean coordinateGiven = false;
         int coordinate = 0;
 
-        while (!coordinateGiven) {
+        while (true) {
             System.out.println("Enter " + str + " coordinate: ");
             try {
-                coordinate = sc.nextInt();
-                if ((coordinate >= board.getSize()) || (coordinate < 0)) {
-//                    throw new IndexOutOfBoundsException("OUT OF BOUNDS: Coordinate " + coordinate);
-                    System.out.println("Out of bounds! Enter again.");
-                    continue;
+                coordinate = sc.nextInt(); // if invalid it will throw an exception
+                if (coordinate < board.getSize() || coordinate >= 0) {
+                    return coordinate; // if correct it'll short the loop
                 }
-                coordinateGiven = true;
+                System.out.println("OUT OF BOUNDS: Coordinate" + coordinate + ". Enter again.");
             } catch (InputMismatchException e) {
-                System.out.println("This input is not an integer - Please try again!");
-                // consume the invalid input and clear the input buffer
-                sc.next();
+                System.out.println("This input is not a boolean - Please try again!");
+                sc.next(); // consume the invalid input and clear the input buffer
             }
-//            catch (IndexOutOfBoundsException e) {
-//                System.out.println("Error: " + e);
-//            }
         }
-        return coordinate;
     }
 
     public static boolean getValidBooleanInput(Scanner sc) {
-        boolean validInputGiven = false;
-        boolean input = false;
+        boolean input;
 
-        while (!validInputGiven) {
+        while (true) {
             System.out.println("Is the ship vertical? Enter 'true' or 'false': ");
             try {
-                input = sc.nextBoolean();
-                validInputGiven = true;
+                input = sc.nextBoolean(); // if invalid it will throw an exception
+                return input;
             } catch (InputMismatchException e) {
                 System.out.println("This input is not a boolean - Please try again!");
-                // consume the invalid input and clear the input buffer
-                sc.next();
+                sc.next(); // consume the invalid input and clear the input buffer
             }
         }
-        return input;
     }
 
     public static void main(String[] args) {
@@ -63,7 +53,7 @@ public class Main {
             System.out.println("Enter Ship Type: ");
             shipInput = sc.nextLine();
 
-            // Standardize string
+            // Standardize string - rm non-alphabetic chars
             shipInput = shipInput.replaceAll("[^A-Za-z]", "");
 
             // For loop through ship types and compare

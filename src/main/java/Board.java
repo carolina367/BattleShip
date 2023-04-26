@@ -33,7 +33,6 @@ public class Board {
     }
 
     public void placeShip(int x, int y, Ship ship) {
-//        try {
         if (!overlapping(x, y, ship) && !outOfBounds(x, y, ship)) {
             for (int i = 0; i < ship.getLength(); i++) { //placing the ship on every coordinate
                 if (ship.isVertical()) {
@@ -54,9 +53,6 @@ public class Board {
                 System.out.println("No ships left!");
             }
         }
-//        } catch (Exception e) {
-//            System.out.println("Error: " + e);
-//        }
     }
 
     public boolean outOfBounds(int x, int y, Ship ship) {
