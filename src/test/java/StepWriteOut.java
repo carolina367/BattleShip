@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -10,19 +11,22 @@ public class StepWriteOut {
 
     int userX;
     int userY;
+    Ship testShip1 = new Ship();
+    Ship testShip2 = new Ship();
+    Board gameBoard1 = new Board(10);
+    Board gameBoard2 = new Board(10);
+    int user1X=1;
+    int user1Y=1;
+    int user2X=5;
+    int user2Y=6;
+    Player player1 = new Player("Player 1");
+    Player player2 = new Player("Player 2");
+
 
     @Given("the board is empty")
     public void the_board_is_empty() {
         assertEquals(true, gameBoard.isEmpty());
     }
-
-//    @Given("random coordinates for a vertical ship")
-//    public void random_coordinates_for_a_vertical_ship() {
-//        userX = ThreadLocalRandom.current().nextInt(0, gameBoard.getSize() - 1);
-//        userY = ThreadLocalRandom.current().nextInt(0, gameBoard.getSize() - testShip.getLength() - 1);
-//        testShip.setVertical(true);
-//        System.out.println("user is entering coordinates for a vertical ship" + "userX:" + userX + " userY:" + userY);
-//    }
     @Given("user is entering coordinates {int} {int} for a vertical equals {string} ship of type {string}")
     public void user_is_entering_coordinates_for_a_vertical_equals_true_ship_of_type(Integer x2, Integer y2, String isVertical, String shipType) {
         userX = x2;
@@ -71,14 +75,6 @@ public class StepWriteOut {
 
     @Given("user has one ship left to place")
     public void user_has_one_ship_left_to_place() {
-        Board gameBoard = new Board(10);
-        Ship testShip = new Ship();
-        testShip.setVertical(true);
-        Player player1 = new Player("Player 1");
-        Player player2 = new Player("Player 2");
-
-        int userX;
-        int userY;
         if (player1.getShipsLeftToPlace() == 1) {
             System.out.println(player1.getName() + " has one ship left to place");
         } else if (player2.getShipsLeftToPlace() == 1) {
@@ -98,8 +94,6 @@ public class StepWriteOut {
     @Then("the next player is prompted to place their ships")
     public void the_next_player_is_prompted_to_place_their_ships() {
         // Write code here that turns the phrase above into concrete actions
-        Player player1 = new Player("Player 1");
-        Player player2 = new Player("Player 2");
 
         if (player1.getShipsLeftToPlace() == 0) {
             System.out.println(player2.getName() + ", it's your turn to place your ships");
@@ -132,6 +126,31 @@ public class StepWriteOut {
         assertEquals(false, gameBoard.isEmpty());
         //need to add check to validate the location of the ship for use down the line
     }
+    @Given("Players are placing ships on their boards")
+    public void Users_are_placing_ships_on_their_board() {
+        testShip1.setVertical(true);
+        testShip2.setVertical(true);
+        System.out.print("Ship, board and coordinates declared, placing ships ready");
+    }
+    @When("I player1 place a ship on my private board")
+    public void I_player1_place_a_ship_on_my_private_board() {
+        gameBoard1.placeShip(user1X, user1Y, testShip1);
+        System.out.print("Player 1 has placed their ship");
+    }
+    @And("Opponent player2 places their ships on their board")
+    public void opponent_player2_places_their_ships_on_their_board(){
+        gameBoard2.placeShip(user2X, user2Y, testShip2);
+        System.out.print("Player 2 has placed their ship");
+    }
+    @Then("My ships are only visible for me and my foes ships to them")
+    public void My_ships_are_only_visible_for_me_and_my_foes_ships_to_them() {
+        System.out.print("Board of Player 1");
+        gameBoard1.displayBoard();
+        System.out.print("Board of Player 2");
+        gameBoard2.displayBoard();
+    }
+
+
 
 
 
