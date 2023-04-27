@@ -10,7 +10,7 @@ public class StepWriteOut {
     Ship testShip = new Ship();
 
     int userX;
-    int userY;
+    char userY;
 
     @Given("the board is empty")
     public void the_board_is_empty() {
@@ -24,10 +24,11 @@ public class StepWriteOut {
 //        testShip.setVertical(true);
 //        System.out.println("user is entering coordinates for a vertical ship" + "userX:" + userX + " userY:" + userY);
 //    }
-    @Given("user is entering coordinates {int} {int} for a vertical equals {string} ship of type {string}")
-    public void user_is_entering_coordinates_for_a_vertical_equals_true_ship_of_type(Integer x2, Integer y2, String isVertical, String shipType) {
+    @Given("user is entering coordinates {int} {char} for a vertical equals {string} ship of type {string}")
+    public void user_is_entering_coordinates_for_a_vertical_equals_true_ship_of_type(Integer x2, char y2, String isVertical, String shipType) {
         userX = x2;
         userY = y2;
+        boolean test = Boolean.parseBoolean(isVertical);
         testShip.setVertical(Boolean.parseBoolean(isVertical));
         testShip.setShipType(ShipType.valueOf(shipType));
     }
@@ -45,15 +46,14 @@ public class StepWriteOut {
         //need to add check to validate the location of the ship for use down the line
     }
 
-    @Given("the board already contains a vertical ship of type {string} at coordinates {int} and {int}")
-    public void the_board_already_contains_a_vertical_ship_of_type_string_at_coordinates_int_and_int(String shipType, Integer x, Integer y) {
+    @Given("the board already contains a vertical ship of type {string} at coordinates {int} and {char}")
+    public void the_board_already_contains_a_vertical_ship_of_type_string_at_coordinates_int_and_int(String shipType, Integer x, char y) {
         userX = x;
         userY = y;
         testShip.setVertical(true);
         testShip.setShipType(ShipType.valueOf(shipType));
         gameBoard.placeShip(userX, userY, testShip);
-//        System.out.println("\n the board already contains a vertical ship of type {string} at coordinates {int} and {int} " + "userX: " + userX + " userY:" + userY);
-
+        System.out.println("\n The ship should appear on board @ " + "userX:" + userX + " userY:" + userY);
         gameBoard.displayBoard(false);
         assertFalse(gameBoard.isEmpty());
     }
@@ -101,7 +101,7 @@ public class StepWriteOut {
         gameBoard.placeShip(2, 0, cruiser1);
         gameBoard.placeShip(3, 0, cruiser2);
 
-
+        System.out.println("\n The ship should appear on board @ " + "userX:" + userX + " userY:" + userY);
         gameBoard.displayBoard(false);
 
         // Test

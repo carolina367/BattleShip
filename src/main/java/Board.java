@@ -36,9 +36,9 @@ public class Board {
         if (!overlapping(x, y, ship) && !outOfBounds(x, y, ship)) {
             for (int i = 0; i < ship.getLength(); i++) { //placing the ship on every coordinate
                 if (ship.isVertical()) {
-                    gameBoard[x][y + i].setTileType(TileType.COVERED_SHIP, ship);
+                    gameBoard[y][x + i].setTileType(TileType.COVERED_SHIP, ship);
                 } else {
-                    gameBoard[x + i][y].setTileType(TileType.COVERED_SHIP, ship);
+                    gameBoard[y + i][x].setTileType(TileType.COVERED_SHIP, ship);
                 }
             }
             shipsLeft.put(ship.getShipType().name(), shipsLeft.get(ship.getShipType().name()) - 1);
@@ -69,9 +69,9 @@ public class Board {
             if (y + i >= size || x + i >= size) {
                 break;
             }
-            if (ship.isVertical() && gameBoard[x][y + i].getTileType() != TileType.WATER) {
+            if (ship.isVertical() && gameBoard[y][x + i].getTileType() != TileType.WATER) {
                 return true; // ships are overlapping
-            } else if (gameBoard[x + i][y].getTileType() != TileType.WATER) {
+            } else if (gameBoard[y + i][x].getTileType() != TileType.WATER) {
                 return true; // ships are overlapping
             }
         }
@@ -81,7 +81,7 @@ public class Board {
     public boolean isEmpty() {
         for (int x = 0; x < size - 1; x++) {
             for (int y = 0; y < size - 1; y++) {
-                if (gameBoard[x][y].getTileType() != TileType.WATER) {
+                if (gameBoard[y][x].getTileType() != TileType.WATER) {
                     return false;
                 }
             }
@@ -105,12 +105,12 @@ public class Board {
             }
         }
 
-        System.out.println(h_margin + "\n" + divider);
+        System.out.println(h_margin + "\n" + divider + "X: num, Y: char");
 
         int counter = 0;
 
         for (int x = 0; x < size; x++) {
-            System.out.print(counter + " | "); // vertical margin
+            System.out.print((char) ('A' + counter) + " | "); // vertical margin
             for (int y = 0; y < size; y++) {
                 if (!opponentView) { // player's personal view
                     if (gameBoard[y][x].getShip() != null) { // show what ship type

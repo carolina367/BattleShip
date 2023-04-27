@@ -3,32 +3,41 @@ import java.util.Scanner;
 
 public class Driver {
     public static int getValidCoordinate(Scanner sc, Board board, String str) {
-//        boolean coordinateGiven = false;
         int coordinate = 0;
-
         while (true) {
             System.out.println("Enter " + str + " coordinate: ");
             try {
-                coordinate = sc.nextInt(); // if invalid it will throw an exception
-                if (coordinate < board.getSize() || coordinate >= 0) {
+                String errMessage = "OUT OF BOUNDS";
+                if (str.contains("Y")) {
+                    coordinate = Character.toUpperCase(sc.next().charAt(0)) - 'A'; // turn char to upper and then to int
+                    errMessage += " on Coordinate " + str.charAt(0) + ":" + (char) ('A' + coordinate) + ". Enter again.";
+                } else {
+                    coordinate = sc.nextInt(); // if invalid it will throw an exception
+                    errMessage += " on Coordinate " + str.charAt(0) + ": " + coordinate + ". Enter again.";
+                }
+
+                if (coordinate < board.getSize() && coordinate >= 0) {
                     return coordinate; // if correct it'll short the loop
                 }
-                System.out.println("OUT OF BOUNDS: Coordinate" + coordinate + ". Enter again.");
+                System.out.println(errMessage);
             } catch (InputMismatchException e) {
-                System.out.println("This input is not a boolean - Please try again!");
+                System.out.println("This input is not of the correct type - Please try again!");
                 sc.next(); // consume the invalid input and clear the input buffer
             }
         }
     }
 
     public static boolean getValidBooleanInput(Scanner sc) {
-        boolean input;
+        char input;
 
         while (true) {
             System.out.println("Is the ship vertical? Enter 'true' or 'false': ");
             try {
-                input = sc.nextBoolean(); // if invalid it will throw an exception
-                return input;
+                input = Character.toUpperCase(sc.next().charAt(0)); // if invalid it will throw an exception
+                if(input == 'T' || input == 'F') {
+                    return true;
+                }
+                System.out.println("This input is not a boolean - Please try again!");
             } catch (InputMismatchException e) {
                 System.out.println("This input is not a boolean - Please try again!");
                 sc.next(); // consume the invalid input and clear the input buffer
@@ -40,8 +49,8 @@ public class Driver {
         Scanner sc = new Scanner(System.in);
         Board gameBoard1 = new Board(10);
         Board gameBoard2 = new Board(10);
-        int xCord = getValidCoordinate(sc, gameBoard1, "X");
-        int yCord = getValidCoordinate(sc, gameBoard1, "Y");
+        int xCord = getValidCoordinate(sc, gameBoard1, "X (as num)");
+        int yCord = getValidCoordinate(sc, gameBoard1, "Y (as char)");
         boolean isVertical = getValidBooleanInput(sc);
 
         // consume any leftover newline character
@@ -75,13 +84,13 @@ public class Driver {
                 continue;
             }
 
-            System.out.println("X Coordinate: " + xCord + "\nY Coordinate: " + yCord + "\nisVertical: " + isVertical + "\nShip Type: " + newShip.getShipType());
+            System.out.println("X Coordinate: " + xCord + "\nY Coordinate: " + yCord + "\nisVertical: " + isVertical + "\nShip Type: " + newShip.getShipType().name());
 
             // Validate the x and y type exception again
             while (gameBoard1.outOfBounds(xCord, yCord, newShip)) {
                 System.out.println("Invalid coordinates. Please enter valid coordinates and isVertical.");
-                xCord = getValidCoordinate(sc, gameBoard1, "X");
-                yCord = getValidCoordinate(sc, gameBoard1, "Y");
+                xCord = getValidCoordinate(sc, gameBoard1, "X as num");
+                yCord = getValidCoordinate(sc, gameBoard1, "Y as char");
                 isVertical = getValidBooleanInput(sc);
             }
 

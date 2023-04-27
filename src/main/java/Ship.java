@@ -46,7 +46,7 @@ public class Ship {
     }
 
     public void setVertical(boolean vertical) {
-        vertical = vertical;
+        this.vertical = vertical;
     }
 
     public boolean getIsSunk() {

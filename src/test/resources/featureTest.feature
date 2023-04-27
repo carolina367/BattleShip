@@ -9,8 +9,8 @@ Feature: Placing ships
     Then The ship should appear on board
     Examples:
       | x2 | y2 | shipType    | isVertical |
-      | 0  | 1  | "DESTROYER" | "false"    |
-      | 6  | 6  | "CRUISER"   | "true"     |
+      | 0  | B  | "DESTROYER" | "true"     |
+      | 4  | G  | "CRUISER"   | "true"     |
 
   @tag
   Scenario Outline: Overlapping ships
@@ -22,8 +22,8 @@ Feature: Placing ships
 
     Examples:
       | x | y | x2 | y2 | shipType    | isVertical |
-      | 2 | 3 | 2  | 3  | "DESTROYER" | "true"     |
-      | 3 | 6 | 3  | 7  | "CRUISER"   | "false"    |
+      | 2 | A | 2  | A  | "DESTROYER" | "true"     |
+      | 3 | H | 3  | I  | "CRUISER"   | "false"    |
 
   @tag
   Scenario Outline: Place ship out of bounds

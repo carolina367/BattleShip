@@ -4,9 +4,9 @@ public class Tile {
     private Ship ship;
 
     public Tile() {
-        type = TileType.WATER;
-        key = TileType.WATER.toString();
-        ship = null;
+        this.type = TileType.WATER;
+        this.key = TileType.WATER.toString();
+        this.ship = null;
     }
 
     public String getKey() {
