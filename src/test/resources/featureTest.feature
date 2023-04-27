@@ -9,8 +9,8 @@ Feature: Placing ships
     Then The ship should appear on board
     Examples:
       | x2 | y2 | shipType    | isVertical |
-      | 0  | B  | "DESTROYER" | "true"     |
-      | 4  | G  | "CRUISER"   | "true"     |
+      | 0  | "B"  | "DESTROYER" | "true"     |
+      | 4  | "G"  | "CRUISER"   | "true"     |
 
   @tag
   Scenario Outline: Overlapping ships
@@ -22,8 +22,8 @@ Feature: Placing ships
 
     Examples:
       | x | y | x2 | y2 | shipType    | isVertical |
-      | 2 | A | 2  | A  | "DESTROYER" | "true"     |
-      | 3 | H | 3  | I  | "CRUISER"   | "false"    |
+      | 2 | "A" | 2  | "A"  | "DESTROYER" | "true"     |
+      | 3 | "H" | 3  | "I"  | "CRUISER"   | "false"    |
 
   @tag
   Scenario Outline: Place ship out of bounds
@@ -33,9 +33,9 @@ Feature: Placing ships
     And a notification appears that ships cannot be placed out of bounds
 
     Examples:
-      | x2 | y2 | shipType    | isVertical |
-      | 9  | 1  | "DESTROYER" | "false"    |
-      | 6  | 8  | "CRUISER"   | "true"     |
+      | x2 | y2  | shipType    | isVertical |
+      | 9  | "B" | "DESTROYER" | "false"    |
+      | 6  | "I" | "CRUISER"   | "true"     |
 
   Scenario Outline: All ships placed for first player
     Given user has one ship left to place
@@ -45,8 +45,8 @@ Feature: Placing ships
     Then the next player is prompted to place their ships
 
     Examples:
-      | x2 | y2 | shipType    | isVertical |
-      | 5  | 0  | "DESTROYER" | "true"     |
+      | x2 | y2  | shipType    | isVertical |
+      | 5  | "A" | "DESTROYER" | "true"     |
 
 
 #  @tag
