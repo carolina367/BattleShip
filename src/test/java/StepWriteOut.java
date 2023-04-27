@@ -79,21 +79,6 @@ public class StepWriteOut {
 
     @Given("user has one ship left to place")
     public void user_has_one_ship_left_to_place() {
-
-//        //artur
-//        Board gameBoard = new Board(10);
-//        Ship testShip = new Ship();
-//        testShip.setVertical(true);
-//        Player player1 = new Player("Player 1");
-//        Player player2 = new Player("Player 2");
-//
-//        if (player1.getShipsLeftToPlace() == 1) {
-//            System.out.println(player1.getName() + " has one ship left to place");
-//        } else if (player2.getShipsLeftToPlace() == 1) {
-//            System.out.println(player2.getName() + " has one ship left to place");
-//        }
-//        System.out.println("Test 'user_has_one_ship_left_to_place' complete");
- //seb
         // Make ships
         testShip.setShipType(ShipType.DESTROYER);
         Ship carrier = new Ship(true, ShipType.CARRIER);
