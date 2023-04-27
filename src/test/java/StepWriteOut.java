@@ -48,8 +48,8 @@ public class StepWriteOut {
     public void the_ship_should_appear_on_board() {
         System.out.println("The ship should appear on board @ " + "userX:" + userX + " userY:" + (char) ('A' + userY));
         gameBoard.displayBoard(false);
-        assertFalse(gameBoard.isEmpty());
-        //need to add check to validate the location of the ship for use down the line
+        assertEquals(false, gameBoard.isEmpty());
+        //TODO: need to add check to validate the location of the ship for use down the line
     }
 
     @Given("the board already contains a vertical ship of type {string} at coordinates {int} and {string}")
@@ -66,19 +66,19 @@ public class StepWriteOut {
 
     @Given("the coordinates for ship overlap with an existing object on board")
     public void the_coordinates_for_ship_overlap_with_an_existing_object_on_board() {
-        boolean overlap = gameBoard.overlapping(userX, userY, testShip);  // TODO: err in how the tiles are stored on board
+        boolean overlap = gameBoard.overlapping(userX, userY, testShip);
         assertTrue(overlap);
     }
 
 
     @Then("a notification appears that ships cannot overlap")
     public void a_notification_appears_that_ships_cannot_overlap() {
-        assertTrue(true);
+        assertFalse(gameBoard.placeShip(userX, userY, testShip));
         // TODO: COME BACK TO THIS!!!! IT IS A GUI THING
     }
 
-    @Given("user has one ship left to place")
-    public void user_has_one_ship_left_to_place() {
+    @Given("user has placed all ships save one of type destroyer")
+    public void user_has_placed_all_ships_save_one_of_type_destroyer() {
         // Make ships
         testShip.setShipType(ShipType.DESTROYER);
         Ship carrier = new Ship(true, ShipType.CARRIER);
@@ -88,19 +88,14 @@ public class StepWriteOut {
 
         // Place Ships
         System.out.println("starting with all ships");
-        gameBoard.displayShipsLeft();
-        System.out.println("placing carrier");
+        gameBoard.displayShipsToPlace("");
         gameBoard.placeShip(0, 0, carrier);
-        System.out.println("placing battleship");
         gameBoard.placeShip(1, 0, battleship);
-        System.out.println("placing cruiser1");
         gameBoard.placeShip(2, 0, cruiser1);
-        System.out.println("placing cruiser2");
         gameBoard.placeShip(3, 0, cruiser2);
 
         gameBoard.displayBoard(false);
-        assertEquals(1, gameBoard.displayShipsLeft());
-        System.out.println("placing destroyer");
+        assertEquals(1, gameBoard.countShipsToPlace());
     }
 
     @Then("the next player is prompted to place their ships")
@@ -113,6 +108,13 @@ public class StepWriteOut {
     public void a_notification_appears_that_ships_cannot_be_placed_out_of_bounds() {
         boolean outOfBounds = gameBoard.outOfBounds(userX, userY, testShip);
         assertTrue(outOfBounds);
+        assertFalse(gameBoard.placeShip(userX, userY, testShip));
+        // TODO: COME BACK TO THIS!!!! IT IS A GUI THING
+    }
+
+    @Then("they should see an error message indicating that they cannot place any more <ship type> ships")
+    public void they_should_see_an_error_message_indicating_that_they_cannot_place_any_more_ship_type_ships() {
+        assertFalse(gameBoard.placeShip(userX, userY, testShip));
         // TODO: COME BACK TO THIS!!!! IT IS A GUI THING
     }
 }

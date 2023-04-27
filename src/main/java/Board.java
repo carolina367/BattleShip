@@ -4,14 +4,14 @@ import java.lang.IndexOutOfBoundsException;
 public class Board {
     private final int size;
     private final Tile[][] gameBoard;
-    private final HashMap<String, Integer> shipsLeft;
+    private final HashMap<String, Integer> shipsToPlace;
 
     public Board(int size) {
-        shipsLeft = new HashMap<>();
-        shipsLeft.put("CARRIER", 1);
-        shipsLeft.put("BATTLESHIP", 1);
-        shipsLeft.put("CRUISER", 2);
-        shipsLeft.put("DESTROYER", 1);
+        shipsToPlace = new HashMap<>();
+        shipsToPlace.put("CARRIER", 1);
+        shipsToPlace.put("BATTLESHIP", 1);
+        shipsToPlace.put("CRUISER", 2);
+        shipsToPlace.put("DESTROYER", 1);
 
         this.size = size;
         this.gameBoard = new Tile[size][size];
@@ -32,17 +32,22 @@ public class Board {
         return gameBoard[x][y];
     }
 
-    public void placeShip(int x, int y, Ship ship) {
-        if (!overlapping(x, y, ship) && !outOfBounds(x, y, ship)) {
+    public boolean placeShip(int x, int y, Ship ship) {
+        if (!overlapping(x, y, ship) && !outOfBounds(x, y, ship) && shipsToPlace.get(ship.getShipType().name()) - 1 >= 0) {
             for (int i = 0; i < ship.getLength(); i++) { //placing the ship on every coordinate
                 if (ship.isVertical()) {
-                    gameBoard[y+i][x].setTileType(TileType.COVERED_SHIP, ship);
+                    gameBoard[y + i][x].setTileType(TileType.COVERED_SHIP, ship);
                 } else {
                     gameBoard[y][x + i].setTileType(TileType.COVERED_SHIP, ship);
                 }
             }
-            shipsLeft.put(ship.getShipType().name(), shipsLeft.get(ship.getShipType().name()) - 1);
-            displayShipsLeft();
+            System.out.println("\t ---> placing " + ship.getShipType().name().toLowerCase());
+            shipsToPlace.put(ship.getShipType().name(), shipsToPlace.get(ship.getShipType().name()) - 1);
+            displayShipsToPlace( ship.getShipType().name());
+            return true;
+        } else {
+            System.out.println("Unable to place ship: "+ ship.getShipType().name().toLowerCase());
+            return false;
         }
     }
 
@@ -128,16 +133,30 @@ public class Board {
 
     }
 
-    public int displayShipsLeft() {
+    public void displayShipsToPlace(String shipName) {
         int sumOfShips = 0;
-        for (String i : shipsLeft.keySet()) {
-            System.out.println("\t" + i.toLowerCase() + ": " + shipsLeft.get(i) + " left to place");
-            sumOfShips += shipsLeft.get(i);
+        String toPrint = "";
+        for (String i : shipsToPlace.keySet()) {
+            if(shipName == i) {
+                toPrint = " <--- decremented";
+            }
+            System.out.println("\t" + i.toLowerCase() + ": " + shipsToPlace.get(i) + " left to place" + toPrint);
+
+            sumOfShips += shipsToPlace.get(i);
+            toPrint = "";
         }
 
         if (sumOfShips == 0) {
-            System.out.println("No ships left!");
+            System.out.println("No ships left to place!");
+        }
+    }
+
+    public int countShipsToPlace() {
+        int sumOfShips = 0;
+        for (String i : shipsToPlace.keySet()) {
+            sumOfShips += shipsToPlace.get(i);
         }
         return sumOfShips;
     }
+
 }
