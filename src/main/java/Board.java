@@ -36,9 +36,9 @@ public class Board {
         if (!overlapping(x, y, ship) && !outOfBounds(x, y, ship)) {
             for (int i = 0; i < ship.getLength(); i++) { //placing the ship on every coordinate
                 if (ship.isVertical()) {
-                    gameBoard[y][x + i].setTileType(TileType.COVERED_SHIP, ship);
+                    gameBoard[y+i][x].setTileType(TileType.COVERED_SHIP, ship);
                 } else {
-                    gameBoard[y + i][x].setTileType(TileType.COVERED_SHIP, ship);
+                    gameBoard[y][x + i].setTileType(TileType.COVERED_SHIP, ship);
                 }
             }
             shipsLeft.put(ship.getShipType().name(), shipsLeft.get(ship.getShipType().name()) - 1);
@@ -112,20 +112,21 @@ public class Board {
         for (int x = 0; x < size; x++) {
             System.out.print((char) ('A' + counter) + " | "); // vertical margin
             for (int y = 0; y < size; y++) {
+                Tile temp = gameBoard[x][y];
                 if (!opponentView) { // player's personal view
-                    if (gameBoard[y][x].getShip() != null) { // show what ship type
-                        System.out.print(gameBoard[y][x].getShip().getShipType().toString() + "  "); // todo: tell GUI to show if the ship is normal/bombed/sunk
+                    if (temp.getShip() != null) { // show what ship type
+                        System.out.print(temp.getShip().getShipType().toString() + "  "); // todo: tell GUI to show if the ship is normal/bombed/sunk
                     } else {
-                        System.out.print(gameBoard[y][x].getKey() + "  ");
+                        System.out.print(temp.getKey() + "  ");
                     }
                 } else {
-                    TileType currTile = gameBoard[y][x].getTileType();
+                    TileType currTile = temp.getTileType();
                     if (currTile == TileType.COVERED_ROCK || currTile == TileType.COVERED_SHIP) { // if not bombed, show water
                         System.out.print(TileType.WATER.toString() + "  ");
                     } else if (currTile == TileType.BOMBED_ROCK || currTile == TileType.BOMBED_SHIP) { // if not uncovered, show bombed
                         System.out.print(TileType.BOMBED_WATER.toString() + "  ");
                     } else {
-                        System.out.print(gameBoard[y][x].getKey() + "  "); // anything else can show its true type
+                        System.out.print(temp.getKey() + "  "); // anything else can show its true type
                     }
                 }
             }
