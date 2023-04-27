@@ -48,6 +48,16 @@ Feature: Placing ships
 #      | 0  | 0  | "BATTLESHIP" | "true"     |
 #      | 4  | 5  | "DESTROYER"  | "false"    |
 
+  @tag
+  Scenario Outline: Both players have their own board and ships there
+    Given Player2 places ship on their board at coordinates <x> and <y>
+    And Player1 places ship on their board at coordinates <x> and <y>
+    Then There should appear two different boards
+    Examples:
+      |x|y|
+      |1|1|
+      |5|6|
+
   Scenario Outline: All ships placed for first player
     Given user has one ship left to place
     And user is entering coordinates <x2> <y2> for a vertical equals <isVertical> ship of type <shipType>

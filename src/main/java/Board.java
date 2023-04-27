@@ -23,7 +23,7 @@ public class Board {
         }
 
     }
-      public int getSize() {
+    public int getSize() {
         return size;
     }
 

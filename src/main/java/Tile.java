@@ -40,19 +40,18 @@ public class Tile {
 //        } // there really should never be a need to set tile back to water
 
     }
-    public void bombing(int x, int y){
-        if (this.type==TileTypes.WATER){
-            setTileType(TileTypes.BOMBED_WATER);
-        }
-        else if (this.type==TileTypes.UNCOVERED_ROCK) {
-            setTileType(TileTypes.BOMBED_ROCK);
-        }
-        else if (this.type==TileTypes.UNCOVERED_SHIP) {
-            setTileType(TileTypes.BOMBED_SHIP);
-        }
-        else if (this.type==TileTypes.COVERED_SHIP) {
-            setTileType(TileTypes.BOMBED_SHIP);
-        }
-
-    }
+//    public void bombing(int x, int y){
+//        if (this.type==TileTypes.WATER){
+//            setTileType(TileTypes.BOMBED_WATER);
+//        }
+//        else if (this.type==TileTypes.UNCOVERED_ROCK) {
+//            setTileType(TileTypes.BOMBED_ROCK);
+//        }
+//        else if (this.type==TileTypes.UNCOVERED_SHIP) {
+//            setTileType(TileTypes.BOMBED_SHIP);
+//        }
+//        else if (this.type==TileTypes.COVERED_SHIP) {
+//            setTileType(TileTypes.BOMBED_SHIP);
+//        }
+//    }
 }
