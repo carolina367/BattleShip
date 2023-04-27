@@ -1,11 +1,12 @@
 public class Player {
     private final String name;
     public Player(String name) {
+        this.conqueredEnemyShips = 0;
         this.name = name;
     }
 
-    private final int conqueredEnemyShips = 0;
-    private final int shipsAlive=10;
+    private int conqueredEnemyShips;
+    private int shipsAlive;
     public int howManyShipsAlive() {
         return shipsAlive;
     }

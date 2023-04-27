@@ -1,57 +1,56 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Main {
+public class Driver {
     public static int getValidCoordinate(Scanner sc, Board board, String str) {
-        boolean coordinateGiven = false;
         int coordinate = 0;
-
-        while (!coordinateGiven) {
+        while (true) {
             System.out.println("Enter " + str + " coordinate: ");
             try {
-                coordinate = sc.nextInt();
-                if ((coordinate >= board.getSize()) || (coordinate < 0)) {
-//                    throw new IndexOutOfBoundsException("OUT OF BOUNDS: Coordinate " + coordinate);
-                    System.out.println("Out of bounds! Enter again.");
-                    continue;
+                String errMessage = "OUT OF BOUNDS";
+                if (str.contains("Y")) {
+                    coordinate = Character.toUpperCase(sc.next().charAt(0)) - 'A'; // turn char to upper and then to int
+                    errMessage += " on Coordinate " + str.charAt(0) + ":" + (char) ('A' + coordinate) + ". Enter again.";
+                } else {
+                    coordinate = sc.nextInt(); // if invalid it will throw an exception
+                    errMessage += " on Coordinate " + str.charAt(0) + ": " + coordinate + ". Enter again.";
                 }
-                coordinateGiven = true;
+
+                if (coordinate < board.getSize() && coordinate >= 0) {
+                    return coordinate; // if correct it'll short the loop
+                }
+                System.out.println(errMessage);
             } catch (InputMismatchException e) {
-                System.out.println("This input is not an integer - Please try again!");
-                // consume the invalid input and clear the input buffer
-                sc.next();
+                System.out.println("This input is not of the correct type - Please try again!");
+                sc.next(); // consume the invalid input and clear the input buffer
             }
-//            catch (IndexOutOfBoundsException e) {
-//                System.out.println("Error: " + e);
-//            }
         }
-        return coordinate;
     }
 
     public static boolean getValidBooleanInput(Scanner sc) {
-        boolean validInputGiven = false;
-        boolean input = false;
+        char input;
 
-        while (!validInputGiven) {
+        while (true) {
             System.out.println("Is the ship vertical? Enter 'true' or 'false': ");
             try {
-                input = sc.nextBoolean();
-                validInputGiven = true;
+                input = Character.toUpperCase(sc.next().charAt(0)); // if invalid it will throw an exception
+                if(input == 'T' || input == 'F') {
+                    return true;
+                }
+                System.out.println("This input is not a boolean - Please try again!");
             } catch (InputMismatchException e) {
                 System.out.println("This input is not a boolean - Please try again!");
-                // consume the invalid input and clear the input buffer
-                sc.next();
+                sc.next(); // consume the invalid input and clear the input buffer
             }
         }
-        return input;
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Board gameBoard1 = new Board(10);
         Board gameBoard2 = new Board(10);
-        int xCord = getValidCoordinate(sc, gameBoard1, "X");
-        int yCord = getValidCoordinate(sc, gameBoard1, "Y");
+        int xCord = getValidCoordinate(sc, gameBoard1, "X (as num)");
+        int yCord = getValidCoordinate(sc, gameBoard1, "Y (as char)");
         boolean isVertical = getValidBooleanInput(sc);
 
         // consume any leftover newline character
@@ -63,7 +62,7 @@ public class Main {
             System.out.println("Enter Ship Type: ");
             shipInput = sc.nextLine();
 
-            // Standardize string
+            // Standardize string - rm non-alphabetic chars
             shipInput = shipInput.replaceAll("[^A-Za-z]", "");
 
             // For loop through ship types and compare
@@ -85,13 +84,13 @@ public class Main {
                 continue;
             }
 
-            System.out.println("X Coordinate: " + xCord + "\nY Coordinate: " + yCord + "\nisVertical: " + isVertical + "\nShip Type: " + newShip.getShipType());
+            System.out.println("X Coordinate: " + xCord + "\nY Coordinate: " + yCord + "\nisVertical: " + isVertical + "\nShip Type: " + newShip.getShipType().name());
 
             // Validate the x and y type exception again
             while (gameBoard1.outOfBounds(xCord, yCord, newShip)) {
                 System.out.println("Invalid coordinates. Please enter valid coordinates and isVertical.");
-                xCord = getValidCoordinate(sc, gameBoard1, "X");
-                yCord = getValidCoordinate(sc, gameBoard1, "Y");
+                xCord = getValidCoordinate(sc, gameBoard1, "X as num");
+                yCord = getValidCoordinate(sc, gameBoard1, "Y as char");
                 isVertical = getValidBooleanInput(sc);
             }
 

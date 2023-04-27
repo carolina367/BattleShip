@@ -34,9 +34,9 @@ public class Ship {
         return hitsTaken;
     }
 
-    public void setHitsTaken(int numberOfHitsGot) {
-        this.hitsTaken = numberOfHitsGot;
-        if (this.hitsTaken == this.length) {
+    public void setHitsTaken() {
+        hitsTaken++;
+        if (hitsTaken == length) {
             this.setSunk(true);
         }
     }
@@ -49,7 +49,7 @@ public class Ship {
         this.vertical = vertical;
     }
 
-    public boolean isSunk() {
+    public boolean getIsSunk() {
         return isSunk;
     }
 
@@ -71,6 +71,6 @@ public class Ship {
         } else if (typeDeclared == ShipType.DESTROYER) {
             length = 2;
         }
-        this.type = typeDeclared;
+        type = typeDeclared;
     }
 }

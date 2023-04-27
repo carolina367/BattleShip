@@ -9,11 +9,11 @@ Feature: Placing ships
     Then The ship should appear on board
     Examples:
       | x2 | y2 | shipType    | isVertical |
-      | 0  | 1  | "DESTROYER" | "false"    |
-      | 6  | 6  | "CRUISER"   | "true"     |
+      | 0  | "B"  | "DESTROYER" | "true"     |
+      | 4  | "G"  | "CRUISER"   | "true"     |
 
   @tag
-  Scenario Outline: Overlapping ships - overlappingException
+  Scenario Outline: Overlapping ships
     Given the board already contains a vertical ship of type <shipType> at coordinates <x> and <y>
     And user is entering coordinates <x2> <y2> for a vertical equals <isVertical> ship of type <shipType>
     And the coordinates for ship overlap with an existing object on board
@@ -22,20 +22,20 @@ Feature: Placing ships
 
     Examples:
       | x | y | x2 | y2 | shipType    | isVertical |
-      | 2 | 3 | 2  | 3  | "DESTROYER" | "true"     |
-      | 3 | 6 | 3  | 7  | "CRUISER"   | "false"    |
+      | 2 | "A" | 2  | "A"  | "DESTROYER" | "true"     |
+      | 3 | "H" | 3  | "I"  | "CRUISER"   | "false"    |
 
   @tag
-  Scenario Outline: Place ship out of bounds - OutOfBoundsException
+  Scenario Outline: Place ship out of bounds
     Given the board is empty
     And user is entering coordinates <x2> <y2> for a vertical equals <isVertical> ship of type <shipType>
     When the user tries to place the ship
     And a notification appears that ships cannot be placed out of bounds
 
     Examples:
-      | x2 | y2 | shipType    | isVertical |
-      | 9  | 1  | "DESTROYER" | "false"    |
-      | 6  | 8  | "CRUISER"   | "true"     |
+      | x2 | y2  | shipType    | isVertical |
+      | 9  | "B" | "DESTROYER" | "false"    |
+      | 6  | "I" | "CRUISER"   | "true"     |
 
   Scenario Outline: All ships placed for first player
     Given user has one ship left to place
@@ -45,8 +45,8 @@ Feature: Placing ships
     Then the next player is prompted to place their ships
 
     Examples:
-      | x2 | y2 | shipType     | isVertical |
-      | 5  | 0  | "DESTROYER" | "true"     |
+      | x2 | y2  | shipType    | isVertical |
+      | 5  | "A" | "DESTROYER" | "true"     |
 
 
 #  @tag
