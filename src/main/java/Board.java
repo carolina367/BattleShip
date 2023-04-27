@@ -42,16 +42,7 @@ public class Board {
                 }
             }
             shipsLeft.put(ship.getShipType().name(), shipsLeft.get(ship.getShipType().name()) - 1);
-
-            int sumOfShips = 0;
-            for (String i : shipsLeft.keySet()) {
-                System.out.println("ShipType: " + i + " | Ships left to be placed: " + shipsLeft.get(i));
-                sumOfShips += shipsLeft.get(i);
-            }
-
-            if (sumOfShips == 0) {
-                System.out.println("No ships left!");
-            }
+            displayShipsLeft();
         }
     }
 
@@ -112,21 +103,20 @@ public class Board {
         for (int x = 0; x < size; x++) {
             System.out.print((char) ('A' + counter) + " | "); // vertical margin
             for (int y = 0; y < size; y++) {
-                Tile temp = gameBoard[x][y];
+                Tile currTile = gameBoard[x][y];
                 if (!opponentView) { // player's personal view
-                    if (temp.getShip() != null) { // show what ship type
-                        System.out.print(temp.getShip().getShipType().toString() + "  "); // todo: tell GUI to show if the ship is normal/bombed/sunk
+                    if (currTile.getShip() != null) { // show what ship type
+                        System.out.print(currTile.getShip().getShipType().toString() + "  "); // todo: tell GUI to show if the ship is normal/bombed/sunk
                     } else {
-                        System.out.print(temp.getKey() + "  ");
+                        System.out.print(currTile.getKey() + "  ");
                     }
                 } else {
-                    TileType currTile = temp.getTileType();
-                    if (currTile == TileType.COVERED_ROCK || currTile == TileType.COVERED_SHIP) { // if not bombed, show water
+                    if (currTile.getTileType() == TileType.COVERED_ROCK || currTile.getTileType() == TileType.COVERED_SHIP) { // if not bombed, show water
                         System.out.print(TileType.WATER.toString() + "  ");
-                    } else if (currTile == TileType.BOMBED_ROCK || currTile == TileType.BOMBED_SHIP) { // if not uncovered, show bombed
+                    } else if (currTile.getTileType() == TileType.BOMBED_ROCK || currTile.getTileType() == TileType.BOMBED_SHIP) { // if not uncovered, show bombed
                         System.out.print(TileType.BOMBED_WATER.toString() + "  ");
                     } else {
-                        System.out.print(temp.getKey() + "  "); // anything else can show its true type
+                        System.out.print(currTile.getKey() + "  "); // anything else can show its true type
                     }
                 }
             }
@@ -138,10 +128,10 @@ public class Board {
 
     }
 
-    public int shipsLeft() {
+    public int displayShipsLeft() {
         int sumOfShips = 0;
         for (String i : shipsLeft.keySet()) {
-            System.out.println("Ship Type: " + i + " | Ships left to be placed: " + shipsLeft.get(i));
+            System.out.println("\t" + i.toLowerCase() + ": " + shipsLeft.get(i) + " left to place");
             sumOfShips += shipsLeft.get(i);
         }
 

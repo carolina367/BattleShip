@@ -1,6 +1,8 @@
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.java.Before;
 
 
 import static org.junit.Assert.*;
@@ -11,6 +13,10 @@ public class StepWriteOut {
 
     int userX;
     int userY;
+    @Before
+    public void beforeScenario(Scenario scenario) {
+        System.out.println("\n Starting scenario: " + scenario.getName());
+    }
 
     @Given("the board is empty")
     public void the_board_is_empty() {
@@ -40,7 +46,7 @@ public class StepWriteOut {
 
     @Then("The ship should appear on board")
     public void the_ship_should_appear_on_board() {
-        System.out.println("\n The ship should appear on board @ " + "userX:" + userX + " userY:" + userY);
+        System.out.println("The ship should appear on board @ " + "userX:" + userX + " userY:" + (char) ('A' + userY));
         gameBoard.displayBoard(false);
         assertFalse(gameBoard.isEmpty());
         //need to add check to validate the location of the ship for use down the line
@@ -53,7 +59,7 @@ public class StepWriteOut {
         testShip.setVertical(true);
         testShip.setShipType(ShipType.valueOf(shipType));
         gameBoard.placeShip(userX, userY, testShip);
-        System.out.println("\n The ship should appear on board @ " + "userX:" + userX + " userY:" + userY);
+        System.out.println("The ship should appear on board @ " + "userX:" + userX + " userY:" + (char) ('A' + userY));
         gameBoard.displayBoard(false);
         assertFalse(gameBoard.isEmpty());
     }
@@ -96,16 +102,20 @@ public class StepWriteOut {
         Ship cruiser2 = new Ship(true, ShipType.CRUISER);
 
         // Place Ships
+        System.out.println("starting with all ships");
+        gameBoard.displayShipsLeft();
+        System.out.println("placing carrier");
         gameBoard.placeShip(0, 0, carrier);
+        System.out.println("placing battleship");
         gameBoard.placeShip(1, 0, battleship);
+        System.out.println("placing cruiser1");
         gameBoard.placeShip(2, 0, cruiser1);
+        System.out.println("placing cruiser2");
         gameBoard.placeShip(3, 0, cruiser2);
 
-        System.out.println("\n The ship should appear on board @ " + "userX:" + userX + " userY:" + userY);
         gameBoard.displayBoard(false);
-
-        // Test
-        assertEquals(1, gameBoard.shipsLeft());
+        assertEquals(1, gameBoard.displayShipsLeft());
+        System.out.println("placing destroyer");
     }
 
     @Then("the next player is prompted to place their ships")
