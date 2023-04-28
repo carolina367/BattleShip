@@ -4,35 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3827aeef-2b64-436f-9985-b6799b292925" name="Changes" comment="enhanced TileTypes enum">
-      <change afterPath="$PROJECT_DIR$/src/test/resources/opponentViews.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/placingShips.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Board.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Driver$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Driver.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Player.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Ship.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/ShipType.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/Tile.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/TileType.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/test-classes/CucumberTest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/test-classes/StepWriteOut.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/test-classes/opponentViews.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/test-classes/placingShips.feature" afterDir="false" />
+    <list default="true" id="3827aeef-2b64-436f-9985-b6799b292925" name="Changes" comment="player owns ships, bombing increases opponent's ship count">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Obstacle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Driver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Ship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Ship.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/CucumberTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/CucumberTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/StepWriteOut.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/StepWriteOut.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/featureTest.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/StepWriteOut.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/StepWriteOut.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/opponentViews.feature" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/opponentViews.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -143,7 +136,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="enhanced TileTypes enum" />
     <MESSAGE value="made board simple view" />
-    <option name="LAST_COMMIT_MESSAGE" value="made board simple view" />
+    <MESSAGE value="player owns ships, bombing increases opponent's ship count" />
+    <option name="LAST_COMMIT_MESSAGE" value="player owns ships, bombing increases opponent's ship count" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -152,6 +146,21 @@
           <url>file://$PROJECT_DIR$/src/main/java/Board.java</url>
           <line>160</line>
           <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/StepWriteOut.java</url>
+          <line>124</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/StepWriteOut.java</url>
+          <line>123</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/StepWriteOut.java</url>
+          <line>114</line>
+          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

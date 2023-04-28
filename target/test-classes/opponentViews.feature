@@ -3,7 +3,7 @@
 Feature: Opponent Views
 
   @tag
-  Scenario: Opponent can see the alternate display of Bomb location on opponent's board
+  Scenario Outline: Opponent can see the alternate display of Bomb location on opponent's board
     Given a board that has been fully set up. last cruiser @ <x> <y>
     When Player1 bombs coordinate <x> <y> on Player2's board
     And a bomb hit a ship

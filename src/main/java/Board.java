@@ -131,7 +131,7 @@ public class Board {
         int sumOfShips = 0;
         String toPrint = "";
         for (String i : shipsToPlace.keySet()) {
-            if (shipName == i) {
+            if (shipName.equals(i)) {
                 toPrint = " <--- decremented";
             }
             System.out.println("\t" + i.toLowerCase() + ": " + shipsToPlace.get(i) + " left to place" + toPrint);
@@ -153,7 +153,7 @@ public class Board {
         return sumOfShips;
     }
 
-    public void bomb(int x, int y) {
+    public void bomb(int x, int y, Player opponent) {
         if (y >= size || x >= size || x < 0 || y < 0) {
             System.out.println("Cannot bomb coordinate " + x + ", " + (char) ('A' + y) + ". It is out of bounds");
         } else {
@@ -167,8 +167,9 @@ public class Board {
                     Ship currShip = currTile.getShip();
                     currShip.takeHit(); // take a hit
                     if (currShip.getIsSunk()) { // if that hit sank ship
-                        // need to find the first tile in ship
                         setAllTilesInShip(x, y, currShip, TileType.UNCOVERED_SHIP);
+                        // todo: tell player ship was bombed
+                        opponent.addConqueredShips(currShip);
                     } else {
                         currTile.setTileType(TileType.BOMBED_SHIP);
                     }
@@ -203,7 +204,7 @@ public class Board {
         for (int i = 0; i < ship.getLength() + 1; i++) { // at most, we are at the end of the ship
             int yOffset = ship.isVertical() ? i : 0;
             int xOffset = ship.isVertical() ? 0 : i;
-            if (outOfBounds(x - xOffset, y - yOffset, ship) || gameBoard[y - yOffset][x - xOffset].getShip() != ship) { // if ship is @ top of board
+            if (outOfBounds(x - xOffset, y - yOffset, ship) || gameBoard[y - yOffset][x - xOffset].getShip() != ship) {
                 coords[0] = y - yOffset + (yOffset != 0 ? 1 : 0);
                 coords[1] = x - xOffset + (xOffset != 0 ? 1 : 0);
                 break;

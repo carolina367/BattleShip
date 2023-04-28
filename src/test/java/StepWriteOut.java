@@ -13,6 +13,9 @@ public class StepWriteOut {
 
     int userX;
     int userY;
+
+    Player p1 = new Player("p1");
+    Player p2 = new Player("p2");
     @Before
     public void beforeScenario(Scenario scenario) {
         System.out.println("\n Starting scenario: " + scenario.getName());
@@ -23,13 +26,6 @@ public class StepWriteOut {
         assertTrue(gameBoard.isEmpty());
     }
 
-//    @Given("random coordinates for a vertical ship")
-//    public void random_coordinates_for_a_vertical_ship() {
-//        userX = ThreadLocalRandom.current().nextInt(0, gameBoard.getSize() - 1);
-//        userY = ThreadLocalRandom.current().nextInt(0, gameBoard.getSize() - testShip.getLength() - 1);
-//        testShip.setVertical(true);
-//        System.out.println("user is entering coordinates for a vertical ship" + "userX:" + userX + " userY:" + userY);
-//    }
     @Given("user is entering coordinates {int} {string} for a vertical equals {string} ship of type {string}")
     public void user_is_entering_coordinates_for_a_vertical_equals_true_ship_of_type(Integer x, String y, String isVertical, String shipType) {
         userX = x;
@@ -136,10 +132,10 @@ public class StepWriteOut {
     @Given("a bomb hit a ship")
     public void a_bomb_hit_a_ship() {
         System.out.println("The bomb should appear on board @ " + "userX:" + userX + " userY:" + (char) ('A' + userY));
-        for(int i = -1; i < 3; i++) {
-            gameBoard.bomb(userX,userY+i);
+        for(int i = 0; i < 3; i++) {
+            gameBoard.bomb(userX,userY+i, p2);
         }
-        gameBoard.bomb(userX,userY);
+        p2.displayConqueredShips();
     }
     @Then("the opponent should see the alternate display of the game board")
     public void the_opponent_should_see_the_alternate_display_of_the_game_board() {
