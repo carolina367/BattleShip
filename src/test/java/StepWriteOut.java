@@ -33,8 +33,7 @@ public class StepWriteOut {
     @Given("user is entering coordinates {int} {string} for a vertical equals {string} ship of type {string}")
     public void user_is_entering_coordinates_for_a_vertical_equals_true_ship_of_type(Integer x, String y, String isVertical, String shipType) {
         userX = x;
-        userY = Character.toUpperCase(y.charAt(0)) - 'A';;
-        boolean test = Boolean.parseBoolean(isVertical);
+        userY = Character.toUpperCase(y.charAt(0)) - 'A';
         testShip.setVertical(Boolean.parseBoolean(isVertical));
         testShip.setShipType(ShipType.valueOf(shipType));
     }
@@ -48,7 +47,7 @@ public class StepWriteOut {
     public void the_ship_should_appear_on_board() {
         System.out.println("The ship should appear on board @ " + "userX:" + userX + " userY:" + (char) ('A' + userY));
         gameBoard.displayBoard(false);
-        assertEquals(false, gameBoard.isEmpty());
+        assertFalse(gameBoard.isEmpty());
         //TODO: need to add check to validate the location of the ship for use down the line
     }
 
@@ -77,22 +76,14 @@ public class StepWriteOut {
         // TODO: COME BACK TO THIS!!!! IT IS A GUI THING
     }
 
-    @Given("user has placed all ships save one of type destroyer")
-    public void user_has_placed_all_ships_save_one_of_type_destroyer() {
-        // Make ships
-        testShip.setShipType(ShipType.DESTROYER);
-        Ship carrier = new Ship(true, ShipType.CARRIER);
-        Ship battleship = new Ship(true, ShipType.BATTLESHIP);
-        Ship cruiser1 = new Ship(true, ShipType.CRUISER);
-        Ship cruiser2 = new Ship(true, ShipType.CRUISER);
-
-        // Place Ships
-        System.out.println("starting with all ships");
-        gameBoard.displayShipsToPlace("");
-        gameBoard.placeShip(0, 0, carrier);
-        gameBoard.placeShip(1, 0, battleship);
-        gameBoard.placeShip(2, 0, cruiser1);
-        gameBoard.placeShip(3, 0, cruiser2);
+    @Given("user has placed all ships save one of type CRUISER")
+    public void user_has_placed_all_ships_save_one_of_type_CRUISER() {
+        int count = 0;
+        for (ShipType ship : ShipType.values()) {
+            testShip = new Ship(true, ship);
+            gameBoard.placeShip(count, 0, testShip);
+            count++;
+        }
 
         gameBoard.displayBoard(false);
         assertEquals(1, gameBoard.countShipsToPlace());
@@ -116,5 +107,46 @@ public class StepWriteOut {
     public void they_should_see_an_error_message_indicating_that_they_cannot_place_any_more_ship_type_ships() {
         assertFalse(gameBoard.placeShip(userX, userY, testShip));
         // TODO: COME BACK TO THIS!!!! IT IS A GUI THING
+    }
+
+    @Given("a board that has been fully set up. last cruiser @ {int} {string}")
+    public void a_board_that_has_been_fully_set_up_last_cruiser(Integer x, String yString) {
+        int y = Character.toUpperCase(yString.charAt(0)) - 'A';
+        System.out.println("starting with all ships");
+        // Make & place ships
+        int count = 0;
+        for (ShipType ship : ShipType.values()) {
+            testShip = new Ship(true, ship);
+            gameBoard.placeShip(count, 0, testShip);
+            count++;
+        }
+        //place the last cruiser
+        testShip = new Ship(true, ShipType.CRUISER);
+        gameBoard.placeShip(x, y, testShip);
+
+        System.out.println("Player1's view of board they own:");
+        gameBoard.displayBoard(false);
+        assertEquals(0, gameBoard.countShipsToPlace());
+    }
+    @When("Player1 bombs coordinate {int} {string} on Player2's board")
+    public void player1_bombs_coordinate_on_player2_s_board(Integer x, String y) {
+        userX = x;
+        userY = Character.toUpperCase(y.charAt(0)) - 'A';
+    }
+    @Given("a bomb hit a ship")
+    public void a_bomb_hit_a_ship() {
+        System.out.println("The bomb should appear on board @ " + "userX:" + userX + " userY:" + (char) ('A' + userY));
+        for(int i = -1; i < 3; i++) {
+            gameBoard.bomb(userX,userY+i);
+        }
+        gameBoard.bomb(userX,userY);
+    }
+    @Then("the opponent should see the alternate display of the game board")
+    public void the_opponent_should_see_the_alternate_display_of_the_game_board() {
+        System.out.println("\n Player2's view of P1's board:");
+        gameBoard.displayBoard(true);
+
+        System.out.println("\n Player1's view of their board after bomb:");
+        gameBoard.displayBoard(false);
     }
 }

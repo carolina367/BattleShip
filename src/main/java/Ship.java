@@ -34,10 +34,10 @@ public class Ship {
         return hitsTaken;
     }
 
-    public void setHitsTaken() {
+    public void takeHit() {
         hitsTaken++;
         if (hitsTaken == length) {
-            this.setSunk(true);
+            this.setSunk();
         }
     }
 
@@ -53,8 +53,8 @@ public class Ship {
         return isSunk;
     }
 
-    public void setSunk(boolean sunk) {
-        isSunk = sunk;
+    public void setSunk() {
+        isSunk = true;
     }
 
     public ShipType getShipType() {

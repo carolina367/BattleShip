@@ -1,11 +1,11 @@
 public class Player {
     private final String name;
+    private int conqueredEnemyShips;
     public Player(String name) {
         this.conqueredEnemyShips = 0;
         this.name = name;
     }
 
-    private int conqueredEnemyShips;
     private int shipsAlive;
     public int howManyShipsAlive() {
         return shipsAlive;
@@ -15,9 +15,5 @@ public class Player {
     }
     public String getName() {
         return name;
-    }
-
-    public void Player(){
-
     }
 }

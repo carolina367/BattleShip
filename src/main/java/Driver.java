@@ -2,49 +2,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Driver {
-    public static int getValidCoordinate(Scanner sc, Board board, String str) {
-        int coordinate = 0;
-        while (true) {
-            System.out.println("Enter " + str + " coordinate: ");
-            try {
-                String errMessage = "OUT OF BOUNDS";
-                if (str.contains("Y")) {
-                    coordinate = Character.toUpperCase(sc.next().charAt(0)) - 'A'; // turn char to upper and then to int
-                    errMessage += " on Coordinate " + str.charAt(0) + ":" + (char) ('A' + coordinate) + ". Enter again.";
-                } else {
-                    coordinate = sc.nextInt(); // if invalid it will throw an exception
-                    errMessage += " on Coordinate " + str.charAt(0) + ": " + coordinate + ". Enter again.";
-                }
-
-                if (coordinate < board.getSize() && coordinate >= 0) {
-                    return coordinate; // if correct it'll short the loop
-                }
-                System.out.println(errMessage);
-            } catch (InputMismatchException e) {
-                System.out.println("This input is not of the correct type - Please try again!");
-                sc.next(); // consume the invalid input and clear the input buffer
-            }
-        }
-    }
-
-    public static boolean getValidBooleanInput(Scanner sc) {
-        char input;
-
-        while (true) {
-            System.out.println("Is the ship vertical? Enter 'true' or 'false': ");
-            try {
-                input = Character.toUpperCase(sc.next().charAt(0)); // if invalid it will throw an exception
-                if(input == 'T' || input == 'F') {
-                    return true;
-                }
-                System.out.println("This input is not a boolean - Please try again!");
-            } catch (InputMismatchException e) {
-                System.out.println("This input is not a boolean - Please try again!");
-                sc.next(); // consume the invalid input and clear the input buffer
-            }
-        }
-    }
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Board gameBoard1 = new Board(10);
@@ -98,6 +55,49 @@ public class Driver {
             // ...
 
             break; // exit the loop once a valid ship and coordinates are entered
+        }
+    }
+
+    public static int getValidCoordinate(Scanner sc, Board board, String str) {
+        int coordinate;
+        while (true) {
+            System.out.println("Enter " + str + " coordinate: ");
+            try {
+                String errMessage = "OUT OF BOUNDS";
+                if (str.contains("Y")) {
+                    coordinate = Character.toUpperCase(sc.next().charAt(0)) - 'A'; // turn char to upper and then to int
+                    errMessage += " on Coordinate " + str.charAt(0) + ":" + (char) ('A' + coordinate) + ". Enter again.";
+                } else {
+                    coordinate = sc.nextInt(); // if invalid it will throw an exception
+                    errMessage += " on Coordinate " + str.charAt(0) + ": " + coordinate + ". Enter again.";
+                }
+
+                if (coordinate < board.getSize() && coordinate >= 0) {
+                    return coordinate; // if correct it'll short the loop
+                }
+                System.out.println(errMessage);
+            } catch (InputMismatchException e) {
+                System.out.println("This input is not of the correct type - Please try again!");
+                sc.next(); // consume the invalid input and clear the input buffer
+            }
+        }
+    }
+
+    public static boolean getValidBooleanInput(Scanner sc) {
+        char input;
+
+        while (true) {
+            System.out.println("Is the ship vertical? Enter 'true' or 'false': ");
+            try {
+                input = Character.toUpperCase(sc.next().charAt(0)); // if invalid it will throw an exception
+                if (input == 'T' || input == 'F') {
+                    return true;
+                }
+                System.out.println("This input is not a boolean - Please try again!");
+            } catch (InputMismatchException e) {
+                System.out.println("This input is not a boolean - Please try again!");
+                sc.next(); // consume the invalid input and clear the input buffer
+            }
         }
     }
 }

@@ -4,11 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3827aeef-2b64-436f-9985-b6799b292925" name="Changes" comment="fixed ship orientation on board">
+    <list default="true" id="3827aeef-2b64-436f-9985-b6799b292925" name="Changes" comment="enhanced TileTypes enum">
+      <change afterPath="$PROJECT_DIR$/src/test/resources/opponentViews.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/placingShips.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Board.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Driver$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Driver.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Player.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Ship.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/ShipType.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/Tile.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/TileType.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/CucumberTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/StepWriteOut.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/opponentViews.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/placingShips.feature" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Ship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Ship.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/CucumberTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/CucumberTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/StepWriteOut.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/StepWriteOut.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/featureTest.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/featureTest.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/featureTest.feature" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +53,9 @@
     </option>
   </component>
   <component name="ProjectId" id="2OxLHkR81FV2oOW7FuBNMNNIt9T" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -54,21 +76,14 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Cucumber Java.All Features in: test">
-    <configuration name="Driver" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Driver" />
-      <module name="battleship" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="All Features in: test" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Cucumber Java.Feature: opponentViews">
+    <configuration name="Feature: opponentViews" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/opponentViews.feature" />
       <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
       <module name="battleship" />
       <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="All Features in: test" />
+      <option name="SUGGESTED_NAME" value="Feature: opponentViews" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -76,33 +91,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Feature: featureTest" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
-      <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/featureTest.feature" />
-      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
-      <module name="battleship" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: featureTest" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="io.cucumber.core.cli.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CucumberTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="battleship" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="CucumberTest" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -117,11 +105,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Cucumber Java.All Features in: test" />
-        <item itemvalue="Cucumber Java.Feature: featureTest" />
-        <item itemvalue="JUnit.CucumberTest" />
+        <item itemvalue="Cucumber Java.Feature: opponentViews" />
         <item itemvalue="JUnit.java in battleship" />
-        <item itemvalue="Application.Driver" />
       </list>
     </recent_temporary>
   </component>
@@ -133,8 +118,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1682497202277</updated>
-      <workItem from="1682497205644" duration="19051000" />
-      <workItem from="1682535884444" duration="23055000" />
+      <workItem from="1682497205644" duration="21004000" />
     </task>
     <task id="LOCAL-00001" summary="enhanced TileTypes enum">
       <created>1682510681320</created>
@@ -143,35 +127,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682510681320</updated>
     </task>
-    <task id="LOCAL-00002" summary="tried to resolve merge conflicts">
-      <created>1682544221358</created>
+    <task id="LOCAL-00002" summary="made board simple view">
+      <created>1682534398790</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1682544221358</updated>
+      <updated>1682534398790</updated>
     </task>
-    <task id="LOCAL-00003" summary="changed y axis to char">
-      <created>1682601770235</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1682601770235</updated>
-    </task>
-    <task id="LOCAL-00004" summary="fixed tests to accept char">
-      <created>1682602493140</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1682602493140</updated>
-    </task>
-    <task id="LOCAL-00005" summary="fixed ship orientation on board">
-      <created>1682603192270</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1682603192270</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -179,24 +142,16 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="enhanced TileTypes enum" />
-    <MESSAGE value="tried to resolve merge conflicts" />
-    <MESSAGE value="changed y axis to char" />
-    <MESSAGE value="fixed tests to accept char" />
-    <MESSAGE value="fixed ship orientation on board" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed ship orientation on board" />
+    <MESSAGE value="made board simple view" />
+    <option name="LAST_COMMIT_MESSAGE" value="made board simple view" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Board.java</url>
-          <line>139</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Board.java</url>
-          <line>48</line>
-          <option name="timeStamp" value="25" />
+          <line>160</line>
+          <option name="timeStamp" value="42" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
