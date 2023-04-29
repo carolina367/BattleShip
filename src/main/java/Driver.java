@@ -53,7 +53,6 @@ public class Driver {
 
             // TODO: add code to place the ship on the game board
             // ...
-
             break; // exit the loop once a valid ship and coordinates are entered
         }
     }

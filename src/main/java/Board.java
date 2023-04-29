@@ -4,10 +4,10 @@ import java.lang.IndexOutOfBoundsException;
 public class Board {
     private final int size;
     private final Tile[][] gameBoard;
-    private final HashMap<String, Integer> shipsToPlace;
+    private final MyHashMap<String, Integer> shipsToPlace;
 
     public Board(int size) {
-        shipsToPlace = new HashMap<>();
+        shipsToPlace = new MyHashMap<>();
         shipsToPlace.put("CARRIER", 1);
         shipsToPlace.put("BATTLESHIP", 1);
         shipsToPlace.put("CRUISER", 2);
@@ -153,7 +153,7 @@ public class Board {
         return sumOfShips;
     }
 
-public boolean bomb(int x, int y, Player opponent) {
+    public boolean bomb(int x, int y, Player opponent) {
         if (y >= size || x >= size || x < 0 || y < 0) {
             System.out.println("Cannot bomb coordinate " + x + ", " + (char) ('A' + y) + ". It is out of bounds");
         } else {
@@ -215,4 +215,11 @@ public boolean bomb(int x, int y, Player opponent) {
         return coords;
     }
 
+    public boolean donePlacingShips() {
+        if (countShipsToPlace() == 0) {
+            System.out.println("Done placing ships!");
+            return true;
+        }
+        return false;
+    }
 }
