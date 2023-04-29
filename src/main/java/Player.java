@@ -1,13 +1,10 @@
 import java.util.HashMap;
-<<<<<<< HEAD
 import java.util.concurrent.ThreadLocalRandom;
-=======
->>>>>>> 84288473a7c4e547e19570f2291b0c02ff3084bc
 
 public class Player {
     private final String name;
     private final HashMap<String, Integer> conqueredShips;
-<<<<<<< HEAD
+///Artur's code:
     ////////////AI///////////
     Player AI= new Player("AI");
     private boolean isNowCurrentPlayerAI=false;
@@ -16,8 +13,6 @@ public class Player {
     public int[][] boardAI=new int[10][10];
     //null=not bombed,1-water,2bombed,3bombed and sunk
     ////////////AI///////////
-=======
->>>>>>> 84288473a7c4e547e19570f2291b0c02ff3084bc
 
     public Player(String name) {
         this.name = name;
@@ -49,7 +44,7 @@ public class Player {
 
     public void addConqueredShips(Ship ship) {
         conqueredShips.put(ship.getShipType().name(), conqueredShips.get(ship.getShipType().name()) + 1);
-<<<<<<< HEAD
+// Artur's addition here to bottom
         if (isNowCurrentPlayerAI==true){
             for (int i=0;i>10;i++){
                 for (int j=0;j>10;j++){
@@ -62,9 +57,6 @@ public class Player {
     }
 
     public void AI() {
-=======
-    }
->>>>>>> 84288473a7c4e547e19570f2291b0c02ff3084bc
 
         int x;
         int y = 0;
@@ -91,6 +83,7 @@ public class Player {
 
         }
     }
+    
     public boolean isNowCurrentPlayerAI() {
         return isNowCurrentPlayerAI;
     }
