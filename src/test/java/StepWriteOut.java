@@ -101,8 +101,8 @@ public class StepWriteOut {
 <<<<<<< HEAD
     }
 
-    @Then("they should see an error message indicating that they cannot place any more <ship type> ships")
-    public void they_should_see_an_error_message_indicating_that_they_cannot_place_any_more_ship_type_ships() {
+    @Then("they should see an error message indicating that they cannot place any more {shipType} ships")
+    public void they_should_see_an_error_message_indicating_that_they_cannot_place_any_more_ship_type_ships(String shipType) {
         assertFalse(gameBoard.placeShip(userX, userY, testShip));
         // TODO: COME BACK TO THIS!!!! IT IS A GUI THING
     }
@@ -169,25 +169,8 @@ public class StepWriteOut {
         gameBoard.displayBoard(false);
         System.out.println("Board of player2");
         gameBoard2.displayBoard(false);
-=======
->>>>>>> 84288473a7c4e547e19570f2291b0c02ff3084bc
     }
-
-    @Then("they should see an error message indicating that they cannot place any more <ship type> ships")
-    public void they_should_see_an_error_message_indicating_that_they_cannot_place_any_more_ship_type_ships() {
-        assertFalse(gameBoard.placeShip(userX, userY, testShip));
-        // TODO: COME BACK TO THIS!!!! IT IS A GUI THING
-    }
-
-<<<<<<< HEAD
-
-
-
-
-}
-
-
-=======
+    
     @Given("a board that has been fully set up. last cruiser @ {int} {string}")
     public void a_board_that_has_been_fully_set_up_last_cruiser(Integer x, String yString) {
         int y = Character.toUpperCase(yString.charAt(0)) - 'A';
@@ -229,4 +212,3 @@ public class StepWriteOut {
         gameBoard.displayBoard(false);
     }
 }
->>>>>>> 84288473a7c4e547e19570f2291b0c02ff3084bc
