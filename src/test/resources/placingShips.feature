@@ -58,6 +58,7 @@ Feature: Placing ships
     Examples:
       | x2 | y2  | shipType     | isVertical | x | y   |
       | 6  | "G" | "BATTLESHIP" | "false"    | 3 | "A" |
+<<<<<<< HEAD
   @tag
   Scenario Outline: Both players have their own board and ships there
     Given Player2 places ship on their board at coordinates <x> and <y>
@@ -69,3 +70,7 @@ Feature: Placing ships
       |5|6|||
 
 ##############################################################################################
+=======
+
+##############################################################################################
+>>>>>>> 84288473a7c4e547e19570f2291b0c02ff3084bc
