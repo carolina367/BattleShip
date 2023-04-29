@@ -73,4 +73,8 @@ public class Ship {
         }
         type = typeDeclared;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 84288473a7c4e547e19570f2291b0c02ff3084bc
