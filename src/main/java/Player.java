@@ -2,11 +2,11 @@ import java.util.HashMap;
 
 public class Player {
     private final String name;
-    private final HashMap<String, Integer> conqueredShips;
+    private final MyHashMap<String, Integer> conqueredShips;
 
     public Player(String name) {
         this.name = name;
-        conqueredShips = new HashMap<>();
+        conqueredShips = new MyHashMap<>();
         conqueredShips.put("CARRIER", 0);
         conqueredShips.put("BATTLESHIP", 0);
         conqueredShips.put("CRUISER", 0);
@@ -35,5 +35,4 @@ public class Player {
     public void addConqueredShips(Ship ship) {
         conqueredShips.put(ship.getShipType().name(), conqueredShips.get(ship.getShipType().name()) + 1);
     }
-
 }
