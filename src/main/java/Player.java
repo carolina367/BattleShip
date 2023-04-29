@@ -2,7 +2,6 @@ import java.util.HashMap;
 
 public class Player {
     private final String name;
-    //    private int conqueredEnemyShips;
     private final HashMap<String, Integer> conqueredShips;
 
     public Player(String name) {

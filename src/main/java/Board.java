@@ -153,7 +153,7 @@ public class Board {
         return sumOfShips;
     }
 
-    public void bomb(int x, int y, Player opponent) {
+    public boolean bomb(int x, int y, Player opponent) {
         if (y >= size || x >= size || x < 0 || y < 0) {
             System.out.println("Cannot bomb coordinate " + x + ", " + (char) ('A' + y) + ". It is out of bounds");
         } else {
@@ -170,6 +170,7 @@ public class Board {
                         setAllTilesInShip(x, y, currShip, TileType.UNCOVERED_SHIP);
                         // todo: tell player ship was bombed
                         opponent.addConqueredShips(currShip);
+                        return true; // sunk a ship so can go again
                     } else {
                         currTile.setTileType(TileType.BOMBED_SHIP);
                     }
@@ -179,6 +180,7 @@ public class Board {
                 }
             }
         }
+        return false;
     }
 
     public void setAllTilesInShip(int x, int y, Ship ship, TileType type) { // the coords need to be to the start of the ship
