@@ -153,7 +153,7 @@ public class Board {
         return sumOfShips;
     }
 
-    public boolean bomb(int x, int y, Player opponent) {
+public boolean bomb(int x, int y, Player opponent) {
         if (y >= size || x >= size || x < 0 || y < 0) {
             System.out.println("Cannot bomb coordinate " + x + ", " + (char) ('A' + y) + ". It is out of bounds");
         } else {

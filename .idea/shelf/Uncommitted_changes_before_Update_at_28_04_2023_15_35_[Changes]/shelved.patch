@@ -1,0 +1,237 @@
+Index: src/test/java/StepWriteOut.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import io.cucumber.java.en.Given;\r\nimport io.cucumber.java.en.Then;\r\nimport io.cucumber.java.en.When;\r\n\r\n\r\nimport static org.junit.Assert.*;\r\n\r\npublic class StepWriteOut {\r\n    Board gameBoard = new Board(10);\r\n    Ship testShip = new Ship();\r\n\r\n    int userX;\r\n    int userY;\r\n\r\n    @Given(\"the board is empty\")\r\n    public void the_board_is_empty() {\r\n        assertTrue(gameBoard.isEmpty());\r\n    }\r\n\r\n//    @Given(\"random coordinates for a vertical ship\")\r\n//    public void random_coordinates_for_a_vertical_ship() {\r\n//        userX = ThreadLocalRandom.current().nextInt(0, gameBoard.getSize() - 1);\r\n//        userY = ThreadLocalRandom.current().nextInt(0, gameBoard.getSize() - testShip.getLength() - 1);\r\n//        testShip.setVertical(true);\r\n//        System.out.println(\"user is entering coordinates for a vertical ship\" + \"userX:\" + userX + \" userY:\" + userY);\r\n//    }\r\n    @Given(\"user is entering coordinates {int} {int} for a vertical equals {string} ship of type {string}\")\r\n    public void user_is_entering_coordinates_for_a_vertical_equals_true_ship_of_type(Integer x2, Integer y2, String isVertical, String shipType) {\r\n        userX = x2;\r\n        userY = y2;\r\n        testShip.setVertical(Boolean.parseBoolean(isVertical));\r\n        testShip.setShipType(ShipType.valueOf(shipType));\r\n    }\r\n\r\n    @When(\"the user tries to place the ship\")\r\n    public void the_user_tries_to_place_the_ship() {\r\n        gameBoard.placeShip(userX, userY, testShip);\r\n    }\r\n\r\n    @Then(\"The ship should appear on board\")\r\n    public void the_ship_should_appear_on_board() {\r\n        System.out.println(\"\\n The ship should appear on board @ \" + \"userX:\" + userX + \" userY:\" + userY);\r\n        gameBoard.displayBoard(false);\r\n        assertFalse(gameBoard.isEmpty());\r\n        //need to add check to validate the location of the ship for use down the line\r\n    }\r\n\r\n    @Given(\"the board already contains a vertical ship of type {string} at coordinates {int} and {int}\")\r\n    public void the_board_already_contains_a_vertical_ship_of_type_string_at_coordinates_int_and_int(String shipType, Integer x, Integer y) {\r\n        userX = x;\r\n        userY = y;\r\n        testShip.setVertical(true);\r\n        testShip.setShipType(ShipType.valueOf(shipType));\r\n        gameBoard.placeShip(userX, userY, testShip);\r\n//        System.out.println(\"\\n the board already contains a vertical ship of type {string} at coordinates {int} and {int} \" + \"userX: \" + userX + \" userY:\" + userY);\r\n\r\n        gameBoard.displayBoard(false);\r\n        assertFalse(gameBoard.isEmpty());\r\n    }\r\n\r\n    @Given(\"the coordinates for ship overlap with an existing object on board\")\r\n    public void the_coordinates_for_ship_overlap_with_an_existing_object_on_board() {\r\n        boolean overlap = gameBoard.overlapping(userX, userY, testShip);  // TODO: err in how the tiles are stored on board\r\n        assertTrue(overlap);\r\n    }\r\n\r\n\r\n    @Then(\"a notification appears that ships cannot overlap\")\r\n    public void a_notification_appears_that_ships_cannot_overlap() {\r\n        assertTrue(true);\r\n        // TODO: COME BACK TO THIS!!!! IT IS A GUI THING\r\n    }\r\n\r\n    @Given(\"user has one ship left to place\")\r\n    public void user_has_one_ship_left_to_place() {\r\n\r\n//        //artur\r\n//        Board gameBoard = new Board(10);\r\n//        Ship testShip = new Ship();\r\n//        testShip.setVertical(true);\r\n//        Player player1 = new Player(\"Player 1\");\r\n//        Player player2 = new Player(\"Player 2\");\r\n//\r\n//        if (player1.getShipsLeftToPlace() == 1) {\r\n//            System.out.println(player1.getName() + \" has one ship left to place\");\r\n//        } else if (player2.getShipsLeftToPlace() == 1) {\r\n//            System.out.println(player2.getName() + \" has one ship left to place\");\r\n//        }\r\n//        System.out.println(\"Test 'user_has_one_ship_left_to_place' complete\");\r\n //seb\r\n        // Make ships\r\n        testShip.setShipType(ShipType.DESTROYER);\r\n        Ship carrier = new Ship(true, ShipType.CARRIER);\r\n        Ship battleship = new Ship(true, ShipType.BATTLESHIP);\r\n        Ship cruiser1 = new Ship(true, ShipType.CRUISER);\r\n        Ship cruiser2 = new Ship(true, ShipType.CRUISER);\r\n\r\n        // Place Ships\r\n        gameBoard.placeShip(0, 0, carrier);\r\n        gameBoard.placeShip(1, 0, battleship);\r\n        gameBoard.placeShip(2, 0, cruiser1);\r\n        gameBoard.placeShip(3, 0, cruiser2);\r\n\r\n\r\n        gameBoard.displayBoard(false);\r\n\r\n        // Test\r\n        assertEquals(1, gameBoard.shipsLeft());\r\n    }\r\n\r\n    @Then(\"the next player is prompted to place their ships\")\r\n    public void the_next_player_is_prompted_to_place_their_ships() {\r\n        // TODO\r\n        assertTrue(true);\r\n    }\r\n\r\n    @When(\"a notification appears that ships cannot be placed out of bounds\")\r\n    public void a_notification_appears_that_ships_cannot_be_placed_out_of_bounds() {\r\n        boolean outOfBounds = gameBoard.outOfBounds(userX, userY, testShip);\r\n        assertTrue(outOfBounds);\r\n        // TODO: COME BACK TO THIS!!!! IT IS A GUI THING\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/StepWriteOut.java b/src/test/java/StepWriteOut.java
+--- a/src/test/java/StepWriteOut.java	
++++ b/src/test/java/StepWriteOut.java	
+@@ -1,12 +1,15 @@
+ import io.cucumber.java.en.Given;
+ import io.cucumber.java.en.Then;
+ import io.cucumber.java.en.When;
++import io.cucumber.java.en.And;
+ 
+ 
+ import static org.junit.Assert.*;
+ 
+ public class StepWriteOut {
+     Board gameBoard = new Board(10);
++    Board gameBoard2 = new Board(10);
++
+     Ship testShip = new Ship();
+ 
+     int userX;
+@@ -17,13 +20,6 @@
+         assertTrue(gameBoard.isEmpty());
+     }
+ 
+-//    @Given("random coordinates for a vertical ship")
+-//    public void random_coordinates_for_a_vertical_ship() {
+-//        userX = ThreadLocalRandom.current().nextInt(0, gameBoard.getSize() - 1);
+-//        userY = ThreadLocalRandom.current().nextInt(0, gameBoard.getSize() - testShip.getLength() - 1);
+-//        testShip.setVertical(true);
+-//        System.out.println("user is entering coordinates for a vertical ship" + "userX:" + userX + " userY:" + userY);
+-//    }
+     @Given("user is entering coordinates {int} {int} for a vertical equals {string} ship of type {string}")
+     public void user_is_entering_coordinates_for_a_vertical_equals_true_ship_of_type(Integer x2, Integer y2, String isVertical, String shipType) {
+         userX = x2;
+@@ -107,7 +103,29 @@
+         // Test
+         assertEquals(1, gameBoard.shipsLeft());
+     }
+-
++    @Given("Player1 places ship on their board at coordinates {int} and {int}")
++    public void Player1_places_ship_on_their_board(Integer x, Integer y){
++        x = 1;
++        y = 1;
++        testShip.setVertical(true);
++        testShip.setShipType(ShipType.BATTLESHIP);
++        gameBoard.placeShip(x, y, testShip);
++    }
++    @And("Player2 places ship on their board at coordinates {int} and {int}")
++    public void Player2_places_ship_on_their_board(Integer x, Integer y){
++        x = 5;
++        y = 6;
++        testShip.setVertical(false);
++        testShip.setShipType(ShipType.DESTROYER);
++        gameBoard2.placeShip(x, y, testShip);
++    }
++    @Then("There should appear two different boards")
++    public void There_should_appear_two_different_boards(){
++        System.out.println("Board of player1");
++        gameBoard.displayBoard(true);
++        System.out.println("Board of player2");
++        gameBoard2.displayBoard(true);
++    }
+     @Then("the next player is prompted to place their ships")
+     public void the_next_player_is_prompted_to_place_their_ships() {
+         // TODO
+Index: src/main/java/Board.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.util.HashMap;\r\nimport java.lang.IndexOutOfBoundsException;\r\n\r\npublic class Board {\r\n    private final int size;\r\n    private final Tile[][] gameBoard;\r\n    private final HashMap<String, Integer> shipsLeft;\r\n\r\n    public Board(int size) {\r\n        shipsLeft = new HashMap<>();\r\n        shipsLeft.put(\"CARRIER\", 1);\r\n        shipsLeft.put(\"BATTLESHIP\", 1);\r\n        shipsLeft.put(\"CRUISER\", 2);\r\n        shipsLeft.put(\"DESTROYER\", 1);\r\n\r\n        this.size = size;\r\n        this.gameBoard = new Tile[size][size];\r\n        // nested loop to add all indexes as a new tile\r\n        for (int x = 0; x < size; x++) {\r\n            for (int y = 0; y < size; y++) {\r\n                gameBoard[x][y] = new Tile();\r\n            }\r\n        }\r\n\r\n    }\r\n\r\n    public int getSize() {\r\n        return size;\r\n    }\r\n\r\n    public Tile getTile(int x, int y) {\r\n        return gameBoard[x][y];\r\n    }\r\n\r\n    public void placeShip(int x, int y, Ship ship) {\r\n        if (!overlapping(x, y, ship) && !outOfBounds(x, y, ship)) {\r\n            for (int i = 0; i < ship.getLength(); i++) { //placing the ship on every coordinate\r\n                if (ship.isVertical()) {\r\n                    gameBoard[x][y + i].setTileType(TileType.COVERED_SHIP, ship);\r\n                } else {\r\n                    gameBoard[x + i][y].setTileType(TileType.COVERED_SHIP, ship);\r\n                }\r\n            }\r\n            shipsLeft.put(ship.getShipType().name(), shipsLeft.get(ship.getShipType().name()) - 1);\r\n\r\n            int sumOfShips = 0;\r\n            for (String i : shipsLeft.keySet()) {\r\n                System.out.println(\"ShipType: \" + i + \" | Ships left to be placed: \" + shipsLeft.get(i));\r\n                sumOfShips += shipsLeft.get(i);\r\n            }\r\n\r\n            if (sumOfShips == 0) {\r\n                System.out.println(\"No ships left!\");\r\n            }\r\n        }\r\n    }\r\n\r\n    public boolean outOfBounds(int x, int y, Ship ship) {\r\n        for (int i = 0; i < ship.getLength(); i++) { // checking that the ship isn't overlapping any coordinate\r\n            if (y + i >= size || x + i >= size || x < 0 || y < 0) {\r\n                return true; // coordinates are out of bounds\r\n            }\r\n        }\r\n        return false; // coordinates are within bounds\r\n    }\r\n\r\n    public boolean overlapping(int x, int y, Ship ship) {\r\n        for (int i = 0; i < ship.getLength(); i++) { // checking that the ship isn't overlapping any coordinate\r\n            if (y + i >= size || x + i >= size) {\r\n                break;\r\n            }\r\n            if (ship.isVertical() && gameBoard[x][y + i].getTileType() != TileType.WATER) {\r\n                return true; // ships are overlapping\r\n            } else if (gameBoard[x + i][y].getTileType() != TileType.WATER) {\r\n                return true; // ships are overlapping\r\n            }\r\n        }\r\n        return false; // ships are NOT overlapping\r\n    }\r\n\r\n    public boolean isEmpty() {\r\n        for (int x = 0; x < size - 1; x++) {\r\n            for (int y = 0; y < size - 1; y++) {\r\n                if (gameBoard[x][y].getTileType() != TileType.WATER) {\r\n                    return false;\r\n                }\r\n            }\r\n        }\r\n        return true;\r\n    }\r\n\r\n    public void displayBoard(boolean opponentView) {\r\n        String divider = \"  +-\";\r\n        String h_margin = \"    \"; // horizontal margin\r\n\r\n        for (int i = 0; i < size; i++) { //making the margin the size of the board\r\n            if (i < 10) {\r\n                h_margin += \" \";\r\n            }\r\n            divider += \"----\";\r\n            h_margin += i + \"  \";\r\n\r\n            if (i == size - 1) {\r\n                divider += \"+ \";\r\n            }\r\n        }\r\n\r\n        System.out.println(h_margin + \"\\n\" + divider);\r\n\r\n        int counter = 0;\r\n\r\n        for (int x = 0; x < size; x++) {\r\n            System.out.print(counter + \" | \"); // vertical margin\r\n            for (int y = 0; y < size; y++) {\r\n                if (!opponentView) { // player's personal view\r\n                    if (gameBoard[y][x].getShip() != null) { // show what ship type\r\n                        System.out.print(gameBoard[y][x].getShip().getShipType().toString() + \"  \"); // todo: tell GUI to show if the ship is normal/bombed/sunk\r\n                    } else {\r\n                        System.out.print(gameBoard[y][x].getKey() + \"  \");\r\n                    }\r\n                } else {\r\n                    TileType currTile = gameBoard[y][x].getTileType();\r\n                    if (currTile == TileType.COVERED_ROCK || currTile == TileType.COVERED_SHIP) { // if not bombed, show water\r\n                        System.out.print(TileType.WATER.toString() + \"  \");\r\n                    } else if (currTile == TileType.BOMBED_ROCK || currTile == TileType.BOMBED_SHIP) { // if not uncovered, show bombed\r\n                        System.out.print(TileType.BOMBED_WATER.toString() + \"  \");\r\n                    } else {\r\n                        System.out.print(gameBoard[y][x].getKey() + \"  \"); // anything else can show its true type\r\n                    }\r\n                }\r\n            }\r\n            System.out.println(\"|\");\r\n            counter++;\r\n        }\r\n\r\n        System.out.println(divider + \"\\n\" + h_margin);\r\n\r\n    }\r\n\r\n    public int shipsLeft() {\r\n        int sumOfShips = 0;\r\n        for (String i : shipsLeft.keySet()) {\r\n            System.out.println(\"Ship Type: \" + i + \" | Ships left to be placed: \" + shipsLeft.get(i));\r\n            sumOfShips += shipsLeft.get(i);\r\n        }\r\n\r\n        if (sumOfShips == 0) {\r\n            System.out.println(\"No ships left!\");\r\n        }\r\n        return sumOfShips;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Board.java b/src/main/java/Board.java
+--- a/src/main/java/Board.java	
++++ b/src/main/java/Board.java	
+@@ -67,6 +67,7 @@
+     public boolean overlapping(int x, int y, Ship ship) {
+         for (int i = 0; i < ship.getLength(); i++) { // checking that the ship isn't overlapping any coordinate
+             if (y + i >= size || x + i >= size) {
++                System.out.print("Out of boundaries");
+                 break;
+             }
+             if (ship.isVertical() && gameBoard[x][y + i].getTileType() != TileType.WATER) {
+@@ -78,6 +79,7 @@
+         return false; // ships are NOT overlapping
+     }
+ 
++
+     public boolean isEmpty() {
+         for (int x = 0; x < size - 1; x++) {
+             for (int y = 0; y < size - 1; y++) {
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"MavenProjectsManager\">\r\n    <option name=\"originalFiles\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_X\" default=\"true\" project-jdk-name=\"20\" project-jdk-type=\"JavaSDK\" />\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	
++++ b/.idea/misc.xml	
+@@ -8,5 +8,5 @@
+       </list>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" default="true" project-jdk-name="20" project-jdk-type="JavaSDK" />
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_20" default="true" project-jdk-name="20" project-jdk-type="JavaSDK" />
+ </project>
+\ No newline at end of file
+Index: src/main/java/AI.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/AI.java b/src/main/java/AI.java
+new file mode 100644
+--- /dev/null	
++++ b/src/main/java/AI.java	
+@@ -0,0 +1,8 @@
++public class AI {
++
++
++
++
++
++
++}
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"3827aeef-2b64-436f-9985-b6799b292925\" name=\"Changes\" comment=\"enhanced TileTypes enum\">\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/uiDesigner.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/Board.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Board.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/Game.java\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Driver.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/Player.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Player.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/Ship.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Ship.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/Tile.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Tile.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/test/java/StepWriteOut.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/test/java/StepWriteOut.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/test/resources/featureTest.feature\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/test/resources/featureTest.feature\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"generalSettings\">\r\n      <MavenGeneralSettings>\r\n        <option name=\"useMavenConfig\" value=\"true\" />\r\n      </MavenGeneralSettings>\r\n    </option>\r\n    <option name=\"importingSettings\">\r\n      <MavenImportingSettings>\r\n        <option name=\"workspaceImportEnabled\" value=\"true\" />\r\n      </MavenImportingSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2OxLHkR81FV2oOW7FuBNMNNIt9T\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"project.structure.last.edited\": \"Modules\",\r\n    \"project.structure.proportion\": \"0.0\",\r\n    \"project.structure.side.proportion\": \"0.0\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RunManager\" selected=\"Cucumber Java.All Features in: test\">\r\n    <configuration name=\"All Features in: test\" type=\"CucumberJavaRunConfigurationType\" factoryName=\"Cucumber java\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"CUCUMBER_CORE_VERSION\" value=\"5\" />\r\n      <option name=\"FILE_PATH\" value=\"$PROJECT_DIR$/src/test\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"io.cucumber.core.cli.Main\" />\r\n      <module name=\"battleship\" />\r\n      <option name=\"PROGRAM_PARAMETERS\" value=\" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter\" />\r\n      <option name=\"SUGGESTED_NAME\" value=\"All Features in: test\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$MODULE_WORKING_DIR$\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"io.cucumber.core.cli.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"CucumberTest\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"battleship\" />\r\n      <option name=\"PACKAGE_NAME\" value=\"\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"CucumberTest\" />\r\n      <option name=\"TEST_OBJECT\" value=\"class\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"java in battleship\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"battleship\" />\r\n      <option name=\"TEST_OBJECT\" value=\"directory\" />\r\n      <dir value=\"$PROJECT_DIR$/src/test/java\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Cucumber Java.All Features in: test\" />\r\n        <item itemvalue=\"JUnit.java in battleship\" />\r\n        <item itemvalue=\"JUnit.CucumberTest\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"3827aeef-2b64-436f-9985-b6799b292925\" name=\"Changes\" comment=\"\" />\r\n      <created>1682497202277</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1682497202277</updated>\r\n      <workItem from=\"1682497205644\" duration=\"19051000\" />\r\n      <workItem from=\"1682535884444\" duration=\"6754000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"enhanced TileTypes enum\">\r\n      <created>1682510681320</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1682510681320</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"enhanced TileTypes enum\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"enhanced TileTypes enum\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/Board.java</url>\r\n          <line>68</line>\r\n          <option name=\"timeStamp\" value=\"4\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/Board.java</url>\r\n          <line>59</line>\r\n          <option name=\"timeStamp\" value=\"5\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-method\">\r\n          <url>file://$PROJECT_DIR$/src/test/java/StepWriteOut.java</url>\r\n          <line>61</line>\r\n          <properties class=\"StepWriteOut\" method=\"the_coordinates_for_ship_overlap_with_an_existing_object_on_board\">\r\n            <option name=\"EMULATED\" value=\"true\" />\r\n            <option name=\"WATCH_EXIT\" value=\"false\" />\r\n          </properties>\r\n          <option name=\"timeStamp\" value=\"7\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -5,14 +5,9 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="3827aeef-2b64-436f-9985-b6799b292925" name="Changes" comment="enhanced TileTypes enum">
+-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Board.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/Game.java" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Driver.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Player.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/Ship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Ship.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Tile.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/test/java/StepWriteOut.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/StepWriteOut.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/test/resources/featureTest.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/featureTest.feature" afterDir="false" />
+     </list>
+@@ -32,34 +27,32 @@
+       <MavenGeneralSettings>
+         <option name="useMavenConfig" value="true" />
+       </MavenGeneralSettings>
+-    </option>
+-    <option name="importingSettings">
+-      <MavenImportingSettings>
+-        <option name="workspaceImportEnabled" value="true" />
+-      </MavenImportingSettings>
+     </option>
+   </component>
+   <component name="ProjectId" id="2OxLHkR81FV2oOW7FuBNMNNIt9T" />
++  <component name="ProjectLevelVcsManager">
++    <ConfirmationsSetting value="2" id="Add" />
++  </component>
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "WebServerToolWindowFactoryState": "false",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "project.structure.last.edited": "Modules",
+-    "project.structure.proportion": "0.0",
+-    "project.structure.side.proportion": "0.0",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RunManager" selected="Cucumber Java.All Features in: test">
+     <configuration name="All Features in: test" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+       <option name="CUCUMBER_CORE_VERSION" value="5" />
+@@ -137,22 +130,17 @@
+       <breakpoints>
+         <line-breakpoint enabled="true" type="java-line">
+           <url>file://$PROJECT_DIR$/src/main/java/Board.java</url>
+-          <line>68</line>
+-          <option name="timeStamp" value="4" />
+-        </line-breakpoint>
+-        <line-breakpoint enabled="true" type="java-line">
+-          <url>file://$PROJECT_DIR$/src/main/java/Board.java</url>
+           <line>59</line>
+           <option name="timeStamp" value="5" />
+         </line-breakpoint>
+         <line-breakpoint enabled="true" type="java-method">
+           <url>file://$PROJECT_DIR$/src/test/java/StepWriteOut.java</url>
+-          <line>61</line>
++          <line>57</line>
+           <properties class="StepWriteOut" method="the_coordinates_for_ship_overlap_with_an_existing_object_on_board">
+             <option name="EMULATED" value="true" />
+             <option name="WATCH_EXIT" value="false" />
+           </properties>
+-          <option name="timeStamp" value="7" />
++          <option name="timeStamp" value="8" />
+         </line-breakpoint>
+       </breakpoints>
+     </breakpoint-manager>

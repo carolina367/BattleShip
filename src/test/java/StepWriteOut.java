@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 
 public class StepWriteOut {
     Board gameBoard = new Board(10);
+    Board gameBoard2 = new Board(10);
     Ship testShip = new Ship();
 
     int userX;
@@ -97,14 +98,79 @@ public class StepWriteOut {
         assertTrue(outOfBounds);
         assertFalse(gameBoard.placeShip(userX, userY, testShip));
         // TODO: COME BACK TO THIS!!!! IT IS A GUI THING
+<<<<<<< HEAD
     }
 
-    @Then("they should see an error message indicating that they cannot place any more <ship type> ships")
-    public void they_should_see_an_error_message_indicating_that_they_cannot_place_any_more_ship_type_ships() {
+    @Then("they should see an error message indicating that they cannot place any more {shipType} ships")
+    public void they_should_see_an_error_message_indicating_that_they_cannot_place_any_more_ship_type_ships(String shipType) {
         assertFalse(gameBoard.placeShip(userX, userY, testShip));
         // TODO: COME BACK TO THIS!!!! IT IS A GUI THING
     }
 
+    @Given("a board that has been fully set up. last cruiser @ {int} {string}")
+    public void a_board_that_has_been_fully_set_up_last_cruiser(Integer x, String yString) {
+        int y = Character.toUpperCase(yString.charAt(0)) - 'A';
+        System.out.println("starting with all ships");
+        // Make & place ships
+        int count = 0;
+        for (ShipType ship : ShipType.values()) {
+            testShip = new Ship(true, ship);
+            gameBoard.placeShip(count, 0, testShip);
+            count++;
+        }
+        //place the last cruiser
+        testShip = new Ship(true, ShipType.CRUISER);
+        gameBoard.placeShip(x, y, testShip);
+
+        System.out.println("Player1's view of board they own:");
+        gameBoard.displayBoard(false);
+        assertEquals(0, gameBoard.countShipsToPlace());
+    }
+    @When("Player1 bombs coordinate {int} {string} on Player2's board")
+    public void player1_bombs_coordinate_on_player2_s_board(Integer x, String y) {
+        userX = x;
+        userY = Character.toUpperCase(y.charAt(0)) - 'A';
+    }
+    @Given("a bomb hit a ship")
+    public void a_bomb_hit_a_ship() {
+        System.out.println("The bomb should appear on board @ " + "userX:" + userX + " userY:" + (char) ('A' + userY));
+        for(int i = 0; i < 3; i++) {
+            gameBoard.bomb(userX,userY+i, p2);
+        }
+        p2.displayConqueredShips();
+    }
+    @Then("the opponent should see the alternate display of the game board")
+    public void the_opponent_should_see_the_alternate_display_of_the_game_board() {
+        System.out.println("\n Player2's view of P1's board:");
+        gameBoard.displayBoard(true);
+
+        System.out.println("\n Player1's view of their board after bomb:");
+        gameBoard.displayBoard(false);
+    }
+    @Given("Player1 places ship on their board at coordinates {int} and {int}")
+    public void Player1_places_ship_on_their_board(Integer x, Integer y){
+        x = 1;
+        y = 1;
+        testShip.setVertical(true);
+        testShip.setShipType(ShipType.BATTLESHIP);
+        gameBoard.placeShip(x, y, testShip);
+    }
+    @Given("Player2 places ship on their board at coordinates {int} and {int}")
+    public void Player2_places_ship_on_their_board(Integer x, Integer y){
+        x = 5;
+        y = 6;
+        testShip.setVertical(false);
+        testShip.setShipType(ShipType.DESTROYER);
+        gameBoard2.placeShip(x, y, testShip);
+    }
+    @Then("There should appear two different boards")
+    public void There_should_appear_two_different_boards(){
+        System.out.println("Board of player1");
+        gameBoard.displayBoard(false);
+        System.out.println("Board of player2");
+        gameBoard2.displayBoard(false);
+    }
+    
     @Given("a board that has been fully set up. last cruiser @ {int} {string}")
     public void a_board_that_has_been_fully_set_up_last_cruiser(Integer x, String yString) {
         int y = Character.toUpperCase(yString.charAt(0)) - 'A';
