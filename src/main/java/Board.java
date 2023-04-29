@@ -4,10 +4,10 @@ import java.lang.IndexOutOfBoundsException;
 public class Board {
     private final int size;
     private final Tile[][] gameBoard;
-    private final HashMap<String, Integer> shipsToPlace;
+    private final MyHashMap<String, Integer> shipsToPlace;
 
     public Board(int size) {
-        shipsToPlace = new HashMap<>();
+        shipsToPlace = new MyHashMap<>();
         shipsToPlace.put("CARRIER", 1);
         shipsToPlace.put("BATTLESHIP", 1);
         shipsToPlace.put("CRUISER", 2);
