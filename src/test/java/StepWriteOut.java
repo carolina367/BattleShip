@@ -132,7 +132,7 @@ public class StepWriteOut {
     @Given("a bomb hit a ship")
     public void a_bomb_hit_a_ship() {
         System.out.println("The bomb should appear on board @ " + "userX:" + userX + " userY:" + (char) ('A' + userY));
-        for(int i = 0; i < 3; i++) {
+        for(int i = -1; i < 2; i++) {
             gameBoard.bomb(userX,userY+i, p2);
         }
         p2.displayConqueredShips();
