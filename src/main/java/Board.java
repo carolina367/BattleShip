@@ -215,4 +215,11 @@ public class Board {
         return coords;
     }
 
+    public boolean donePlacingShips() {
+        if (countShipsToPlace() == 0) {
+            System.out.println("Done placing ships!");
+            return true;
+        }
+        return false;
+    }
 }
