@@ -5,6 +5,15 @@ public class Driver {
     public static void main(String[] args) {
         System.out.println("Hello, welcome to battleship");
         Scanner sc = new Scanner(System.in);
+/////sebas stuff 
+        Board gameBoard1 = new Board(10);
+        Board gameBoard2 = new Board(10);
+//        gameBoard1.randomPlaceShips(gameBoard1);
+//        gameBoard1.countShipsToPlace();
+//        gameBoard1.displayBoard(false);
+        int xCord = getValidCoordinate(sc, gameBoard1, "X (as num)");
+        int yCord = getValidCoordinate(sc, gameBoard1, "Y (as char)");
+        boolean isVertical = getValidBooleanInput(sc);
 
         ///////// INITIALIZE /////////
         // player 1
@@ -29,6 +38,7 @@ public class Driver {
             manualPlaceAllShips(board1, sc);
         } else {
             // todo: put in the random place function
+            board1.randomPlaceShips(gameBoard1);
         }
 
         // player 2
@@ -46,9 +56,11 @@ public class Driver {
                 manualPlaceAllShips(board2, sc);
             } else {
                 // todo: put in the random place function
+                board2.randomPlaceShips(gameBoard1);
             }
         } else if (p2 instanceof AI) {
             // todo: put in the random place function
+            board2.randomPlaceShips(gameBoard1);
         }
 
 
