@@ -22,6 +22,9 @@ public class Tile {
     }
 
     public void setTileType(TileType typeDeclared) { // for transitioning tile
+        if(this.type == TileType.COVERED_SHIP && typeDeclared == TileType.WATER) { // setting back to water
+            this.ship = null;
+        }
         if (typeDeclared != TileType.COVERED_SHIP && typeDeclared != TileType.COVERED_ROCK) {
             this.key = typeDeclared.toString();
             this.type = typeDeclared;
