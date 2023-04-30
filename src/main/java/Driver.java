@@ -50,11 +50,10 @@ public class Driver {
             // todo: put in the random place function
         }
 
-
         sc.close();
     }
 
-    public static String play(Scanner sc, Player p1, Player p2, Board gameBoard) {
+    public static String play(Scanner sc, Player p1, Player p2, Board gameBoard) { // haven't fully implemented yet
         final int totShips = gameBoard.countShipsToPlace();
         Integer counter = 0;
         while (p1.countConqueredShips() != totShips && p2.countConqueredShips() != totShips) {

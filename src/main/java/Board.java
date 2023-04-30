@@ -9,7 +9,7 @@ public class Board {
     private HashMap<String, Integer> shipsToPlace;
 
     public Board(int size) {
-        shipsToPlace = new HashMap<>();
+        shipsToPlace = new MyHashMap<>();
         shipsToPlace.put("CARRIER", 1);
         shipsToPlace.put("BATTLESHIP", 1);
         shipsToPlace.put("CRUISER", 2);
