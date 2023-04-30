@@ -20,13 +20,8 @@ public class Driver {
         Player p2 = opponent ? new Human() : new AI();
         p2.setName();
 
-        while (((Human) p1).getHumanName().equalsIgnoreCase(((Human) p2).getHumanName())) {
-            System.out.println("That is the same name as p1. Pick a new name please");
-            p2.setName();
-        }
-
         ///////// Set up Board /////////
-        System.out.println(String.format("Player %s Would you like to set up your board manually or randomly generated? Enter 'true' for manual, 'false' for random", p1.getName()));
+        System.out.println(String.format("Player %s, Would you like to set up your board manually or randomly generated? Enter 'true' for manual, 'false' for random", ((Human) p1).getHumanName()));
         boolean manualSetUp = getValidBooleanInput(sc);
 
         // player 1
@@ -38,7 +33,13 @@ public class Driver {
 
         // player 2
         if (p2 instanceof Human) {
-            System.out.println(String.format("Player %s Would you like to set up your board manually or randomly generated? Enter 'true' for manual, 'false' for random", p2.getName()));
+            p2.setName();
+            while (((Human) p1).getHumanName().equalsIgnoreCase(((Human) p2).getHumanName())) { // this was the only way to access the names
+                System.out.println("That is the same name as p1. Pick a new name please");
+                p2.setName();
+            }
+
+            System.out.println(String.format("Player %s, Would you like to set up your board manually or randomly generated? Enter 'true' for manual, 'false' for random", ((Human) p2).getHumanName()));
             manualSetUp = getValidBooleanInput(sc);
 
             if (manualSetUp) {
@@ -50,19 +51,33 @@ public class Driver {
             // todo: put in the random place function
         }
 
+
+        play(sc,p1, p2, board1, board2);
+
+        String winner = play(sc,p1, p2, board1, board2);
+
+        System.out.println("The winner is " + winner);
         sc.close();
     }
 
-    public static String play(Scanner sc, Player p1, Player p2, Board gameBoard) { // haven't fully implemented yet
-        final int totShips = gameBoard.countShipsToPlace();
+    public static String play(Scanner sc, Player p1, Player p2, Board gameBoard1, Board gameBoard2) { // haven't fully implemented yet
         Integer counter = 0;
-        while (p1.countConqueredShips() != totShips && p2.countConqueredShips() != totShips) {
+        String p1Name = ((Human) p1).getHumanName();
+        String p2Name;
+        if (p2 instanceof Human) {
+            p2Name = ((Human) p2).getHumanName();
+        } else if (p2 instanceof AI) {
+            // todo: figure out if AI will return its hardcoded name
+            p2Name = p2.getName();
+        }
+        while (p1.countConqueredShips() != 5 && p2.countConqueredShips() != 5) {
             if (counter % 2 == 0) {
-//                turn(sc, p1, gameBoard);
+//                turn(sc, p1, p1Name, gameBoard1);
+                gameBoard1.displayBoard(true);
             } else {
-//                turn(sc, p2, gameBoard);
+//                turn(sc, p2, p2Name, gameBoard2);
+                gameBoard2.displayBoard(true);
             }
-            gameBoard.displayBoard(true);
             counter++;
         }
 
@@ -70,7 +85,7 @@ public class Driver {
             System.out.println("There was a tie. Would you like to play again? Enter 'true' for yes, 'false' for no");
             boolean next = getValidBooleanInput(sc);
             if (next) {
-                play(sc, p1, p2, gameBoard);
+                play(sc, p1, p2, gameBoard1, gameBoard2);
             } else {
                 return ("\t Thank you for playing\n");
             }
@@ -80,8 +95,18 @@ public class Driver {
         return p2.getName();
     }
 
+    public static void turn(Scanner sc, Player player, String playerName, Board opponentBoard) {
+        System.out.println("Turn of player " + playerName);
+        while(true) {
+            int xCord = getValidCoordinate(sc, opponentBoard.getSize(), "X (as num)");
+            int yCord = getValidCoordinate(sc, opponentBoard.getSize(), "Y (as char)");
 
-    public static int getValidCoordinate(Scanner sc, Board board, String str) {
+            while(!opponentBoard.bomb(yCord, xCord, player)) {
+                System.out.println("You sunk a ship, you get to go again!");
+            } // bomb function will let user know why they can't bomb
+        }
+    }
+    public static int getValidCoordinate(Scanner sc, int boardSize, String str) {
         int coordinate = -1;
         while (true) {
             System.out.println("Enter " + str + " coordinate: ");
@@ -98,7 +123,7 @@ public class Driver {
                     coordinate = sc.nextInt(); // if invalid it will throw an exception
                 }
 
-                if (coordinate < board.getSize() && coordinate >= 0) {
+                if (coordinate < boardSize && coordinate >= 0) {
                     return coordinate; // if correct it'll short the loop
                 }
                 System.out.println(errMessage + ". Enter again.");
@@ -129,25 +154,25 @@ public class Driver {
     }
 
     public static void manualPlaceAllShips(Board board, Scanner sc) {
-        int xCord, yCord;
-        boolean isVertical;
-        String shipInput;
         Ship newShip = null;
         outer:
         while (board.countShipsToPlace() > 0) {
             System.out.println(String.format("You have %d ships left to place. Remember, the board is from x: 0-%d, y: A-%c", board.countShipsToPlace(), (board.getSize() - 1), (char) ('A' + board.getSize() - 1)));
-            xCord = getValidCoordinate(sc, board, "X (as num)");
-            yCord = getValidCoordinate(sc, board, "Y (as char)");
+            int xCord = getValidCoordinate(sc, board.getSize(), "X (as num)");
+            int yCord = getValidCoordinate(sc, board.getSize(), "Y (as char)");
 
             System.out.println("Is the ship vertical? Enter 'true' or 'false': ");
-            isVertical = getValidBooleanInput(sc);
+            boolean isVertical = getValidBooleanInput(sc);
 
             boolean terminate = false;
             while (terminate == false) {
 
                 System.out.println("Valid ships: " + board.getShipsToPlace().entrySet());
                 System.out.println("Enter Ship Type: ");
-                shipInput = sc.next().toUpperCase();
+                String shipInput = sc.next().toUpperCase();
+                while(!shipInput.matches("[a-zA-Z]+")){ // only characters
+                    shipInput = sc.next().toUpperCase();
+                }
 
                 for (ShipType type : ShipType.values()) {
                     if (type.name().equalsIgnoreCase(shipInput)) {
