@@ -1,10 +1,12 @@
 import java.util.HashMap;
 import java.lang.IndexOutOfBoundsException;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class Board {
     private final int size;
-    private final Tile[][] gameBoard;
-    private final HashMap<String, Integer> shipsToPlace;
+    private Tile[][] gameBoard;
+    private HashMap<String, Integer> shipsToPlace;
 
     public Board(int size) {
         shipsToPlace = new HashMap<>();
@@ -16,9 +18,9 @@ public class Board {
         this.size = size;
         this.gameBoard = new Tile[size][size];
         // nested loop to add all indexes as a new tile
-        for (int x = 0; x < size; x++) {
-            for (int y = 0; y < size; y++) {
-                gameBoard[y][x] = new Tile();
+        for (int letter = 0; letter < size; letter++) {
+            for (int num = 0; num < size; num++) {
+                gameBoard[letter][num] = new Tile();
             }
         }
 
@@ -28,40 +30,36 @@ public class Board {
         return size;
     }
 
-    public Tile getTile(int x, int y) {
-        return gameBoard[y][x];
+    public Tile getTile(int letter, int num) {
+        return gameBoard[letter][num];
     }
 
-    public boolean placeShip(int x, int y, Ship ship) {
-        if (!overlapping(x, y, ship) && !outOfBounds(x, y, ship) && shipsToPlace.get(ship.getShipType().name()) - 1 >= 0) {
-            setAllTilesInShip(x, y, ship, TileType.COVERED_SHIP);
-//            System.out.println("\t ---> placing " + ship.getShipType().name().toLowerCase());
+    public boolean placeShip(int letter, int num, Ship ship, boolean output) {
+        if (!overlapping(letter, num, ship) && !ship.outOfBounds(letter, num, size) && shipsToPlace.get(ship.getShipType().name()) - 1 >= 0) {
+            ship.setAllTilesInShip(letter, num, this, TileType.COVERED_SHIP);
             shipsToPlace.put(ship.getShipType().name(), shipsToPlace.get(ship.getShipType().name()) - 1);
-//            displayShipsToPlace( ship.getShipType().name());
+            if (output) {
+               System.out.println(String.format("\n \t ---> placing %s %s, at (x: %d, y: %c)", ship.getShipType().name().toLowerCase(), (ship.isVertical() ? " vertically" : " horizontally"), num, (char) ('A' + letter)));
+                displayShipsToPlace(ship.getShipType().name());
+            }
             return true;
         } else {
-            System.out.println("Unable to place ship: " + ship.getShipType().name().toLowerCase());
+            if (output) {
+                String reason = (overlapping(letter, num, ship) ? "Overlapping" : (ship.outOfBounds(letter, num, size) ? "Ship goes out of bounds" : "All ships of this type placed"));
+                System.out.println("Unable to place ship: " + ship.getShipType().name().toLowerCase() + " - " + reason);
+            }
             return false;
         }
     }
 
-    public boolean outOfBounds(int x, int y, Ship ship) {
+    public boolean overlapping(int letter, int num, Ship ship) {
         for (int i = 0; i < ship.getLength(); i++) { // checking that the ship isn't overlapping any coordinate
-            if (y + i >= size || x + i >= size || x < 0 || y < 0) {
-                return true; // coordinates are out of bounds
-            }
-        }
-        return false; // coordinates are within bounds
-    }
-
-    public boolean overlapping(int x, int y, Ship ship) {
-        for (int i = 0; i < ship.getLength(); i++) { // checking that the ship isn't overlapping any coordinate
-            if (y + i >= size || x + i >= size) {
+            if (letter + i >= size || num + i >= size) {
                 break;
             }
-            if (ship.isVertical() && gameBoard[y][x + i].getTileType() != TileType.WATER) {
-                return true; // ships are overlapping
-            } else if (gameBoard[y + i][x].getTileType() != TileType.WATER) {
+            int letterOffset = ship.isVertical() ? i : 0;
+            int numOffset = ship.isVertical() ? 0 : i;
+            if (gameBoard[letter + letterOffset][num + numOffset].getTileType() != TileType.WATER) {
                 return true; // ships are overlapping
             }
         }
@@ -69,9 +67,9 @@ public class Board {
     }
 
     public boolean isEmpty() {
-        for (int x = 0; x < size - 1; x++) {
-            for (int y = 0; y < size - 1; y++) {
-                if (gameBoard[y][x].getTileType() != TileType.WATER) {
+        for (int num = 0; num < size - 1; num++) {
+            for (int letter = 0; letter < size - 1; letter++) {
+                if (gameBoard[letter][num].getTileType() != TileType.WATER) {
                     return false;
                 }
             }
@@ -99,10 +97,10 @@ public class Board {
 
         int counter = 0;
 
-        for (int x = 0; x < size; x++) {
+        for (int letter = 0; letter < size; letter++) {
             System.out.print((char) ('A' + counter) + " | "); // vertical margin
-            for (int y = 0; y < size; y++) {
-                Tile currTile = gameBoard[x][y];
+            for (int num = 0; num < size; num++) {
+                Tile currTile = gameBoard[letter][num]; // how i had it Tile currTile = gameBoard[num][letter]; //todo look into thos
                 if (!opponentView) { // player's personal view
                     if (currTile.getShip() != null && currTile.getTileType() == TileType.COVERED_SHIP) { // show what ship type
                         System.out.print(currTile.getShip().getShipType().toString() + "  "); // TODO: tell GUI to show if the ship is normal/bombed/sunk
@@ -135,6 +133,8 @@ public class Board {
                 toPrint = " <--- decremented";
             }
             System.out.println("\t" + i.toLowerCase() + ": " + shipsToPlace.get(i) + " left to place" + toPrint);
+            // todo: see if this works the same or better than print statement
+//            shipsToPlace.entrySet(); // gets the set of pairs (k, v )
 
             sumOfShips += shipsToPlace.get(i);
             toPrint = "";
@@ -145,6 +145,11 @@ public class Board {
         }
     }
 
+    public HashMap<String, Integer> getShipsToPlace() {
+        return shipsToPlace;
+    }
+
+
     public int countShipsToPlace() {
         int sumOfShips = 0;
         for (String i : shipsToPlace.keySet()) {
@@ -153,13 +158,14 @@ public class Board {
         return sumOfShips;
     }
 
-public boolean bomb(int x, int y, Player opponent) {
-        if (y >= size || x >= size || x < 0 || y < 0) {
-            System.out.println("Cannot bomb coordinate " + x + ", " + (char) ('A' + y) + ". It is out of bounds");
+    public boolean bomb(int letter, int num, Player opponent) {
+        if (letter >= size || num >= size || num < 0 || letter < 0) {
+            String before = (letter < 0 ? "-" : ( letter >= size ? Character.toString((char) ('A' + letter - size)) : "" )); // this is ugly but it works
+            System.out.println("Cannot bomb coordinate " + num + ", " + before + (char) ('A' + Math.abs(letter)) + ". It is out of bounds");
         } else {
-            Tile currTile = gameBoard[y][x];
+            Tile currTile = gameBoard[letter][num];
             if (!(currTile.getTileType() == TileType.WATER) && !(currTile.getTileType() == TileType.COVERED_SHIP) && !(currTile.getTileType() == TileType.COVERED_ROCK)) {
-                System.out.println("Cannot bomb coordinate " + x + ", " + (char) ('A' + y) + ". It is already bombed");
+                System.out.println("Cannot bomb coordinate " + num + ", " + (char) ('A' + letter) + ". It is already bombed");
             } else {
                 if (currTile.getTileType() == TileType.WATER) {
                     currTile.setTileType(TileType.BOMBED_WATER);
@@ -167,7 +173,7 @@ public boolean bomb(int x, int y, Player opponent) {
                     Ship currShip = currTile.getShip();
                     currShip.takeHit(); // take a hit
                     if (currShip.getIsSunk()) { // if that hit sank ship
-                        setAllTilesInShip(x, y, currShip, TileType.UNCOVERED_SHIP);
+                        currShip.setAllTilesInShip(letter, num, this, TileType.UNCOVERED_SHIP);
                         // todo: tell player ship was bombed
                         opponent.addConqueredShips(currShip);
                         return true; // sunk a ship so can go again
@@ -182,37 +188,4 @@ public boolean bomb(int x, int y, Player opponent) {
         }
         return false;
     }
-
-    public void setAllTilesInShip(int x, int y, Ship ship, TileType type) { // the coords need to be to the start of the ship
-        // ensure coords are for the start of the ship
-        if (type != TileType.COVERED_SHIP) {
-            y = findShipStart(x, y, ship)[0];
-            x = findShipStart(x, y, ship)[1];
-        }
-
-        for (int i = 0; i < ship.getLength(); i++) { //uncovering the ship on every coordinate
-            int yOffset = ship.isVertical() ? i : 0;
-            int xOffset = ship.isVertical() ? 0 : i;
-            if (type == TileType.COVERED_SHIP) {
-                gameBoard[y + yOffset][x + xOffset].setTileType(type, ship);
-            } else {
-                gameBoard[y + yOffset][x + xOffset].setTileType(type);
-            }
-        }
-    }
-
-    public int[] findShipStart(int x, int y, Ship ship) {
-        int[] coords = {y, x}; // if none are found it'll return this
-        for (int i = 0; i < ship.getLength() + 1; i++) { // at most, we are at the end of the ship
-            int yOffset = ship.isVertical() ? i : 0;
-            int xOffset = ship.isVertical() ? 0 : i;
-            if (outOfBounds(x - xOffset, y - yOffset, ship) || gameBoard[y - yOffset][x - xOffset].getShip() != ship) {
-                coords[0] = y - yOffset + (yOffset != 0 ? 1 : 0);
-                coords[1] = x - xOffset + (xOffset != 0 ? 1 : 0);
-                break;
-            }
-        }
-        return coords;
-    }
-
 }
