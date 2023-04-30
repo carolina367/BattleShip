@@ -92,8 +92,8 @@ public class StepWriteOut {
 
     @When("a notification appears that ships cannot be placed out of bounds")
     public void a_notification_appears_that_ships_cannot_be_placed_out_of_bounds() {
-//        boolean outOfBounds = testShip.outOfBounds(userLetter, userNum, gameBoard);
-        boolean outOfBounds = testShip.outOfBounds(userLetter, userNum, gameBoard.getSize());
+        boolean outOfBounds = testShip.outOfBounds(userLetter, userNum, gameBoard);
+//        boolean outOfBounds = testShip.outOfBounds(userLetter, userNum, gameBoard.getSize());
         assertTrue(outOfBounds);
         assertFalse(gameBoard.placeShip(userLetter, userNum, testShip, false));
         // TODO: COME BACK TO THIS!!!! IT IS A GUI THING

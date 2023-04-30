@@ -38,7 +38,7 @@ public class Tile {
             this.key = typeDeclared.toString();
             this.type = typeDeclared;
             this.ship = ship;
-//          this.obstacle = rock; // TODO: create an interface for obstacle and change ship to that
+//          this.obstacle = obst; // TODO: create an interface for obstacle and change ship to that
         }
     }
 }

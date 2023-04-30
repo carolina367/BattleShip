@@ -26,7 +26,7 @@ public class Driver {
                 System.out.println("That is the same name as p1. Pick a new name please");
                 p2.setName();
             }
-        } else if (p2 instanceof AI) {
+        } else {
             System.out.println("Your opponent is AI, their name is " + p2.getName());
         }
 
@@ -37,7 +37,7 @@ public class Driver {
         // Player 2
         if (p2 instanceof Human) {
             generateBoard(sc, p2, board2);
-        } else if (p2 instanceof AI) {
+        } else {
             board2.randomPlaceShips();
         }
 
@@ -58,7 +58,7 @@ public class Driver {
 //            board.displayBoard(false); // todo: uncomment after debugging
             System.out.println("Here is your randomly generated board. Enter 'true' if you are satisfied, 'false' to regenerate");
             boolean answer = getValidBooleanInput(sc);
-            while (answer == false) {
+            while (!answer) {
                 board.randomPlaceShips();
 //                board.displayBoard(false); // todo: uncomment after debugging
                 System.out.println("Here is your randomly generated board. Enter 'true' if you are satisfied, 'false' to regenerate");
@@ -69,7 +69,7 @@ public class Driver {
 
     public static String play(Scanner sc, Player p1, Player p2, Board gameBoard1, Board gameBoard2) { // haven't fully implemented yet
         Integer counter = 0;
-        while (p1.countConqueredShips() != 5 && p2.countConqueredShips() != 5) { // todo put as variable
+        while (p1.countConqueredShips() != 5 && p2.countConqueredShips() != 5) {
             if (counter % 2 == 0) {
                 turn(sc, p1, gameBoard2);
 //                gameBoard1.displayBoard(true);
@@ -108,7 +108,7 @@ public class Driver {
         }
 
         int hit = opponentBoard.bomb(yCord, xCord, player);
-        while (hit == 2 || hit == 0) { //TODO: this has a bug
+        while (hit == 2 || hit == 0) {
             if (player instanceof Human) {
                 if (hit == 2) {
                     System.out.println("You sunk a ship, you get to go again! Here is where you hit: ");
@@ -192,7 +192,7 @@ public class Driver {
             boolean isVertical = getValidBooleanInput(sc);
 
             boolean terminate = false;
-            while (terminate == false) {
+            while (!terminate) {
 
                 System.out.println("Valid ships: " + board.getShipsToPlace().entrySet());
                 System.out.println("Enter Ship Type: ");
@@ -219,9 +219,7 @@ public class Driver {
                     boolean anotherShip = getValidBooleanInput(sc);
                     if (!anotherShip) {
                         continue outer; // restart outer while loop
-                    } else {
-                        continue; // restart inner while loop
-                    }
+                    } // restart inner while loop
                 } else {
                     board.placeShip(yCord, xCord, newShip, true); // the true will handle outputting any relevant info in both success and fail state
                     board.displayBoard(false);

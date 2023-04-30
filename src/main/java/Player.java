@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 public abstract class Player {
     private String name;
-    private final HashMap<String, Integer> conqueredShips = new HashMap<>();
+    private final HashMap<String, Integer> conqueredShips = new MyHashMap<>();
 
     public Player() {
         this.name = "";

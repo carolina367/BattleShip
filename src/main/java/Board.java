@@ -4,7 +4,7 @@ import java.util.Random;
 public class Board {
     private final int size;
     private final Tile[][] gameBoard;
-    private final HashMap<String, Integer> shipsToPlace;
+    private final MyHashMap<String, Integer> shipsToPlace;
 
     public Board(int size) {
         shipsToPlace = new MyHashMap<>();
@@ -37,8 +37,8 @@ public class Board {
     }
 
     public boolean placeShip(int letter, int num, Ship ship, boolean output) {
-//        if (!overlapping(letter, num, ship) && !ship.outOfBounds(letter, num, this) && shipsToPlace.get(ship.getShipType().name()) - 1 >= 0) {
-        if (!overlapping(letter, num, ship) && !ship.outOfBounds(letter, num, size) && shipsToPlace.get(ship.getShipType().name()) - 1 >= 0) {
+        if (!overlapping(letter, num, ship) && !ship.outOfBounds(letter, num, this) && shipsToPlace.get(ship.getShipType().name()) - 1 >= 0) {
+//        if (!overlapping(letter, num, ship) && !ship.outOfBounds(letter, num, size) && shipsToPlace.get(ship.getShipType().name()) - 1 >= 0) {
             ship.setAllTilesInShip(letter, num, this, TileType.COVERED_SHIP);
             shipsToPlace.put(ship.getShipType().name(), shipsToPlace.get(ship.getShipType().name()) - 1);
             if (output) {
@@ -48,8 +48,8 @@ public class Board {
             return true;
         } else {
             if (output) {
-//                String reason = (overlapping(letter, num, ship) ? "Overlapping" : (ship.outOfBounds(letter, num, this) ? "Ship goes out of bounds" : "All ships of this type placed"));
-                String reason = (overlapping(letter, num, ship) ? "Overlapping" : (ship.outOfBounds(letter, num, size) ? "Ship goes out of bounds" : "All ships of this type placed"));
+                String reason = (overlapping(letter, num, ship) ? "Overlapping" : (ship.outOfBounds(letter, num, this) ? "Ship goes out of bounds" : "All ships of this type placed"));
+//                String reason = (overlapping(letter, num, ship) ? "Overlapping" : (ship.outOfBounds(letter, num, size) ? "Ship goes out of bounds" : "All ships of this type placed"));
                 System.out.println("Unable to place ship: " + ship.getShipType().name().toLowerCase() + " - " + reason);
             }
             return false;
