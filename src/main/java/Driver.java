@@ -55,12 +55,10 @@ public class Driver {
             manualPlaceAllShips(board, sc);
         } else {
             board.randomPlaceShips();
-//            board.displayBoard(false); // todo: uncomment after debugging
             System.out.println("Here is your randomly generated board. Enter 'true' if you are satisfied, 'false' to regenerate");
             boolean answer = getValidBooleanInput(sc);
             while (!answer) {
                 board.randomPlaceShips();
-//                board.displayBoard(false); // todo: uncomment after debugging
                 System.out.println("Here is your randomly generated board. Enter 'true' if you are satisfied, 'false' to regenerate");
                 answer = getValidBooleanInput(sc);
             }
