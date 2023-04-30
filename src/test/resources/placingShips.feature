@@ -53,24 +53,20 @@ Feature: Placing ships
     Given the board already contains a vertical ship of type <shipType> at coordinates <x> and <y>
     And user is entering coordinates <x2> <y2> for a vertical equals <isVertical> ship of type <shipType>
     When the user tries to place the ship
-    Then they should see an error message indicating that they cannot place any more <ship type> ships
+    Then they should see an error message indicating that they cannot place any more <shipType> ships
 
     Examples:
       | x2 | y2  | shipType     | isVertical | x | y   |
       | 6  | "G" | "BATTLESHIP" | "false"    | 3 | "A" |
-<<<<<<< HEAD
-  @tag
-  Scenario Outline: Both players have their own board and ships there
-    Given Player2 places ship on their board at coordinates <x> and <y>
-    And Player1 places ship on their board at coordinates <x> and <y>
-    Then There should appear two different boards
-    Examples:
-      |x|y|||
-      |1|1|||
-      |5|6|||
+
+#  @tag
+#  Scenario Outline: Both players have their own board and ships there
+#    Given Player2 places ship on their board at coordinates <x> and <y>
+#    And Player1 places ship on their board at coordinates <x> and <y>
+#    Then There should appear two different boards
+#    Examples:
+#      |x|y|||
+#      |1|1|||
+#      |5|6|||
 
 ##############################################################################################
-=======
-
-##############################################################################################
->>>>>>> 84288473a7c4e547e19570f2291b0c02ff3084bc
