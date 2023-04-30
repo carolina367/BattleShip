@@ -6,6 +6,9 @@ public class Driver {
         Scanner sc = new Scanner(System.in);
         Board gameBoard1 = new Board(10);
         Board gameBoard2 = new Board(10);
+//        gameBoard1.randomPlaceShips(gameBoard1);
+//        gameBoard1.countShipsToPlace();
+//        gameBoard1.displayBoard(false);
         int xCord = getValidCoordinate(sc, gameBoard1, "X (as num)");
         int yCord = getValidCoordinate(sc, gameBoard1, "Y (as char)");
         boolean isVertical = getValidBooleanInput(sc);
