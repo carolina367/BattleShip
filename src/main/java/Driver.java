@@ -101,7 +101,7 @@ public class Driver {
             int xCord = getValidCoordinate(sc, opponentBoard.getSize(), "X (as num)");
             int yCord = getValidCoordinate(sc, opponentBoard.getSize(), "Y (as char)");
 
-            while(!opponentBoard.bomb(yCord, xCord, player)) {
+            while(!opponentBoard.bomb(yCord, xCord, player)) { //TODO: this has a bug
                 System.out.println("You sunk a ship, you get to go again!");
             } // bomb function will let user know why they can't bomb
         }

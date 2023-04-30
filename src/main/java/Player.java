@@ -1,12 +1,10 @@
 import java.util.HashMap;
-import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Player {
     private String name;
-    private HashMap<String, Integer> conqueredShips = new HashMap<>();
+    private final HashMap<String, Integer> conqueredShips = new HashMap<>();
 
-    private int prevX;
+    private int prevX; // todo: use in turn?
     private int prevY;
 
     public Player() {
@@ -29,7 +27,9 @@ public abstract class Player {
         return name;
     }
 
-    public abstract void setName();
+    public void setName() {
+        this.name = "";
+    }
 
     public void displayConqueredShips() {
         System.out.println("Ships conquered:");
@@ -49,6 +49,4 @@ public abstract class Player {
     public void addConqueredShips(Ship ship) {
         conqueredShips.put(ship.getShipType().name(), conqueredShips.get(ship.getShipType().name()) + 1);
     }
-
-    public abstract void turn(Board board);
 }
