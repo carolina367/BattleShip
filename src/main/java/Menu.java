@@ -24,44 +24,82 @@ public class Menu extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Label gameLabel = new Label("Battleship Game");
-        gameLabel.setFont(new Font("Arial", 50));
-        gameLabel.setTextFill(Color.BLACK);
-
-        Button newGameButton = new Button("Start New Game");
-        newGameButton.setOnAction(e -> {
-        System.out.print("213");});
-
-        Button savedGameButton = new Button("Continue Saved Game");
-        savedGameButton.setOnAction(e -> {
-            //Downloading data here
-            //primaryStage.setScene(set proper game scene here);
-            System.out.print("set proper game scene here");
-        }
-        );
-
-
+//        BackgroundImage backgroundImage = new BackgroundImage(
+//                new Image("assets/Missouri_post_refit.jpg", 803, 578, false, true),
+//                BackgroundRepeat.NO_REPEAT,
+//                BackgroundRepeat.NO_REPEAT,
+//                BackgroundPosition.CENTER,
+//                BackgroundSize.DEFAULT
+//        );
 
 
         BorderPane container = new BorderPane();
-        Scene mainScene = new Scene(container);
-//        Scene ruleScene = new Scene(container);
+        BorderPane containerRules = new BorderPane();
+//        container.setBackground(new Background(backgroundImage));
+//        containerRules.setBackground(new Background(backgroundImage));
+        Scene mainScene = new Scene(container,800,600);
+        Scene ruleScene = new Scene(containerRules,800,600);
 
-//        Button rulesButton = new Button("Rules");
-//        rulesButton.setOnAction(e -> {
-//            primaryStage.setScene(ruleScene);});
+        Label gameLabel = new Label("Battleship Game");
+        gameLabel.setFont(new Font("Charles worth", 30));
+        gameLabel.setTextFill(Color.BLACK);
 
-        primaryStage.setScene(mainScene);
+        Label gameLabel3 = new Label("Battleship Game - rules");
+        gameLabel3.setFont(new Font("Charles worth", 30));
+        gameLabel3.setTextFill(Color.BLACK);
+
+        //rules
+        Label ruleLabel=new Label(
+                "Rules of the game \n" +
+                        "1. Each player places their ships on their own game board \n" +
+                        "2. Take turns calling out coordinates to bomb enemy's ships\n" +
+                        "3. You can hit ship, rock or water \n" +
+                        "4. You win when enemy has all ships sank\n" +
+                        "5. Remember to have fun!");
+        ruleLabel.setFont(new Font("Charles worth", 15));
+        ruleLabel.setTextFill(Color.BLACK);
+
+
+        Button newGameButton = new Button("Multiplayer");
+        newGameButton.setOnAction(e -> {
+//            primaryStage.setScene(gameScene);
+            System.out.print("213");
+            }
+        );
+
+        Button AgainstAI = new Button("Against AI");
+        AgainstAI.setOnAction(e -> {
+//            primaryStage.setScene(gameScene);
+//            setAI(true);
+            System.out.print("set proper game scene here");
+            }
+        );
+        Button rulesButton = new Button("Rules");
+        rulesButton.setOnAction(e -> {
+            System.out.print("rules ");
+            primaryStage.setScene(ruleScene);
+            }
+        );
+        Button backToMenu2 = new Button("Back to menu");
+        backToMenu2.setOnAction(e -> {
+            primaryStage.setScene(mainScene);});
+
         VBox menuLayout = new VBox(20);
         menuLayout.setPadding(new Insets(50));
         menuLayout.setAlignment(Pos.CENTER);
-        menuLayout.setStyle("-fx-background-color: DARKCYAN;");
-        menuLayout.getChildren().addAll(gameLabel, newGameButton, savedGameButton
-//                ,rulesButton
-        );
+        menuLayout.setStyle("-fx-background-color: DARKSLATEBLUE;");
+        menuLayout.getChildren().addAll(gameLabel, newGameButton, AgainstAI, rulesButton);
         mainScene.setRoot(menuLayout);
 
+        VBox ruleLayout = new VBox(20);
+        ruleLayout.setPadding(new Insets(50));
+        ruleLayout.setAlignment(Pos.CENTER);
+        ruleLayout.setStyle("-fx-background-color: DARKSLATEBLUE;");
+        ruleLayout.getChildren().addAll(gameLabel3, ruleLabel, backToMenu2);
+        ruleScene.setRoot(ruleLayout);
+
         primaryStage.setTitle("Battleship - v. 0.1");
+        primaryStage.setScene(mainScene);
         primaryStage.show();
     }
 
