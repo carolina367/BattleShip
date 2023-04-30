@@ -75,7 +75,7 @@ public class Ship {
         for (int i = 0; i < length + 1; i++) { // at most, we are at the end of the ship
             int letterOffset = isVertical() ? i : 0;
             int numOffset = isVertical() ? 0 : i;
-            if (outOfBounds(letter - letterOffset, num - numOffset, gameBoard.getSize()) || gameBoard.getTile((letter - letterOffset), (num - numOffset)).getShip() != this) {
+            if (outOfBounds((letter - letterOffset), (num - numOffset), gameBoard.getSize()) || gameBoard.getTile((letter - letterOffset), (num - numOffset)).getShip() != this) {
                 coords[0] = letter - letterOffset + (letterOffset != 0 ? 1 : 0);
                 coords[1] = num - numOffset + (numOffset != 0 ? 1 : 0);
                 break;

@@ -1,5 +1,6 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Driver {
     public static void main(String[] args) {
@@ -54,10 +55,12 @@ public class Driver {
             manualPlaceAllShips(board, sc);
         } else {
             board.randomPlaceShips();
+//            board.displayBoard(false); // todo: uncomment after debugging
             System.out.println("Here is your randomly generated board. Enter 'true' if you are satisfied, 'false' to regenerate");
             boolean answer = getValidBooleanInput(sc);
             while (answer == false) {
                 board.randomPlaceShips();
+//                board.displayBoard(false); // todo: uncomment after debugging
                 System.out.println("Here is your randomly generated board. Enter 'true' if you are satisfied, 'false' to regenerate");
                 answer = getValidBooleanInput(sc);
             }
@@ -66,21 +69,13 @@ public class Driver {
 
     public static String play(Scanner sc, Player p1, Player p2, Board gameBoard1, Board gameBoard2) { // haven't fully implemented yet
         Integer counter = 0;
-        String p1Name = ""; //((Human) p1).getHumanName();
-        String p2Name;
-        if (p2 instanceof Human) {
-            p2Name = "";//((Human) p2).getHumanName();
-        } else if (p2 instanceof AI) {
-            // todo: figure out if AI will return its hardcoded name
-            p2Name = p2.getName();
-        }
         while (p1.countConqueredShips() != 5 && p2.countConqueredShips() != 5) { // todo put as variable
             if (counter % 2 == 0) {
-//                turn(sc, p1, p1Name, gameBoard1);
-                gameBoard1.displayBoard(true);
+                turn(sc, p1, gameBoard2);
+//                gameBoard1.displayBoard(true);
             } else {
-//                turn(sc, p2, p2Name, gameBoard2);
-                gameBoard2.displayBoard(true);
+                turn(sc, p2, gameBoard1);
+//                gameBoard2.displayBoard(true);
             }
             counter++;
         }
@@ -99,15 +94,42 @@ public class Driver {
         return p2.getName();
     }
 
-    public static void turn(Scanner sc, Player player, String playerName, Board opponentBoard) {
-        System.out.println("Turn of player " + playerName);
-        while (true) {
-            int xCord = getValidCoordinate(sc, opponentBoard.getSize(), "X (as num)");
-            int yCord = getValidCoordinate(sc, opponentBoard.getSize(), "Y (as char)");
+    public static void turn(Scanner sc, Player player, Board opponentBoard) {
+        clearConsole();
+        int xCord, yCord;
+        if (player instanceof Human) {
+            System.out.println("Turn of player " + player.getName() + "\n Here is your opponent's board");
+            opponentBoard.displayBoard(true);
+            xCord = getValidCoordinate(sc, opponentBoard.getSize(), "X (as num)");
+            yCord = getValidCoordinate(sc, opponentBoard.getSize(), "Y (as char)");
+        } else {
+            xCord = ThreadLocalRandom.current().nextInt(0, opponentBoard.getSize());
+            yCord = ThreadLocalRandom.current().nextInt(0, opponentBoard.getSize());
+        }
 
-            while (opponentBoard.bomb(yCord, xCord, player)) { //TODO: this has a bug
-                System.out.println("You sunk a ship, you get to go again!");
-            } // bomb function will let user know why they can't bomb
+        int hit = opponentBoard.bomb(yCord, xCord, player);
+        while (hit == 2 || hit == 0) { //TODO: this has a bug
+            if (player instanceof Human) {
+                if (hit == 2) {
+                    System.out.println("You sunk a ship, you get to go again! Here is where you hit: ");
+                } else {
+                    System.out.println("So close, but not quite. Try entering another coordinate.");
+                }
+                opponentBoard.displayBoard(true);
+                xCord = getValidCoordinate(sc, opponentBoard.getSize(), "X (as num)");
+                yCord = getValidCoordinate(sc, opponentBoard.getSize(), "Y (as char)");
+            } else {
+                xCord = ThreadLocalRandom.current().nextInt(0, opponentBoard.getSize());
+                yCord = ThreadLocalRandom.current().nextInt(0, opponentBoard.getSize());
+            }
+            hit = opponentBoard.bomb(yCord, xCord, player);
+        }
+        if (player instanceof Human) {
+            if (hit == 1) { //water
+                System.out.println("You bombed water");
+            } else {
+                System.out.println("You bombed something, I wonder what it is...");
+            }
         }
     }
 
@@ -206,6 +228,19 @@ public class Driver {
                     terminate = true;
                 }
             }
+        }
+    }
+
+    public static void clearConsole() {
+        try {
+            final String os = System.getProperty("os.name");
+            if (os.contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                Runtime.getRuntime().exec("clear");
+            }
+        } catch (final Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }

@@ -3,8 +3,8 @@ import java.util.Random;
 
 public class Board {
     private final int size;
-    private Tile[][] gameBoard;
-    private HashMap<String, Integer> shipsToPlace;
+    private final Tile[][] gameBoard;
+    private final HashMap<String, Integer> shipsToPlace;
 
     public Board(int size) {
         shipsToPlace = new MyHashMap<>();
@@ -37,6 +37,7 @@ public class Board {
     }
 
     public boolean placeShip(int letter, int num, Ship ship, boolean output) {
+//        if (!overlapping(letter, num, ship) && !ship.outOfBounds(letter, num, this) && shipsToPlace.get(ship.getShipType().name()) - 1 >= 0) {
         if (!overlapping(letter, num, ship) && !ship.outOfBounds(letter, num, size) && shipsToPlace.get(ship.getShipType().name()) - 1 >= 0) {
             ship.setAllTilesInShip(letter, num, this, TileType.COVERED_SHIP);
             shipsToPlace.put(ship.getShipType().name(), shipsToPlace.get(ship.getShipType().name()) - 1);
@@ -47,6 +48,7 @@ public class Board {
             return true;
         } else {
             if (output) {
+//                String reason = (overlapping(letter, num, ship) ? "Overlapping" : (ship.outOfBounds(letter, num, this) ? "Ship goes out of bounds" : "All ships of this type placed"));
                 String reason = (overlapping(letter, num, ship) ? "Overlapping" : (ship.outOfBounds(letter, num, size) ? "Ship goes out of bounds" : "All ships of this type placed"));
                 System.out.println("Unable to place ship: " + ship.getShipType().name().toLowerCase() + " - " + reason);
             }
@@ -55,6 +57,7 @@ public class Board {
     }
 
     public boolean overlapping(int letter, int num, Ship ship) {
+
         for (int i = 0; i < ship.getLength(); i++) { // checking that the ship isn't overlapping any coordinate
             if (letter + i >= size || num + i >= size) {
                 break;
@@ -102,7 +105,7 @@ public class Board {
         for (int letter = 0; letter < size; letter++) {
             System.out.print((char) ('A' + counter) + " | "); // vertical margin
             for (int num = 0; num < size; num++) {
-                Tile currTile = gameBoard[letter][num]; // how i had it Tile currTile = gameBoard[num][letter]; //todo look into thos
+                Tile currTile = gameBoard[letter][num]; // how i had it Tile currTile = gameBoard[num][letter]; //todo look into this
                 if (!opponentView) { // player's personal view
                     if (currTile.getShip() != null && currTile.getTileType() == TileType.COVERED_SHIP) { // show what ship type
                         System.out.print(currTile.getShip().getShipType().toString() + "  "); // TODO: tell GUI to show if the ship is normal/bombed/sunk
@@ -111,7 +114,7 @@ public class Board {
                     }
                 } else {
                     if (currTile.getTileType() == TileType.COVERED_ROCK || currTile.getTileType() == TileType.COVERED_SHIP) { // if not bombed, show water
-                        System.out.print(TileType.WATER.toString() + "  ");
+                        System.out.print(TileType.WATER + "  ");
                     } else if (currTile.getTileType() == TileType.UNCOVERED_ROCK || currTile.getTileType() == TileType.UNCOVERED_SHIP) {
                         System.out.print(currTile.getShip().getShipType() + "  ");
                     } else {
@@ -140,17 +143,19 @@ public class Board {
         return sumOfShips;
     }
 
-    public boolean bomb(int letter, int num, Player opponent) {
-        if (letter >= size || num >= size || num < 0 || letter < 0) {
+    public int bomb(int letter, int num, Player opponent) {
+        if (letter >= size || num >= size || num < 0 || letter < 0) { // out of bounds
             String before = (letter < 0 ? "-" : (letter >= size ? Character.toString((char) ('A' + letter - size)) : "")); // this is ugly but it works
             System.out.println("Cannot bomb coordinate " + num + ", " + before + (char) ('A' + Math.abs(letter)) + ". It is out of bounds");
         } else {
             Tile currTile = gameBoard[letter][num];
+            // already bombed
             if (!(currTile.getTileType() == TileType.WATER) && !(currTile.getTileType() == TileType.COVERED_SHIP) && !(currTile.getTileType() == TileType.COVERED_ROCK)) {
                 System.out.println("Cannot bomb coordinate " + num + ", " + (char) ('A' + letter) + ". It is already bombed");
             } else {
                 if (currTile.getTileType() == TileType.WATER) {
                     currTile.setTileType(TileType.BOMBED_WATER);
+                    return 1; // hit water
                 } else if (currTile.getTileType() == TileType.COVERED_SHIP) {
                     Ship currShip = currTile.getShip();
                     currShip.takeHit(); // take a hit
@@ -158,17 +163,19 @@ public class Board {
                         currShip.setAllTilesInShip(letter, num, this, TileType.UNCOVERED_SHIP);
                         // todo: tell player ship was bombed
                         opponent.addConqueredShips(currShip);
-                        return true; // sunk a ship so can go again
+                        return 2; // sunk a ship so can go again
                     } else {
                         currTile.setTileType(TileType.BOMBED_SHIP);
+                        return 3; // hit a ship
                     }
                 } else if (currTile.getTileType() == TileType.COVERED_ROCK) {
                     currTile.setTileType(TileType.BOMBED_ROCK);
+                    return 4;
                     // TODO: eventually implement the setAllTilesInObj() for the rock;
                 }
             }
         }
-        return false; // if it couldn't bomb OR if it did bomb but only once
+        return 0; // didn't bomb
     }
 
     public void randomPlaceShips() {
@@ -208,11 +215,14 @@ public class Board {
                         gameBoard[y][x].setTileType(TileType.WATER);
                     }
                 }
+                initShipsToPlace(); // reset ships to place
             }
         }
         System.out.println("All ships placed");
-        displayBoard(false);
+        displayBoard(false); // debugging only TODO erase after debugging
     }
 
-
+    public boolean outOfBounds(int coordinate) {
+        return coordinate >= size || coordinate < 0; // coordinates are out of bounds
+    }
 }

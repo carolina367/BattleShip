@@ -45,4 +45,6 @@ public abstract class Obstacle {
         isSunk = true;
     }
 
+    public abstract String setType();
+
 }
