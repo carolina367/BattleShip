@@ -9,13 +9,11 @@ import static org.junit.Assert.*;
 
 public class StepWriteOut {
     Board gameBoard = new Board(10);
-    Board gameBoard2 = new Board(10);
     Ship testShip = new Ship();
 
     int userLetter;
     int userNum;
 
-    Player p1 = new Human("p1");
     Player p2 = new Human("p2");
     @Before
     public void beforeScenario(Scenario scenario) {
@@ -94,7 +92,8 @@ public class StepWriteOut {
 
     @When("a notification appears that ships cannot be placed out of bounds")
     public void a_notification_appears_that_ships_cannot_be_placed_out_of_bounds() {
-        boolean outOfBounds = testShip.outOfBounds(userLetter, userNum, gameBoard.getSize());
+        boolean outOfBounds = testShip.outOfBounds(userLetter, userNum, gameBoard);
+//        boolean outOfBounds = testShip.outOfBounds(userLetter, userNum, gameBoard.getSize());
         assertTrue(outOfBounds);
         assertFalse(gameBoard.placeShip(userLetter, userNum, testShip, false));
         // TODO: COME BACK TO THIS!!!! IT IS A GUI THING
@@ -102,10 +101,11 @@ public class StepWriteOut {
 
     @Then("they should see an error message indicating that they cannot place any more {string} ships")
     public void they_should_see_an_error_message_indicating_that_they_cannot_place_any_more_ship_type_ships(String shipType) {
+        assertEquals(testShip.getShipType().name(), shipType.toUpperCase());
         assertFalse(gameBoard.placeShip(userLetter, userNum, testShip, false));
         // TODO: COME BACK TO THIS!!!! IT IS A GUI THING
     }
-    
+
     @Given("a board that has been fully set up. last cruiser @ {int} {string}")
     public void a_board_that_has_been_fully_set_up_last_cruiser(Integer num, String letter) {
         userLetter = Character.toUpperCase(letter.charAt(0)) - 'A';

@@ -1,10 +1,9 @@
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Human extends Player {
     private String name;
-    private HashMap<String, Integer> conqueredShips;
+    private final HashMap<String, Integer> conqueredShips  = new MyHashMap<>();
 
     public Human() {
         super();
@@ -36,5 +35,9 @@ public class Human extends Player {
             }
         }
         this.name = playerName;
+    }
+
+    public void addConqueredShips(Ship ship) {
+        super.addConqueredShips(ship);
     }
 }

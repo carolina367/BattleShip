@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 public class AI extends Player {
     private String name;
-    private HashMap<String, Integer> conqueredShips;
+    private HashMap<String, Integer> conqueredShips = new MyHashMap<>();
 
     public AI() {
         super();
@@ -15,11 +15,4 @@ public class AI extends Player {
     public String getName() {
         return this.name;
     }
-
-//    public void turn(Board board) {
-//
-//        int x = ThreadLocalRandom.current().nextInt(0, board.getSize());
-//        int y = ThreadLocalRandom.current().nextInt(0, board.getSize());
-//
-//    }
 }
