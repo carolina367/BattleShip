@@ -4,7 +4,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class AI extends Player {
     private String name;
-    private HashMap<String, Integer> conqueredShips;
+    private MyHashMap<String, Integer> conqueredShips;
 
     private int prevX;
     private int prevY;

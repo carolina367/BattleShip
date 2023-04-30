@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Board {
     private final int size;
     private Tile[][] gameBoard;
-    private HashMap<String, Integer> shipsToPlace;
+    private MyHashMap<String, Integer> shipsToPlace;
 
     public Board(int size) {
         shipsToPlace = new MyHashMap<>();
@@ -146,7 +146,7 @@ public class Board {
         }
     }
 
-    public HashMap<String, Integer> getShipsToPlace() {
+    public MyHashMap<String, Integer> getShipsToPlace() {
         return shipsToPlace;
     }
 
@@ -201,7 +201,7 @@ public class Board {
                 // place two cruisers if no cruisers have been placed yet
                 for (int i = 0; i < 2; i++) {
                     Ship testShip = new Ship(isVertical, ship);
-                    while (!gameBoard.placeShip(xCord, yCord, testShip)) {
+                    while (!gameBoard.placeShip(xCord, yCord, testShip, true)) {
                         isVertical = rand.nextBoolean();
                         xCord = rand.nextInt(10);
                         yCord = rand.nextInt(10);
@@ -210,7 +210,7 @@ public class Board {
                 }
             } else {
                 Ship testShip = new Ship(isVertical, ship);
-                while (!gameBoard.placeShip(xCord, yCord, testShip)) {
+                while (!gameBoard.placeShip(xCord, yCord, testShip, true)) {
                     isVertical = rand.nextBoolean();
                     xCord = rand.nextInt(10);
                     yCord = rand.nextInt(10);

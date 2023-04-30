@@ -11,8 +11,8 @@ public class Driver {
 //        gameBoard1.randomPlaceShips(gameBoard1);
 //        gameBoard1.countShipsToPlace();
 //        gameBoard1.displayBoard(false);
-        int xCord = getValidCoordinate(sc, gameBoard1, "X (as num)");
-        int yCord = getValidCoordinate(sc, gameBoard1, "Y (as char)");
+        int xCord = getValidCoordinate(sc, gameBoard1.getSize(), "X (as num)");
+        int yCord = getValidCoordinate(sc, gameBoard1.getSize(), "Y (as char)");
         boolean isVertical = getValidBooleanInput(sc);
 
         ///////// INITIALIZE /////////
