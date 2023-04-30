@@ -186,6 +186,6 @@ public class Board {
                 }
             }
         }
-        return false;
+        return false; // if it couldn't bomb OR if it did bomb but only once
     }
 }

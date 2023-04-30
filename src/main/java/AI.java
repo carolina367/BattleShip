@@ -13,14 +13,14 @@ public class AI extends Player {
         super();
     }
 
-    public void setName() {
+    public void setAIName() {
         this.name = "AI";
     }
 
     public void turn(Board board) {
 
-        int x = ThreadLocalRandom.current().nextInt(0, board.getSize() - 1);
-        int y = ThreadLocalRandom.current().nextInt(0, board.getSize() - 1);
+        int x = ThreadLocalRandom.current().nextInt(0, board.getSize());
+        int y = ThreadLocalRandom.current().nextInt(0, board.getSize());
 
     }
 }
