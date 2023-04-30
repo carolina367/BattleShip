@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.lang.IndexOutOfBoundsException;
+import java.util.Random;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -188,4 +189,39 @@ public class Board {
         }
         return false; // if it couldn't bomb OR if it did bomb but only once
     }
+
+    public boolean randomPlaceShips(Board gameBoard) {
+        Random rand = new Random();
+        boolean cruisersPlaced = false; // track number of cruisers placed
+        for (ShipType ship : ShipType.values()) {
+            boolean isVertical = rand.nextBoolean();
+            int xCord = rand.nextInt(9);
+            int yCord = rand.nextInt(9);
+            if (ship == ShipType.CRUISER && !cruisersPlaced) {
+                // place two cruisers if no cruisers have been placed yet
+                for (int i = 0; i < 2; i++) {
+                    Ship testShip = new Ship(isVertical, ship);
+                    while (!gameBoard.placeShip(xCord, yCord, testShip)) {
+                        isVertical = rand.nextBoolean();
+                        xCord = rand.nextInt(10);
+                        yCord = rand.nextInt(10);
+                    }
+                    cruisersPlaced = true;
+                }
+            } else {
+                Ship testShip = new Ship(isVertical, ship);
+                while (!gameBoard.placeShip(xCord, yCord, testShip)) {
+                    isVertical = rand.nextBoolean();
+                    xCord = rand.nextInt(10);
+                    yCord = rand.nextInt(10);
+                }
+            }
+            // if all ships have been placed, return true
+            if (gameBoard.countShipsToPlace() == 0) {
+                System.out.println("All ships placed");
+                return true;
+            }
+        }
+        return false;
+     }
 }
