@@ -5,17 +5,8 @@ public class Driver {
     public static void main(String[] args) {
         System.out.println("Hello, welcome to battleship");
         Scanner sc = new Scanner(System.in);
-/////sebas stuff 
-        Board gameBoard1 = new Board(10);
-        Board gameBoard2 = new Board(10);
-//        gameBoard1.randomPlaceShips(gameBoard1);
-//        gameBoard1.countShipsToPlace();
-//        gameBoard1.displayBoard(false);
-        int xCord = getValidCoordinate(sc, gameBoard1, "X (as num)");
-        int yCord = getValidCoordinate(sc, gameBoard1, "Y (as char)");
-        boolean isVertical = getValidBooleanInput(sc);
 
-        ///////// INITIALIZE /////////
+        ///////// INITIALIZE  BOARD AND PLAYERS /////////
         // player 1
         Board board1 = new Board(10);
         Player p1 = new Human();
@@ -29,55 +20,56 @@ public class Driver {
         Player p2 = opponent ? new Human() : new AI();
         p2.setName();
 
-        ///////// Set up Board /////////
-        System.out.println(String.format("Player %s, Would you like to set up your board manually or randomly generated? Enter 'true' for manual, 'false' for random", ((Human) p1).getHumanName()));
-        boolean manualSetUp = getValidBooleanInput(sc);
-
-        // player 1
-        if (manualSetUp) {
-            manualPlaceAllShips(board1, sc);
-        } else {
-            // todo: put in the random place function
-            board1.randomPlaceShips(gameBoard1);
-        }
-
-        // player 2
         if (p2 instanceof Human) {
-            p2.setName();
-            while (((Human) p1).getHumanName().equalsIgnoreCase(((Human) p2).getHumanName())) { // this was the only way to access the names
+            while (p1.getName().equalsIgnoreCase(p2.getName())) {
                 System.out.println("That is the same name as p1. Pick a new name please");
                 p2.setName();
             }
-
-            System.out.println(String.format("Player %s, Would you like to set up your board manually or randomly generated? Enter 'true' for manual, 'false' for random", ((Human) p2).getHumanName()));
-            manualSetUp = getValidBooleanInput(sc);
-
-            if (manualSetUp) {
-                manualPlaceAllShips(board2, sc);
-            } else {
-                // todo: put in the random place function
-                board2.randomPlaceShips(gameBoard1);
-            }
         } else if (p2 instanceof AI) {
-            // todo: put in the random place function
-            board2.randomPlaceShips(gameBoard1);
+            System.out.println("Your opponent is AI, their name is " + p2.getName());
         }
 
+        ///////// SET UP BOARD /////////
+        // player 1
+        generateBoard(sc, p1, board1);
 
-//        play(sc,p1, p2, board1, board2);
+        // Player 2
+        if (p2 instanceof Human) {
+            generateBoard(sc, p2, board2);
+        } else if (p2 instanceof AI) {
+            board2.randomPlaceShips();
+        }
 
-        String winner = play(sc,p1, p2, board1, board2);
+        String winner = play(sc, p1, p2, board1, board2);
 
         System.out.println("The winner is " + winner);
         sc.close();
     }
 
+    private static void generateBoard(Scanner sc, Player player, Board board) {
+        System.out.println(String.format("\nPlayer %s, Would you like to set up your board manually or randomly generated? Enter 'true' for manual, 'false' for random", player.getName()));
+        boolean manualSetUp = getValidBooleanInput(sc);
+
+        if (manualSetUp) {
+            manualPlaceAllShips(board, sc);
+        } else {
+            board.randomPlaceShips();
+            System.out.println("Here is your randomly generated board. Enter 'true' if you are satisfied, 'false' to regenerate");
+            boolean answer = getValidBooleanInput(sc);
+            while (answer == false) {
+                board.randomPlaceShips();
+                System.out.println("Here is your randomly generated board. Enter 'true' if you are satisfied, 'false' to regenerate");
+                answer = getValidBooleanInput(sc);
+            }
+        }
+    }
+
     public static String play(Scanner sc, Player p1, Player p2, Board gameBoard1, Board gameBoard2) { // haven't fully implemented yet
         Integer counter = 0;
-        String p1Name = ((Human) p1).getHumanName();
+        String p1Name = ""; //((Human) p1).getHumanName();
         String p2Name;
         if (p2 instanceof Human) {
-            p2Name = ((Human) p2).getHumanName();
+            p2Name = "";//((Human) p2).getHumanName();
         } else if (p2 instanceof AI) {
             // todo: figure out if AI will return its hardcoded name
             p2Name = p2.getName();
@@ -109,21 +101,22 @@ public class Driver {
 
     public static void turn(Scanner sc, Player player, String playerName, Board opponentBoard) {
         System.out.println("Turn of player " + playerName);
-        while(true) {
+        while (true) {
             int xCord = getValidCoordinate(sc, opponentBoard.getSize(), "X (as num)");
             int yCord = getValidCoordinate(sc, opponentBoard.getSize(), "Y (as char)");
 
-            while(opponentBoard.bomb(yCord, xCord, player)) { //TODO: this has a bug
+            while (opponentBoard.bomb(yCord, xCord, player)) { //TODO: this has a bug
                 System.out.println("You sunk a ship, you get to go again!");
             } // bomb function will let user know why they can't bomb
         }
     }
+
     public static int getValidCoordinate(Scanner sc, int boardSize, String str) {
         int coordinate = -1;
         while (true) {
             System.out.println("Enter " + str + " coordinate: ");
             try {
-                String errMessage = "OUT OF BOUNDS";
+                String errMessage = ">>>> OUT OF BOUNDS";
                 if (str.contains("Y")) {
                     char c = sc.next().charAt(0);
                     if (Character.isLetter(c)) {
@@ -140,7 +133,7 @@ public class Driver {
                 }
                 System.out.println(errMessage + ". Enter again.");
             } catch (InputMismatchException e) {
-                System.out.println("This input is not of the correct type - Please try again!");
+                System.out.println(">>>> This input is not of the correct type - Please try again!");
                 sc.nextLine();
             }
         }
@@ -157,9 +150,9 @@ public class Driver {
                 } else if (input == 'F') {
                     return false;
                 }
-                System.out.println("This input is not a boolean - Please try again!");
+                System.out.println(">>>> This input is not a boolean - Please try again!");
             } catch (InputMismatchException e) {
-                System.out.println("This input is not a boolean - Please try again!");
+                System.out.println(">>>> This input is not a boolean - Please try again!");
                 sc.nextLine();
             }
         }
@@ -182,7 +175,7 @@ public class Driver {
                 System.out.println("Valid ships: " + board.getShipsToPlace().entrySet());
                 System.out.println("Enter Ship Type: ");
                 String shipInput = sc.next().toUpperCase();
-                while(!shipInput.matches("[a-zA-Z]+")){ // only characters
+                while (!shipInput.matches("[a-zA-Z]+")) { // only characters
                     shipInput = sc.next().toUpperCase();
                 }
 
@@ -200,7 +193,7 @@ public class Driver {
                 }
 
                 if (newShip == null) {
-                    System.out.println("Invalid ship type. Would you like to enter another ship name or enter new coordinates? Enter 'true' for another ship name, 'false' for new coordinates.");
+                    System.out.println(">>>> Invalid ship type. \n Would you like to enter another ship name or enter new coordinates? Enter 'true' for another ship name, 'false' for new coordinates.");
                     boolean anotherShip = getValidBooleanInput(sc);
                     if (!anotherShip) {
                         continue outer; // restart outer while loop

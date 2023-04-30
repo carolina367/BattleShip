@@ -4,9 +4,6 @@ public abstract class Player {
     private String name;
     private final HashMap<String, Integer> conqueredShips = new HashMap<>();
 
-    private int prevX; // todo: use in turn?
-    private int prevY;
-
     public Player() {
         this.name = "";
         conqueredShips.put("CARRIER", 0);
@@ -23,13 +20,8 @@ public abstract class Player {
         conqueredShips.put("DESTROYER", 0);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName() {
-        this.name = "";
-    }
+    public abstract String getName();
+    public abstract void setName();
 
     public void displayConqueredShips() {
         System.out.println("Ships conquered:");

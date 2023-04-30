@@ -1,8 +1,5 @@
 import java.util.HashMap;
-import java.lang.IndexOutOfBoundsException;
 import java.util.Random;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class Board {
     private final int size;
@@ -11,10 +8,7 @@ public class Board {
 
     public Board(int size) {
         shipsToPlace = new MyHashMap<>();
-        shipsToPlace.put("CARRIER", 1);
-        shipsToPlace.put("BATTLESHIP", 1);
-        shipsToPlace.put("CRUISER", 2);
-        shipsToPlace.put("DESTROYER", 1);
+        initShipsToPlace();
 
         this.size = size;
         this.gameBoard = new Tile[size][size];
@@ -25,6 +19,13 @@ public class Board {
             }
         }
 
+    }
+
+    public void initShipsToPlace() {
+        shipsToPlace.put("CARRIER", 1);
+        shipsToPlace.put("BATTLESHIP", 1);
+        shipsToPlace.put("CRUISER", 2);
+        shipsToPlace.put("DESTROYER", 1);
     }
 
     public int getSize() {
@@ -40,8 +41,8 @@ public class Board {
             ship.setAllTilesInShip(letter, num, this, TileType.COVERED_SHIP);
             shipsToPlace.put(ship.getShipType().name(), shipsToPlace.get(ship.getShipType().name()) - 1);
             if (output) {
-               System.out.println(String.format("\n \t ---> placing %s %s, at (x: %d, y: %c)", ship.getShipType().name().toLowerCase(), (ship.isVertical() ? " vertically" : " horizontally"), num, (char) ('A' + letter)));
-                displayShipsToPlace(ship.getShipType().name());
+                System.out.println(String.format("\n \t ---> placing %s %s, at (x: %d, y: %c)", ship.getShipType().name().toLowerCase(), (ship.isVertical() ? " vertically" : " horizontally"), num, (char) ('A' + letter)));
+                System.out.println("Ships Left: " + shipsToPlace.entrySet()); // gets the set of pairs (k, v );
             }
             return true;
         } else {
@@ -126,26 +127,6 @@ public class Board {
 
     }
 
-    public void displayShipsToPlace(String shipName) {
-        int sumOfShips = 0;
-        String toPrint = "";
-        for (String i : shipsToPlace.keySet()) {
-            if (shipName.equals(i)) {
-                toPrint = " <--- decremented";
-            }
-            System.out.println("\t" + i.toLowerCase() + ": " + shipsToPlace.get(i) + " left to place" + toPrint);
-            // todo: see if this works the same or better than print statement
-//            shipsToPlace.entrySet(); // gets the set of pairs (k, v )
-
-            sumOfShips += shipsToPlace.get(i);
-            toPrint = "";
-        }
-
-        if (sumOfShips == 0) {
-            System.out.println("No ships left to place!");
-        }
-    }
-
     public HashMap<String, Integer> getShipsToPlace() {
         return shipsToPlace;
     }
@@ -161,7 +142,7 @@ public class Board {
 
     public boolean bomb(int letter, int num, Player opponent) {
         if (letter >= size || num >= size || num < 0 || letter < 0) {
-            String before = (letter < 0 ? "-" : ( letter >= size ? Character.toString((char) ('A' + letter - size)) : "" )); // this is ugly but it works
+            String before = (letter < 0 ? "-" : (letter >= size ? Character.toString((char) ('A' + letter - size)) : "")); // this is ugly but it works
             System.out.println("Cannot bomb coordinate " + num + ", " + before + (char) ('A' + Math.abs(letter)) + ". It is out of bounds");
         } else {
             Tile currTile = gameBoard[letter][num];
@@ -190,38 +171,48 @@ public class Board {
         return false; // if it couldn't bomb OR if it did bomb but only once
     }
 
-    public boolean randomPlaceShips(Board gameBoard) {
-        Random rand = new Random();
-        boolean cruisersPlaced = false; // track number of cruisers placed
-        for (ShipType ship : ShipType.values()) {
-            boolean isVertical = rand.nextBoolean();
-            int xCord = rand.nextInt(9);
-            int yCord = rand.nextInt(9);
-            if (ship == ShipType.CRUISER && !cruisersPlaced) {
-                // place two cruisers if no cruisers have been placed yet
-                for (int i = 0; i < 2; i++) {
-                    Ship testShip = new Ship(isVertical, ship);
-                    while (!gameBoard.placeShip(xCord, yCord, testShip)) {
-                        isVertical = rand.nextBoolean();
-                        xCord = rand.nextInt(10);
-                        yCord = rand.nextInt(10);
-                    }
-                    cruisersPlaced = true;
-                }
-            } else {
-                Ship testShip = new Ship(isVertical, ship);
-                while (!gameBoard.placeShip(xCord, yCord, testShip)) {
-                    isVertical = rand.nextBoolean();
-                    xCord = rand.nextInt(10);
-                    yCord = rand.nextInt(10);
+    public void randomPlaceShips() {
+        if (countShipsToPlace() == 0) {
+            for (int y = 0; y < size; y++) { // reset board
+                for (int x = 0; x < size; x++) {
+                    gameBoard[y][x].setTileType(TileType.WATER);
                 }
             }
-            // if all ships have been placed, return true
-            if (gameBoard.countShipsToPlace() == 0) {
-                System.out.println("All ships placed");
-                return true;
+            initShipsToPlace(); // reset ships to place
+        }
+        Random rand = new Random();
+        while (this.countShipsToPlace() != 0) {
+            boolean isVertical = rand.nextBoolean();
+            int num = rand.nextInt(10);
+            int letter = rand.nextInt(10);
+            for (ShipType type : ShipType.values()) {
+                Ship testShip = new Ship(isVertical, type);
+                while (!placeShip(letter, num, testShip, false)) {
+                    num = rand.nextInt(10);
+                    letter = rand.nextInt(10);
+                    testShip.setVertical(rand.nextBoolean());
+                }
+            }
+            // for the last cruiser
+            Ship testShip = new Ship(isVertical, ShipType.CRUISER);
+            while (!placeShip(letter, num, testShip, false)) {
+                num = rand.nextInt(10);
+                letter = rand.nextInt(10);
+                testShip.setVertical(rand.nextBoolean());
+            }
+
+            if (countShipsToPlace() != 0) {
+                // reset board
+                for (int y = 0; y < size; y++) {
+                    for (int x = 0; x < size; x++) {
+                        gameBoard[y][x].setTileType(TileType.WATER);
+                    }
+                }
             }
         }
-        return false;
-     }
+        System.out.println("All ships placed");
+        displayBoard(false);
+    }
+
+
 }

@@ -6,9 +6,6 @@ public class Human extends Player {
     private String name;
     private HashMap<String, Integer> conqueredShips;
 
-    private int prevX;
-    private int prevY;
-
     public Human() {
         super();
     }
@@ -17,14 +14,7 @@ public class Human extends Player {
         super(name);
     }
 
-    public void turn(Board board) {
-
-//        int x = ThreadLocalRandom.current().nextInt(0, board.getSize() - 1);
-//        int y = ThreadLocalRandom.current().nextInt(0, board.getSize() - 1);
-
-    }
-
-    public String getHumanName(){ // THIS WAS THE ONLY WAY TO MAKE .getName() work
+    public String getName(){
         return name;
     }
 
