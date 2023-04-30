@@ -52,7 +52,7 @@ public class Driver {
         }
 
 
-        play(sc,p1, p2, board1, board2);
+//        play(sc,p1, p2, board1, board2);
 
         String winner = play(sc,p1, p2, board1, board2);
 
@@ -70,7 +70,7 @@ public class Driver {
             // todo: figure out if AI will return its hardcoded name
             p2Name = p2.getName();
         }
-        while (p1.countConqueredShips() != 5 && p2.countConqueredShips() != 5) {
+        while (p1.countConqueredShips() != 5 && p2.countConqueredShips() != 5) { // todo put as variable
             if (counter % 2 == 0) {
 //                turn(sc, p1, p1Name, gameBoard1);
                 gameBoard1.displayBoard(true);
@@ -101,7 +101,7 @@ public class Driver {
             int xCord = getValidCoordinate(sc, opponentBoard.getSize(), "X (as num)");
             int yCord = getValidCoordinate(sc, opponentBoard.getSize(), "Y (as char)");
 
-            while(!opponentBoard.bomb(yCord, xCord, player)) { //TODO: this has a bug
+            while(opponentBoard.bomb(yCord, xCord, player)) { //TODO: this has a bug
                 System.out.println("You sunk a ship, you get to go again!");
             } // bomb function will let user know why they can't bomb
         }
