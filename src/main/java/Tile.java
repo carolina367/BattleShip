@@ -2,6 +2,7 @@ public class Tile {
     private TileType type;
     private String key;
     private Ship ship;
+    private Obstacle obstacle;
 
     public Tile() {
         this.type = TileType.WATER;

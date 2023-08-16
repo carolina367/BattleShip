@@ -8,7 +8,7 @@ public enum TileType {
     UNCOVERED_SHIP("US"), //6
     UNCOVERED_ROCK("UR"); //7
 
-    private String extendedName;
+    private final String extendedName;
 
     TileType(String extendedName) {
         this.extendedName = extendedName;

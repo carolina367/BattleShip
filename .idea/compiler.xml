@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="battleship" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Coordinate" target="20" />
+      <module name="helpers" target="20" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,43 +1,52 @@
-import java.util.HashMap;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
+import helpers.validateInput.*; // Coordinate, Name
 
 public class Human extends Player {
-    private String name;
-    private final HashMap<String, Integer> conqueredShips  = new MyHashMap<>();
-
     public Human() {
         super();
     }
 
     public Human(String name) {
         super(name);
-    }
-
-    public String getName(){
-        return name;
-    }
+    } // for testing purposes
 
     public void setName() {
-       Scanner sc = new Scanner(System.in);
-        String playerName = "";
-        boolean isValid = false;
-        while (!isValid) {
-            System.out.print("Enter player name (2 characters or more, only alpha-numeric characters but cannot only be numeric): ");
-            playerName = sc.nextLine();
-            if (playerName.length() < 2) {
-                System.out.println("Name must be at least 2 characters long.");
-            } else if (!playerName.matches("[a-zA-Z0-9]+")) {
-                System.out.println("Name can only contain alpha-numeric characters.");
-            } else if (playerName.matches("[0-9]+")) {
-                System.out.println("Name cannot only contain numeric characters.");
-            } else {
-                isValid = true;
-            }
-        }
-        this.name = playerName;
+        this.name = Name.getName();
     }
 
     public void addConqueredShips(Ship ship) {
         super.addConqueredShips(ship);
+    }
+
+    public Integer makeGuess(Board opponentBoard) {
+        return ThreadLocalRandom.current().nextInt(0, opponentBoard.getSize());
+    }
+    public void turn(Scanner sc, Board opponentBoard) {
+//        clearConsole();
+        int xCord, yCord;
+        System.out.println("Turn of player " + name + "\n Here is your opponent's board");
+        opponentBoard.displayBoard(true);
+        xCord = Coordinate.getCoord(sc, opponentBoard.getSize(), "X");
+        yCord = Coordinate.getCoord(sc, opponentBoard.getSize(), "Y");
+
+        int hit = opponentBoard.bomb(yCord, xCord, this);
+        while (hit == 2 || hit == 0) {
+            if (hit == 2) {
+                System.out.println("You sunk a ship, you get to go again! Here is where you hit: ");
+            } else {
+                System.out.println("So close, but not quite. Try entering another coordinate.");
+            }
+            opponentBoard.displayBoard(true);
+            xCord = Coordinate.getCoord(sc, opponentBoard.getSize(), "X");
+            yCord = Coordinate.getCoord(sc, opponentBoard.getSize(), "Y");
+
+            hit = opponentBoard.bomb(yCord, xCord, this);
+        }
+        if (hit == 1) { //water
+            System.out.println("You bombed water");
+        } else {
+            System.out.println("You bombed something, I wonder what it is...");
+        }
     }
 }

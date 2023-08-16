@@ -1,6 +1,6 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
+import helpers.validateInput.Coordinate;
+import helpers.validateInput.Bool;
 
 public class Driver {
     public static void main(String[] args) {
@@ -14,20 +14,16 @@ public class Driver {
         p1.setName();
 
         System.out.println("Would you like to play against a human or AI opponent? Enter 'true' for human, 'false' for AI");
-        boolean opponent = getValidBooleanInput(sc);
+        boolean opponent = Bool.getBool(sc);
 
         // player 2
         Board board2 = new Board(10);
         Player p2 = opponent ? new Human() : new AI();
         p2.setName();
 
-        if (p2 instanceof Human) {
-            while (p1.getName().equalsIgnoreCase(p2.getName())) {
-                System.out.println("That is the same name as p1. Pick a new name please");
-                p2.setName();
-            }
-        } else {
-            System.out.println("Your opponent is AI, their name is " + p2.getName());
+        while (p1.name.equals(p2.name)) { // make sure p1 & p2 don't have the same name
+            System.out.println("The name is already taken. Please choose a different name.");
+            p2.setName();
         }
 
         ///////// SET UP BOARD /////////
@@ -48,19 +44,23 @@ public class Driver {
     }
 
     private static void generateBoard(Scanner sc, Player player, Board board) {
-        System.out.println(String.format("\nPlayer %s, Would you like to set up your board manually or randomly generated? Enter 'true' for manual, 'false' for random", player.getName()));
-        boolean manualSetUp = getValidBooleanInput(sc);
+        System.out.printf("\nPlayer %s, Would you like to set up your board manually or randomly generated? Enter 'true' for manual, 'false' for random%n", player.getName());
+        boolean manualSetUp = Bool.getBool(sc);
 
         if (manualSetUp) {
             manualPlaceAllShips(board, sc);
         } else {
-            board.randomPlaceShips();
-            System.out.println("Here is your randomly generated board. Enter 'true' if you are satisfied, 'false' to regenerate");
-            boolean answer = getValidBooleanInput(sc);
-            while (!answer) {
-                board.randomPlaceShips();
+            boolean successfullyPlaced = board.randomPlaceShips();
+            if (successfullyPlaced) {
                 System.out.println("Here is your randomly generated board. Enter 'true' if you are satisfied, 'false' to regenerate");
-                answer = getValidBooleanInput(sc);
+                boolean answer = Bool.getBool(sc);
+                while (!answer) {
+                    board.randomPlaceShips();
+                    System.out.println("Here is your randomly generated board. Enter 'true' if you are satisfied, 'false' to regenerate");
+                    answer = Bool.getBool(sc);
+                }
+            } else {
+                System.out.println("Wasn't able to place all of the ships, perhaps try having less ships"); // todo: add functionality to edit num of ships included
             }
         }
     }
@@ -69,18 +69,19 @@ public class Driver {
         Integer counter = 0;
         while (p1.countConqueredShips() != 5 && p2.countConqueredShips() != 5) {
             if (counter % 2 == 0) {
-                turn(sc, p1, gameBoard2);
-//                gameBoard1.displayBoard(true);
+//                turn(sc, p1, gameBoard2);
+                p1.turn(sc, gameBoard2);
+
             } else {
-                turn(sc, p2, gameBoard1);
-//                gameBoard2.displayBoard(true);
+//                turn(sc, p2, gameBoard1);
+                p2.turn(sc, gameBoard1);
             }
             counter++;
         }
 
         if (p1.countConqueredShips() == p2.countConqueredShips()) {
             System.out.println("There was a tie. Would you like to play again? Enter 'true' for yes, 'false' for no");
-            boolean next = getValidBooleanInput(sc);
+            boolean next = Bool.getBool(sc);
             if (next) {
                 play(sc, p1, p2, gameBoard1, gameBoard2);
             } else {
@@ -92,107 +93,64 @@ public class Driver {
         return p2.getName();
     }
 
-    public static void turn(Scanner sc, Player player, Board opponentBoard) {
-        clearConsole();
-        int xCord, yCord;
-        if (player instanceof Human) {
-            System.out.println("Turn of player " + player.getName() + "\n Here is your opponent's board");
-            opponentBoard.displayBoard(true);
-            xCord = getValidCoordinate(sc, opponentBoard.getSize(), "X (as num)");
-            yCord = getValidCoordinate(sc, opponentBoard.getSize(), "Y (as char)");
-        } else {
-            xCord = ThreadLocalRandom.current().nextInt(0, opponentBoard.getSize());
-            yCord = ThreadLocalRandom.current().nextInt(0, opponentBoard.getSize());
-        }
+//    public static void turn(Scanner sc, Player player, Board opponentBoard) {
+//        clearConsole();
+//        int xCord, yCord;
+//        if (player instanceof Human) {
+//            System.out.println("Turn of player " + player.getName() + "\n Here is your opponent's board");
+//            opponentBoard.displayBoard(true);
+//            xCord = getValidCoordinate(sc, opponentBoard.getSize(), "X (as num)");
+//            yCord = getValidCoordinate(sc, opponentBoard.getSize(), "Y (as char)");
+//        } else {
+//            xCord = ThreadLocalRandom.current().nextInt(0, opponentBoard.getSize());
+//            yCord = ThreadLocalRandom.current().nextInt(0, opponentBoard.getSize());
+//        }
+//
+//        int hit = opponentBoard.bomb(yCord, xCord, player);
+//        while (hit == 2 || hit == 0) {
+//            if (player instanceof Human) {
+//                if (hit == 2) {
+//                    System.out.println("You sunk a ship, you get to go again! Here is where you hit: ");
+//                } else {
+//                    System.out.println("So close, but not quite. Try entering another coordinate.");
+//                }
+//                opponentBoard.displayBoard(true);
+//                xCord = getValidCoordinate(sc, opponentBoard.getSize(), "X (as num)");
+//                yCord = getValidCoordinate(sc, opponentBoard.getSize(), "Y (as char)");
+//            } else {
+//                xCord = ThreadLocalRandom.current().nextInt(0, opponentBoard.getSize());
+//                yCord = ThreadLocalRandom.current().nextInt(0, opponentBoard.getSize());
+//            }
+//            hit = opponentBoard.bomb(yCord, xCord, player);
+//        }
+//        if (player instanceof Human) {
+//            if (hit == 1) { //water
+//                System.out.println("You bombed water");
+//            } else {
+//                System.out.println("You bombed something, I wonder what it is...");
+//            }
+//        }
+//    }
 
-        int hit = opponentBoard.bomb(yCord, xCord, player);
-        while (hit == 2 || hit == 0) {
-            if (player instanceof Human) {
-                if (hit == 2) {
-                    System.out.println("You sunk a ship, you get to go again! Here is where you hit: ");
-                } else {
-                    System.out.println("So close, but not quite. Try entering another coordinate.");
-                }
-                opponentBoard.displayBoard(true);
-                xCord = getValidCoordinate(sc, opponentBoard.getSize(), "X (as num)");
-                yCord = getValidCoordinate(sc, opponentBoard.getSize(), "Y (as char)");
-            } else {
-                xCord = ThreadLocalRandom.current().nextInt(0, opponentBoard.getSize());
-                yCord = ThreadLocalRandom.current().nextInt(0, opponentBoard.getSize());
-            }
-            hit = opponentBoard.bomb(yCord, xCord, player);
-        }
-        if (player instanceof Human) {
-            if (hit == 1) { //water
-                System.out.println("You bombed water");
-            } else {
-                System.out.println("You bombed something, I wonder what it is...");
-            }
-        }
-    }
 
-    public static int getValidCoordinate(Scanner sc, int boardSize, String str) {
-        int coordinate = -1;
-        while (true) {
-            System.out.println("Enter " + str + " coordinate: ");
-            try {
-                String errMessage = ">>>> OUT OF BOUNDS";
-                if (str.contains("Y")) {
-                    char c = sc.next().charAt(0);
-                    if (Character.isLetter(c)) {
-                        coordinate = Character.toUpperCase(c) - 'A'; // turn char to upper and then to int
-                    } else {
-                        errMessage += ". Input is not a letter";
-                    }
-                } else {
-                    coordinate = sc.nextInt(); // if invalid it will throw an exception
-                }
 
-                if (coordinate < boardSize && coordinate >= 0) {
-                    return coordinate; // if correct it'll short the loop
-                }
-                System.out.println(errMessage + ". Enter again.");
-            } catch (InputMismatchException e) {
-                System.out.println(">>>> This input is not of the correct type - Please try again!");
-                sc.nextLine();
-            }
-        }
-    }
-
-    public static boolean getValidBooleanInput(Scanner sc) {
-        char input;
-
-        while (true) {
-            try {
-                input = Character.toUpperCase(sc.next().charAt(0)); // if invalid it will throw an exception
-                if (input == 'T') {
-                    return true;
-                } else if (input == 'F') {
-                    return false;
-                }
-                System.out.println(">>>> This input is not a boolean - Please try again!");
-            } catch (InputMismatchException e) {
-                System.out.println(">>>> This input is not a boolean - Please try again!");
-                sc.nextLine();
-            }
-        }
-    }
 
     public static void manualPlaceAllShips(Board board, Scanner sc) {
         Ship newShip = null;
         outer:
         while (board.countShipsToPlace() > 0) {
-            System.out.println(String.format("You have %d ships left to place. Remember, the board is from x: 0-%d, y: A-%c", board.countShipsToPlace(), (board.getSize() - 1), (char) ('A' + board.getSize() - 1)));
-            int xCord = getValidCoordinate(sc, board.getSize(), "X (as num)");
-            int yCord = getValidCoordinate(sc, board.getSize(), "Y (as char)");
+            System.out.printf("You have %d ships left to place. Remember, the board is from x: 0-%d, y: A-%c%n", board.countShipsToPlace(), (board.getSize() - 1), (char) ('A' + board.getSize() - 1));
+            int xCord = Coordinate.getCoord(sc, board.getSize(), "X");
+            int yCord = Coordinate.getCoord(sc, board.getSize(), "Y");
 
             System.out.println("Is the ship vertical? Enter 'true' or 'false': ");
-            boolean isVertical = getValidBooleanInput(sc);
+            sc.nextLine(); // clear scanner from last input
+            boolean isVertical = Bool.getBool(sc);
 
             boolean terminate = false;
             while (!terminate) {
 
-                System.out.println("Valid ships: " + board.getShipsToPlace().entrySet());
+                System.out.println("Remaining ships: " + board.getShipsToPlace().entrySet());
                 System.out.println("Enter Ship Type: ");
                 String shipInput = sc.next().toUpperCase();
                 while (!shipInput.matches("[a-zA-Z]+")) { // only characters
@@ -214,7 +172,7 @@ public class Driver {
 
                 if (newShip == null) {
                     System.out.println(">>>> Invalid ship type. \n Would you like to enter another ship name or enter new coordinates? Enter 'true' for another ship name, 'false' for new coordinates.");
-                    boolean anotherShip = getValidBooleanInput(sc);
+                    boolean anotherShip = Bool.getBool(sc);
                     if (!anotherShip) {
                         continue outer; // restart outer while loop
                     } // restart inner while loop

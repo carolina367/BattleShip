@@ -1,9 +1,8 @@
 import java.util.HashMap;
+import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AI extends Player {
-    private String name;
-    private HashMap<String, Integer> conqueredShips = new MyHashMap<>();
-
     public AI() {
         super();
     }
@@ -12,7 +11,20 @@ public class AI extends Player {
         this.name = "AI";
     }
 
-    public String getName() {
-        return this.name;
+    public Integer makeGuess(Board opponentBoard) {
+        return ThreadLocalRandom.current().nextInt(0, opponentBoard.getSize());
+    }
+    public void turn(Scanner sc, Board opponentBoard) {
+        Driver.clearConsole();
+        int xCord, yCord;
+        xCord = makeGuess(opponentBoard);
+        yCord = makeGuess(opponentBoard);;
+
+        int hit = opponentBoard.bomb(yCord, xCord, this); // todo: see if it should be this or player
+        while (hit == 2 || hit == 0) {
+            xCord = makeGuess(opponentBoard);;
+            yCord = makeGuess(opponentBoard);;
+            hit = opponentBoard.bomb(yCord, xCord, this);
+        }
     }
 }
