@@ -15,15 +15,7 @@ public class Ship {
         hitsTaken = 0;
         isSunk = false;
         type = typeDeclared;
-        if (typeDeclared == ShipType.CARRIER) {
-            length = 5;
-        } else if (typeDeclared == ShipType.BATTLESHIP) {
-            length = 4;
-        } else if (typeDeclared == ShipType.CRUISER) {
-            length = 3;
-        } else if (typeDeclared == ShipType.DESTROYER) {
-            length = 2;
-        }
+        length = typeDeclared.getLength();
     }
 
     public int getLength() {
@@ -58,16 +50,8 @@ public class Ship {
     }
 
     public void setShipType(ShipType typeDeclared) {
-        if (typeDeclared == ShipType.CARRIER) {
-            length = 5;
-        } else if (typeDeclared == ShipType.BATTLESHIP) {
-            length = 4;
-        } else if (typeDeclared == ShipType.CRUISER) {
-            length = 3;
-        } else if (typeDeclared == ShipType.DESTROYER) {
-            length = 2;
-        }
         type = typeDeclared;
+        length = typeDeclared.getLength();
     }
 
     public int[] findShipStart(int letter, int num, Board gameBoard) {
@@ -106,7 +90,7 @@ public class Ship {
             num = findShipStart(letter, num, gameBoard)[1];
         }
 
-        for (int i = 0; i < length; i++) { //uncovering the ship on every coordinate
+        for (int i = 0; i < length; i++) { // uncovering the ship on every coordinate
             int letterOffset = letter + (isVertical() ? i : 0);
             int numOffset = num + (isVertical() ? 0 : i);
             if (type == TileType.COVERED_SHIP) {
