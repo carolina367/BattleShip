@@ -8,39 +8,37 @@ public enum ShipType{
     CRUISER("cr", 3),
     DESTROYER("de", 2);
 
-    private final String key;
+    private final String abbr;
     private final int length;
 
     ShipType(String key, int length) {
-        this.key = key;
+        this.abbr = key;
         this.length = length;
     }
 
-    public String getKey() {
-        return key;
+    public String getAbbr() {
+        return abbr;
     }
 
     public int getLength() {
         return length;
     }
 
-    // Reverse lookup methods
-    public static Optional<ShipType> getShipTypeByValue(String value) { // todo: figure out if i need to delete
-        return Arrays.stream(ShipType.values())
-                .filter(ship -> ship.key.equalsIgnoreCase(value)) // need .equals for strings
-                .findFirst();
-    }
-
-    public static Optional<ShipType> getShipTypeByValue(int value) {
-        return Arrays.stream(ShipType.values())
-                .filter(ship -> ship.length == value)
-                .findFirst();
-    }
+//    // Reverse lookup methods
+//    public static Optional<ShipType> getShipTypeByValue(String value) { // todo: figure out if i need to delete
+//        return Arrays.stream(ShipType.values())
+//                .filter(ship -> ship.abbr.equalsIgnoreCase(value)) // need .equals for strings
+//                .findFirst();
+//    }
+//
+//    public static Optional<ShipType> getShipTypeByValue(int value) {
+//        return Arrays.stream(ShipType.values())
+//                .filter(ship -> ship.length == value)
+//                .findFirst();
+//    }
     public String toString() {
-        return key;
-        // todo: make this for the lowercase
-//        String id = name(); // BATTLESHIP
-//        String lower = id.substring(1).toLowerCase(); // ATTLESHIP -> attleship
-//        return id.charAt(0) + lower; // B + attleship
+        String id = name(); // BATTLESHIP
+        String lower = id.substring(1).toLowerCase(); // ATTLESHIP -> attleship
+        return id.charAt(0) + lower; // B + attleship
     }
 }

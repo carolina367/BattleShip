@@ -37,17 +37,17 @@ public class Board {
 
     public boolean placeShip(int letter, int num, Ship ship, boolean output) {
         if (!overlapping(letter, num, ship) && !ship.outOfBounds(letter, num, this) && shipsToPlace.get(ship.getShipType().name()) - 1 >= 0) {
-            ship.setAllTilesInShip(letter, num, this, TileType.COVERED_SHIP);
+            ship.setAllTilesInShip(letter, num, this, TileState.COVERED_SHIP);
             shipsToPlace.put(ship.getShipType().name(), shipsToPlace.get(ship.getShipType().name()) - 1);
             if (output) {
-                System.out.printf("\n \t ---> placing %s %s, at (x: %d, y: %c)%n", ship.getShipType().name().toLowerCase(), (ship.isVertical() ? " vertically" : " horizontally"), num, (char) ('A' + letter));
+                System.out.printf("\n \t ---> placing %s %s, at (x: %d, y: %c)%n", ship.getShipType(), (ship.isVertical() ? " vertically" : " horizontally"), num, (char) ('A' + letter));
                 System.out.println("Ships Left: " + shipsToPlace.entrySet()); // gets the set of pairs (k, v );
             }
             return true;
         } else {
             if (output) {
                 String reason = (overlapping(letter, num, ship) ? "Overlapping" : (ship.outOfBounds(letter, num, this) ? "Ship goes out of bounds" : "All ships of this type placed"));
-                System.out.println("Unable to place ship: " + ship.getShipType().name().toLowerCase() + " - " + reason);
+                System.out.println("Unable to place ship: " + ship.getShipType() + " - " + reason);
             }
             return false;
         }
@@ -61,7 +61,7 @@ public class Board {
             }
             int letterOffset = ship.isVertical() ? i : 0;
             int numOffset = ship.isVertical() ? 0 : i;
-            if (gameBoard[letter + letterOffset][num + numOffset].getTileType() != TileType.WATER) {
+            if (gameBoard[letter + letterOffset][num + numOffset].getState() != TileState.WATER) {
                 return true; // ships are overlapping
             }
         }
@@ -71,7 +71,7 @@ public class Board {
     public boolean isEmpty() {
         for (int num = 0; num < size - 1; num++) {
             for (int letter = 0; letter < size - 1; letter++) {
-                if (gameBoard[letter][num].getTileType() != TileType.WATER) {
+                if (gameBoard[letter][num].getState() != TileState.WATER) {
                     return false;
                 }
             }
@@ -104,18 +104,20 @@ public class Board {
             for (int num = 0; num < size; num++) {
                 Tile currTile = gameBoard[letter][num];
                 if (!opponentView) { // player's personal view
-                    if (currTile.getShip() != null && currTile.getTileType() == TileType.COVERED_SHIP) { // show what ship type
-                        System.out.print(currTile.getShip().getShipType().toString() + "  "); // TODO: tell GUI to show if the ship is normal/bombed/sunk
+                    if (currTile.getObst() != null && currTile.getState() == TileState.COVERED_SHIP) { // show what ship type
+                        Ship tempShip = (Ship) currTile.getObst();
+                        System.out.print(tempShip.getShipType().getAbbr() + "  "); // TODO: tell GUI to show if the ship is normal/bombed/sunk
                     } else {
-                        System.out.print(currTile.getKey() + "  ");
+                        System.out.print(currTile.getState().getAbbr() + "  ");
                     }
                 } else {
-                    if (currTile.getTileType() == TileType.COVERED_ROCK || currTile.getTileType() == TileType.COVERED_SHIP) { // if not bombed, show water
-                        System.out.print(TileType.WATER + "  ");
-                    } else if (currTile.getTileType() == TileType.UNCOVERED_ROCK || currTile.getTileType() == TileType.UNCOVERED_SHIP) {
-                        System.out.print(currTile.getShip().getShipType() + "  ");
+                    if (currTile.getState() == TileState.COVERED_ROCK || currTile.getState() == TileState.COVERED_SHIP) { // if not bombed, show water
+                        System.out.print(TileState.WATER.getAbbr() + "  ");
+                    } else if (currTile.getState() == TileState.UNCOVERED_ROCK || currTile.getState() == TileState.UNCOVERED_SHIP) {
+                        Ship tempShip = (Ship) currTile.getObst();
+                        System.out.print(tempShip.getShipType().getAbbr() + "  ");
                     } else {
-                        System.out.print(currTile.getKey() + "  "); // anything else can show its true type
+                        System.out.print(currTile.getState().getAbbr() + "  "); // anything else can show its true type
                     }
                 }
             }
@@ -147,25 +149,25 @@ public class Board {
         } else {
             Tile currTile = gameBoard[letter][num];
             // already bombed
-            if (!(currTile.getTileType() == TileType.WATER) && !(currTile.getTileType() == TileType.COVERED_SHIP) && !(currTile.getTileType() == TileType.COVERED_ROCK)) {
+            if (!(currTile.getState() == TileState.WATER) && !(currTile.getState() == TileState.COVERED_SHIP) && !(currTile.getState() == TileState.COVERED_ROCK)) {
                 System.out.println("Cannot bomb coordinate " + num + ", " + (char) ('A' + letter) + ". It is already bombed");
             } else {
-                if (currTile.getTileType() == TileType.WATER) {
-                    currTile.setTileType(TileType.BOMBED_WATER);
+                if (currTile.getState() == TileState.WATER) {
+                    currTile.setState(TileState.BOMBED_WATER);
                     return 1; // hit water
-                } else if (currTile.getTileType() == TileType.COVERED_SHIP) {
-                    Ship currShip = currTile.getShip();
+                } else if (currTile.getState() == TileState.COVERED_SHIP) {
+                    Ship currShip = (Ship) currTile.getObst();
                     currShip.takeHit(); // take a hit
                     if (currShip.getIsSunk()) { // if that hit sank ship
-                        currShip.setAllTilesInShip(letter, num, this, TileType.UNCOVERED_SHIP);
+                        currShip.setAllTilesInShip(letter, num, this, TileState.UNCOVERED_SHIP);
                         opponent.addConqueredShips(currShip);
                         return 2; // sunk a ship so can go again
                     } else {
-                        currTile.setTileType(TileType.BOMBED_SHIP);
+                        currTile.setState(TileState.BOMBED_SHIP);
                         return 3; // hit a ship
                     }
-                } else if (currTile.getTileType() == TileType.COVERED_ROCK) {
-                    currTile.setTileType(TileType.BOMBED_ROCK);
+                } else if (currTile.getState() == TileState.COVERED_ROCK) {
+                    currTile.setState(TileState.BOMBED_ROCK);
                     return 4;
                     // TODO: eventually implement the setAllTilesInObj() for the rock;
                 }
@@ -178,7 +180,7 @@ public class Board {
         if (countShipsToPlace() == 0) { // 0 left to place
             for (int y = 0; y < size; y++) { // reset board
                 for (int x = 0; x < size; x++) {
-                    gameBoard[y][x].setTileType(TileType.WATER);
+                    gameBoard[y][x].setState(TileState.WATER);
                 }
             }
             initShipsToPlace(); // reset ships to place
@@ -216,7 +218,7 @@ public class Board {
 
         for (int y = 0; y < size; y++) { // if it wasn't successful then reset and return false for fail
             for (int x = 0; x < size; x++) {
-                gameBoard[y][x].setTileType(TileType.WATER);
+                gameBoard[y][x].setState(TileState.WATER);
             }
         }
         initShipsToPlace(); // reset ships to place

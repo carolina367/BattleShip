@@ -1,17 +1,20 @@
 public abstract class Obstacle {
     int length;
     int hitsTaken;
-    boolean vertical;
+    boolean isVertical;
     boolean isSunk;
 
     public Obstacle() {
         isSunk = false;
+        isVertical = false;
         hitsTaken = 0;
+        length = 0;
     }
     public Obstacle(boolean verticalDeclared) {
-        vertical = verticalDeclared;
-        hitsTaken = 0;
         isSunk = false;
+        isVertical = verticalDeclared;
+        hitsTaken = 0;
+        length = 0;
     }
 
     public int getLength() {
@@ -22,6 +25,18 @@ public abstract class Obstacle {
         return hitsTaken;
     }
 
+    public boolean getIsSunk() {
+        return isSunk;
+    }
+
+    public void setVertical(boolean vertical) {
+        this.isVertical = vertical;
+    }
+
+    public void setSunk() {
+        isSunk = true;
+    }
+
     public void takeHit() {
         hitsTaken++;
         if (hitsTaken == length) {
@@ -30,21 +45,7 @@ public abstract class Obstacle {
     }
 
     public boolean isVertical() {
-        return vertical;
+        return isVertical;
     }
-
-    public void setVertical(boolean vertical) {
-        this.vertical = vertical;
-    }
-
-    public boolean getIsSunk() {
-        return isSunk;
-    }
-
-    public void setSunk() {
-        isSunk = true;
-    }
-
-    public abstract String setType();
 
 }

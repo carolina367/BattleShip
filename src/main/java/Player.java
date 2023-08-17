@@ -14,8 +14,6 @@ public abstract class Player {
         this.conqueredShips = new ConqueredShips();
     }
 
-    public void configureName(Player opponent){} // todo: only needed for human but reference in driver
-
     public String getName(){
         return name;
     };
