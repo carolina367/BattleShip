@@ -9,7 +9,7 @@ public class Driver {
 
         ///////// INITIALIZE  BOARD AND PLAYERS /////////
         // player 1
-        Board board1 = new Board(10);
+        Board board1 = new Board();
         Player p1 = new Human();
         p1.setName();
 
@@ -17,7 +17,7 @@ public class Driver {
         boolean opponent = Bool.getBool(sc);
 
         // player 2
-        Board board2 = new Board(10);
+        Board board2 = new Board();
         Player p2 = opponent ? new Human() : new AI();
         p2.setName();
 

@@ -1,7 +1,9 @@
+package helpers;
+
 import java.util.HashMap;
 import java.util.Objects;
 
-public class MyHashMap<K, V> extends HashMap<K, V> {
+public class MyHashMap<K, V extends Number> extends HashMap<K, V> {
 
     @Override
     public boolean equals(Object o) {
@@ -16,5 +18,9 @@ public class MyHashMap<K, V> extends HashMap<K, V> {
             if (!Objects.equals(value, that.get(key))) return false;
         }
         return true;
+    }
+
+    public int sumAll() {
+        return values().stream().mapToInt(Number::intValue).sum();
     }
 }

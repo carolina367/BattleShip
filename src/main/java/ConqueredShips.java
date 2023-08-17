@@ -1,9 +1,11 @@
+import helpers.MyHashMap;
+
 import java.util.HashMap;
 public class ConqueredShips { // responsible for managing the player's ship states
-    private final HashMap<String, Integer> conqueredShips = new HashMap<>();
+    private final MyHashMap<String, Integer> conqueredShips = new MyHashMap<>();
 
     public ConqueredShips() {
-        for (ShipType shipName : ShipType.values()) {
+        for (ShipType shipName : ShipType.values()) { // inits all ships to 0
             conqueredShips.put(shipName.name(), 0);
         }
     }
@@ -13,7 +15,7 @@ public class ConqueredShips { // responsible for managing the player's ship stat
     }
 
     public int countCS() {
-        return conqueredShips.values().stream().mapToInt(Integer::intValue).sum();
+        return conqueredShips.sumAll();
     }
 
     public void addCS(Ship ship) {

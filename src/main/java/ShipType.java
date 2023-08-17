@@ -24,6 +24,12 @@ public enum ShipType{
         return length;
     }
 
+    public String toString() {
+        String id = name(); // BATTLESHIP
+        String lower = id.substring(1).toLowerCase(); // ATTLESHIP -> attleship
+        return id.charAt(0) + lower; // B + attleship
+    }
+
 //    // Reverse lookup methods
 //    public static Optional<ShipType> getShipTypeByValue(String value) { // todo: figure out if i need to delete
 //        return Arrays.stream(ShipType.values())
@@ -36,9 +42,4 @@ public enum ShipType{
 //                .filter(ship -> ship.length == value)
 //                .findFirst();
 //    }
-    public String toString() {
-        String id = name(); // BATTLESHIP
-        String lower = id.substring(1).toLowerCase(); // ATTLESHIP -> attleship
-        return id.charAt(0) + lower; // B + attleship
-    }
 }
