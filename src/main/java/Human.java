@@ -20,7 +20,7 @@ public class Human extends Player {
     }
 
     public Integer makeGuess(Board opponentBoard) {
-        return ThreadLocalRandom.current().nextInt(0, opponentBoard.getSize());
+        return ThreadLocalRandom.current().nextInt(0, opponentBoard.getSize()); // todo: try to put coordinate.getcoord here so turn can go in driver
     }
     public void turn(Scanner sc, Board opponentBoard) {
 //        clearConsole();

@@ -1,45 +1,45 @@
 public class Tile {
-    private TileType type;
-    private String key;
-    private Ship ship;
+    private TileState state;
     private Obstacle obstacle;
 
     public Tile() {
-        this.type = TileType.WATER;
-        this.key = TileType.WATER.toString();
-        this.ship = null;
+        this.state = TileState.WATER;
+        this.obstacle = null;
     }
 
-    public String getKey() {
-        return key;
+    public Obstacle getObst() {
+        return obstacle;
     }
 
-    public Ship getShip() {
-        return ship;
+    public TileState getState() {
+        return state;
     }
 
-    public TileType getTileType() {
-        return type;
-    }
 
-    public void setTileType(TileType typeDeclared) { // for transitioning tile
-        if(this.type == TileType.COVERED_SHIP && typeDeclared == TileType.WATER) { // setting back to water
-            this.ship = null;
+    // This setState doesn't allow transitions to a 'covered' state
+    public void setState(TileState newState) {
+        if (isNewStateCovered(newState)) {
+            throw new IllegalStateException("Cannot transition to a 'covered' state with this method.");
         }
-        if (typeDeclared != TileType.COVERED_SHIP && typeDeclared != TileType.COVERED_ROCK) {
-            this.key = typeDeclared.toString();
-            this.type = typeDeclared;
+        if (TileStateTransitions.isAllowed(this.state, newState)) {
+            this.state = newState;
         } else {
-            System.out.println("You need to enter a ship to set a tile to type CS");
+            throw new IllegalStateException("Cannot transition from " + this.state + " to " + newState);
         }
     }
 
-    public void setTileType(TileType typeDeclared, Ship ship) {  // for initializing a tile with obstacle or ship
-        if (typeDeclared == TileType.COVERED_SHIP || typeDeclared == TileType.COVERED_ROCK) {
-            this.key = typeDeclared.toString();
-            this.type = typeDeclared;
-            this.ship = ship;
-//          this.obstacle = obst; // TODO: create an interface for obstacle and change ship to that
+    // This setState allows transitions to a 'covered' state and requires an additional Object parameter
+    public void setState(TileState newState, Obstacle newObstacle) {
+        // You can include some logic related to 'obj' here if needed
+        if (isNewStateCovered(newState) && TileStateTransitions.isAllowed(this.state, newState)) {
+            this.state = newState;
+            this.obstacle = newObstacle;
+        } else {
+            throw new IllegalStateException("Cannot transition from " + this.state + " to " + newState);
         }
+    }
+
+    private boolean isNewStateCovered(TileState state) {
+        return state.name().startsWith("COVERED");
     }
 }
