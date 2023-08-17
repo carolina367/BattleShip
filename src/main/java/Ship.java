@@ -1,16 +1,23 @@
-public class Ship extends Obstacle{
-//    private int length;
-//    private int hitsTaken;
-//    private boolean vertical;
-//    private boolean isSunk;
+import javax.management.DescriptorKey;
+
+public class Ship implements Obstacle {
+    private int length;
+    private int hitsTaken;
+    private boolean isVertical;
+    private boolean isSunk;
     private ShipType type;
 
     public Ship() {
-        super();
+        isSunk = false;
+        isVertical = false;
+        hitsTaken = 0;
+        length = 0;
     }
 
     public Ship(boolean verticalDeclared, ShipType typeDeclared) {
-        super(verticalDeclared);
+        isSunk = false;
+        isVertical = verticalDeclared;
+        hitsTaken = 0;
         type = typeDeclared;
         length = typeDeclared.getLength();
     }
@@ -22,20 +29,27 @@ public class Ship extends Obstacle{
     public void takeHit() {
         hitsTaken++;
         if (hitsTaken == length) {
-            this.isSunk = true;
+            setSunk();
         }
     }
 
-//    public boolean isVertical() {
-//        return vertical;
-//    }
+    public int getHitsTaken() {
+        return hitsTaken;
+    }
 
-//    public void setVertical(boolean vertical) {
-//        this.vertical = vertical;
-//    } //todo: @VisibleForTesting
+    public boolean isVertical() {
+        return isVertical;
+    }
+
+    public void setVertical(boolean vertical) {
+        isVertical = vertical;
+    } //todo: @VisibleForTesting
 
     public boolean getIsSunk() {
         return isSunk;
+    }
+    public void setSunk() {
+        isSunk = true;
     }
 
     public ShipType getShipType() {
@@ -47,6 +61,7 @@ public class Ship extends Obstacle{
         length = typeDeclared.getLength();
     }
 
+    // Given any coordinate of the ship, it can find the starting point
     public int[] findShipStart(int letter, int num, Board gameBoard) {
         int[] coords = {letter, num}; // if none are found it'll return this
         for (int i = 0; i < length + 1; i++) { // at most, we are at the end of the ship
@@ -61,6 +76,7 @@ public class Ship extends Obstacle{
         return coords;
     }
 
+    // Given any coordinate of the ship, it will tell you if it goes out of bounds
     public boolean outOfBounds(int letter, int num, Board gameBoard) {
         // ensure coords are for the start of the ship
         letter = findShipStart(letter, num, gameBoard)[0];
@@ -76,6 +92,7 @@ public class Ship extends Obstacle{
         return false; // coordinates are within bounds
     }
 
+    // Will change all the tiles for an entire ship when transitioning states
     public void setAllTilesInShip(int letter, int num, Board gameBoard, TileState type) { // the coords need to be to the start of the ship
         // ensure coords are for the start of the ship
         if (type != TileState.COVERED_SHIP) { // if we try to cover a ship, this would move coordinate over by 1

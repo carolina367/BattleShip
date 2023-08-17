@@ -1,17 +1,17 @@
+import helpers.MyHashMap;
+
 import java.util.HashMap;
 import java.util.Random;
 
 public class Board {
     private final int size;
     private final Tile[][] gameBoard;
-    private final MyHashMap<String, Integer> shipsToPlace;
+    private MyHashMap<String, Integer> shipsToPlace = new MyHashMap<>();
 
-    public Board(int size) {
-        shipsToPlace = new MyHashMap<>();
-        initShipsToPlace();
-
-        this.size = size;
+    public Board() {
+        this.size = 10;
         this.gameBoard = new Tile[size][size];
+        initShipsToPlace();
         // nested loop to add all indexes as a new tile
         for (int letter = 0; letter < size; letter++) {
             for (int num = 0; num < size; num++) {
@@ -135,11 +135,7 @@ public class Board {
 
 
     public int countShipsToPlace() {
-        int sumOfShips = 0;
-        for (String i : shipsToPlace.keySet()) {
-            sumOfShips += shipsToPlace.get(i);
-        }
-        return sumOfShips;
+        return shipsToPlace.sumAll();
     }
 
     public int bomb(int letter, int num, Player opponent) {

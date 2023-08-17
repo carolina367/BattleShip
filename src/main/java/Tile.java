@@ -28,9 +28,8 @@ public class Tile {
         }
     }
 
-    // This setState allows transitions to a 'covered' state and requires an additional Object parameter
+    // This setState is only for transitions to a 'covered' state and requires an additional obstacle parameter
     public void setState(TileState newState, Obstacle newObstacle) {
-        // You can include some logic related to 'obj' here if needed
         if (isNewStateCovered(newState) && TileStateTransitions.isAllowed(this.state, newState)) {
             this.state = newState;
             this.obstacle = newObstacle;

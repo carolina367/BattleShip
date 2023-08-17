@@ -7,27 +7,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3827aeef-2b64-436f-9985-b6799b292925" name="Changes" comment="made player, AI and human more open/closed principle">
-      <change afterPath="$PROJECT_DIR$/src/main/java/GameHelper.java" afterDir="false" />
+    <list default="true" id="3827aeef-2b64-436f-9985-b6799b292925" name="Changes" comment="made obstacle abstract class and implemented it in board and tile">
+      <change afterPath="$PROJECT_DIR$/src/main/java/AdvancedFeature.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Game.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/GameFactory.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/GameMaster.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/TileState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/TileStateTransitions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/StandardGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Human.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Human.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ConqueredShips.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ConqueredShips.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MyHashMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/helpers/MyHashMap.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Obstacle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Obstacle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Ship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Ship.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ShipType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ShipType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TileType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/StepWriteOut.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/StepWriteOut.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Obstacle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Obstacle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Driver.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Driver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/MyHashMap.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Ship.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Ship.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ShipType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ShipType.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Tile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TileType.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +38,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -68,28 +70,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;20&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Problems&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.uml&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "extract.method.default.visibility": "private",
+    "jdk.selected.JAVA_MODULE": "20",
+    "last_directory_selection": "/Users/caro/Documents/GitHub/battleship/src/main/java/helpers",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Problems",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="helpers" />
+      <recent name="" />
     </key>
   </component>
   <component name="RunManager" selected="Cucumber Java.All Features in: test">
@@ -150,7 +157,7 @@
       <workItem from="1683108838636" duration="9725000" />
       <workItem from="1692144150696" duration="15209000" />
       <workItem from="1692163141653" duration="17844000" />
-      <workItem from="1692228906817" duration="8689000" />
+      <workItem from="1692228906817" duration="23971000" />
     </task>
     <task id="LOCAL-00003" summary="made player, AI and human more open/closed principle">
       <created>1692205116158</created>
@@ -159,7 +166,14 @@
       <option name="project" value="LOCAL" />
       <updated>1692205116158</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="made obstacle abstract class and implemented it in board and tile">
+      <created>1692242751211</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1692242751211</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -182,50 +196,63 @@
     <MESSAGE value="last touches" />
     <MESSAGE value="work after presentation" />
     <MESSAGE value="made player, AI and human more open/closed principle" />
-    <option name="LAST_COMMIT_MESSAGE" value="made player, AI and human more open/closed principle" />
+    <MESSAGE value="made obstacle abstract class and implemented it in board and tile" />
+    <option name="LAST_COMMIT_MESSAGE" value="made obstacle abstract class and implemented it in board and tile" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Board.java</url>
+          <line>175</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/StepWriteOut.java</url>
-          <line>135</line>
-          <option name="timeStamp" value="18" />
+          <line>81</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/StepWriteOut.java</url>
+          <line>82</line>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/GameMaster.java</url>
+          <line>4</line>
+          <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Board.java</url>
-          <line>165</line>
-          <option name="timeStamp" value="22" />
+          <line>38</line>
+          <option name="timeStamp" value="46" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Tile.java</url>
-          <line>20</line>
-          <option name="timeStamp" value="23" />
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/GameMaster.java</url>
+          <line>12</line>
+          <properties class="GameMaster">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="43" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Tile.java</url>
-          <line>23</line>
-          <option name="timeStamp" value="24" />
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/StandardGame.java</url>
+          <line>15</line>
+          <properties class="StandardGame" method="getStaticBoardSize">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="44" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/Board.java</url>
-          <line>160</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Board.java</url>
-          <line>161</line>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Ship.java</url>
-          <line>89</line>
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Ship.java</url>
-          <line>91</line>
-          <option name="timeStamp" value="30" />
+          <line>22</line>
+          <properties class="Board" method="initShipsToPlace">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="45" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -8,7 +8,7 @@ import io.cucumber.java.Before;
 import static org.junit.Assert.*;
 
 public class StepWriteOut {
-    Board gameBoard = new Board(10);
+    Board gameBoard = new Board();
     Ship testShip = new Ship();
 
     int userLetter;
